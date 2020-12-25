@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.Swagger;
 
 namespace api
 {
@@ -31,6 +33,21 @@ namespace api
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("Default")));
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Teste DotNet Luby",
+                        Version = "v1",
+                        Description = "Projeto de teste da Luby Software",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Josué Placido",
+                            Url = new Uri("https://github.com/josueplacido")
+                        }
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +58,12 @@ namespace api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "swagger";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doc API");
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();
