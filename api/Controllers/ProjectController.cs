@@ -25,19 +25,30 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public Project[] Get(int items=10,int page=1)
+        public ProjectList Get(int items=10,int page=1)
         {
             if(items < 1)
                 items = 10;
             if(page < 1)
                 page = 1;
-            return _dao.Get(items,page-1);
+            return new ProjectList()
+            {
+                Items = items,
+                Page = page,
+                Total = _dao.Total(),
+                List = _dao.List(items, page - 1)
+            }; ;
         }
         [HttpGet]
         [Route("{id}")]
-        public Project Get(int id)
+        public ActionResult Get(int id)
         {
-            return _dao.GetById(id);
+            var temp = _dao.GetById(id);
+            if (temp == null)
+            {
+                return BadRequest(new { message = $"Developer {id} not found!" });
+            }
+            return Ok(temp);
         }
         [HttpPut]
         public ActionResult Put(Project project)
@@ -45,13 +56,17 @@ namespace api.Controllers
             var temp = _dao.GetById(project.Id);
             if (temp == null)
             {
-                ModelState.AddModelError("Id",$"Project {project.Id} not found!");
+                return BadRequest(new { message = $"Project {project.Id} not found!" });
             }
             if (ModelState.IsValid)
             {
                 _dao.Update(project, project.Id);
                 _dao.Save();
-                return Ok(project);
+                return Ok(new
+                {
+                    project = temp,
+                    message = $"Project {temp.Name} updated!"
+                });
             }
            return ValidationProblem();
         }
@@ -63,7 +78,11 @@ namespace api.Controllers
                 var temp = new Project { Name = project.Name };
                 _dao.Add(temp);
                 _dao.Save();
-                return Ok(temp);
+                return Ok(new
+                {
+                    project = temp,
+                    message = $"Project {temp.Name} created!"
+                });
             }
             return ValidationProblem();
             
@@ -81,7 +100,11 @@ namespace api.Controllers
             }
             _dao.Delete(prj);
             _dao.Save();
-            return Ok(prj);
+            return Ok(new
+            {
+                developer = prj,
+                message = $"PRoject {prj.Name} deleted!"
+            });
         }
     }
 }

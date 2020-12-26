@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Modelo;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -7,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace Model
 {
     [Table("tb_project")]
-    public class Project
+    public class Project: IEntidadeGenerica
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,6 +17,8 @@ namespace Model
         [Required]
         [MaxLength(150)]
         public string Name { get; set; }
+        public virtual ICollection<Hour> Hours { get; set; }
+        public ICollection<DeveloperProject> PromocoesProdutos { get; set; }
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -46,7 +50,7 @@ namespace Model
     }
     public class DeveloperProject
     {
-        public string DeveloperId { get; set; }
+        public int DeveloperId { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
         public Developer Developer { get; set; }
@@ -55,6 +59,6 @@ namespace Model
         [IgnoreDataMember]
         public Project Project { get; set; }
 
-        public string ProjectId { get; set; }
+        public int ProjectId { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Infra;
 using Microsoft.EntityFrameworkCore.Storage;
 using Model;
+using Persistencia.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,68 +9,30 @@ using System.Text;
 
 namespace App.DAL
 {
-    public class DAOProject
+    public class DAOProject : GenericDAO<Project>
     {
-        protected readonly Context _context;
+        public DAOProject(Context context1) : base(context1) { }
 
-        public DAOProject(Context context)
+        public override Project[] GetAll()
         {
-            _context = context;
+            return _context.Projects.OrderBy(prj => prj.Name).ToArray();
         }
-        public Project[] Get(int items,int page) {
-            return _context.Projects.OrderBy(prj => prj.Name).Skip(page*items).Take(items).ToArray();
-        }
-        public Project GetById(int id) {
-            return _context.Projects.Where(prj => prj.Id == id).FirstOrDefault();
-        }
-        public void Add(Project obj)
+        public override Project[] List(int items, int page)
         {
-            try
-            {
-                _context.Projects.Add(obj);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return _context.Projects.OrderBy(prj => prj.Name).Skip(page * items).Take(items).ToArray();
         }
-        public void Update(Project newProject, int id)
+        public void RefreshDevelopers(DeveloperProject[] news,int project,int[] devs)
         {
-            try
-            {
-                Project old = GetById(id);
-                _context.Entry(old).CurrentValues.SetValues(newProject);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            _context.Set<DeveloperProject>().RemoveRange(
+                _context.Set<DeveloperProject>().Where(obj => obj.ProjectId == project && devs.Contains(obj.DeveloperId))
+                .ToArray()
+            );
+            _context.Set<DeveloperProject>().AddRange(news);
         }
-        public virtual void Delete(Project project)
+        public override Project GetById(int id)
         {
-            try
-            {
-                _context.Projects.Remove(project);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-        public virtual void Save()
-        {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-        public IDbContextTransaction BeginTtransaction()
-        {
-            return _context.Database.BeginTransaction();
+            return _context.Projects.Where(prj => prj.Id == id)
+                .FirstOrDefault();
         }
     }
 }
