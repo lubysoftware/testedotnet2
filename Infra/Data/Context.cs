@@ -15,13 +15,13 @@ namespace Infra
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Hour>(entity =>
+            modelBuilder.Entity<Developer>(entity =>
             {
-                entity.HasOne(hour => hour.Developer);
+                entity.HasMany(dev => dev.Hours).WithOne(hour => hour.Developer).HasForeignKey(hour => hour.DeveloperId);
             });
-            modelBuilder.Entity<Hour>(entity =>
+            modelBuilder.Entity<Project>(entity =>
             {
-                entity.HasOne(hour => hour.Project);
+                entity.HasMany(dev => dev.Hours).WithOne(hour => hour.Project).HasForeignKey(hour => hour.ProjectId);
             });
             modelBuilder.Entity<DeveloperProject>().HasKey(devprj => new { devprj.DeveloperId, devprj.ProjectId });
         }

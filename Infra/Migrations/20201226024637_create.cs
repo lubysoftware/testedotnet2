@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations
 {
-    public partial class initial : Migration
+    public partial class create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,10 @@ namespace Infra.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CPF = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    CPF = table.Column<string>(maxLength: 11, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +29,7 @@ namespace Infra.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,26 +40,24 @@ namespace Infra.Migrations
                 name: "DeveloperProject",
                 columns: table => new
                 {
-                    DeveloperId = table.Column<string>(nullable: false),
-                    ProjectId = table.Column<string>(nullable: false),
-                    DeveloperId1 = table.Column<int>(nullable: true),
-                    ProjectId1 = table.Column<int>(nullable: true)
+                    DeveloperId = table.Column<int>(nullable: false),
+                    ProjectId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeveloperProject", x => new { x.DeveloperId, x.ProjectId });
                     table.ForeignKey(
-                        name: "FK_DeveloperProject_tb_developer_DeveloperId1",
-                        column: x => x.DeveloperId1,
+                        name: "FK_DeveloperProject_tb_developer_DeveloperId",
+                        column: x => x.DeveloperId,
                         principalTable: "tb_developer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DeveloperProject_tb_project_ProjectId1",
-                        column: x => x.ProjectId1,
+                        name: "FK_DeveloperProject_tb_project_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "tb_project",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,14 +89,9 @@ namespace Infra.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeveloperProject_DeveloperId1",
+                name: "IX_DeveloperProject_ProjectId",
                 table: "DeveloperProject",
-                column: "DeveloperId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeveloperProject_ProjectId1",
-                table: "DeveloperProject",
-                column: "ProjectId1");
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_hour_DeveloperId",

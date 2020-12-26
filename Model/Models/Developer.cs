@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelo;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,15 +8,23 @@ using System.Text;
 namespace Model
 {
     [Table("tb_developer")]
-    public class Developer
+    public class Developer: IEntidadeGenerica
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string CPF { get; set; }
+        [Required]
+        [MaxLength(11)]
+        public virtual string CPF { get; set; }
+        [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        [Required]
+        [EmailAddress]
+        public virtual string Email { get; set; }
+        [Required]
+        public virtual string Password { get; set; }
+        public virtual ICollection<Hour> Hours { get; set; }
         public override bool Equals(object obj)
         {
             if (obj == null)

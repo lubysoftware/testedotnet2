@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201224212412_initial")]
-    partial class initial
+    [Migration("20201226024637_create")]
+    partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,15 +29,21 @@ namespace Infra.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CPF")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -47,23 +53,15 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Model.DeveloperProject", b =>
                 {
-                    b.Property<string>("DeveloperId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("DeveloperId1")
+                    b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectId1")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.HasKey("DeveloperId", "ProjectId");
 
-                    b.HasIndex("DeveloperId1");
-
-                    b.HasIndex("ProjectId1");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("DeveloperProject");
                 });
@@ -104,7 +102,9 @@ namespace Infra.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
@@ -115,23 +115,27 @@ namespace Infra.Migrations
                 {
                     b.HasOne("Model.Developer", "Developer")
                         .WithMany()
-                        .HasForeignKey("DeveloperId1");
-
-                    b.HasOne("Model.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId1");
-                });
-
-            modelBuilder.Entity("Model.Hour", b =>
-                {
-                    b.HasOne("Model.Developer", "Developer")
-                        .WithMany()
                         .HasForeignKey("DeveloperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Model.Project", "Project")
-                        .WithMany()
+                        .WithMany("PromocoesProdutos")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Model.Hour", b =>
+                {
+                    b.HasOne("Model.Developer", "Developer")
+                        .WithMany("Hours")
+                        .HasForeignKey("DeveloperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Model.Project", "Project")
+                        .WithMany("Hours")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
