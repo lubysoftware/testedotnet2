@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>api</name>
+    </assembly>
+    <members>
+        <member name="T:api.Services.HashService">
+            <summary>
+            Classe com o serviço de Criptografia de senha.
+            </summary>
+        </member>
+    </members>
+</doc>
