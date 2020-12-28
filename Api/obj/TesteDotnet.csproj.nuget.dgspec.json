@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\TesteDotnet\\TesteDotnet\\TesteDotnet.csproj": {}
+    "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\Api\\TesteDotnet.csproj": {}
   },
   "projects": {
-    "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\TesteDotnet\\TesteDotnet\\TesteDotnet.csproj": {
+    "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\Api\\TesteDotnet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\TesteDotnet\\TesteDotnet\\TesteDotnet.csproj",
+        "projectUniqueName": "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\Api\\TesteDotnet.csproj",
         "projectName": "TesteDotnet",
-        "projectPath": "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\TesteDotnet\\TesteDotnet\\TesteDotnet.csproj",
+        "projectPath": "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\Api\\TesteDotnet.csproj",
         "packagesPath": "C:\\Users\\leona\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\TesteDotnet\\TesteDotnet\\obj\\",
+        "outputPath": "C:\\Users\\leona\\OneDrive\\Documentos\\testedotnet2\\Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
