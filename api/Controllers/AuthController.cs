@@ -4,6 +4,11 @@ using Infra;
 using App.DAL;
 using api.ViewModels;
 using api.Services;
+using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.Swagger.Annotations;
+using System.Web.Http.ModelBinding;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace api.Controllers
 {
@@ -19,8 +24,18 @@ namespace api.Controllers
 			_dao = new DAODeveloper(context);
 			_jwtService = jwtService;
 		}
-
+		/// <summary>
+		/// Autenticar usuário 
+		/// </summary>
+		/// <param name="login"></param>
+		/// <returns>dados do usuário e o token</returns>
+		/// <response code="200">dados do usuário e o token</response>
+		/// <response code="400">Mensagens de erro</response>
+		[ProducesResponseType(typeof(DeveloperLogged), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
 		[HttpPost, AllowAnonymous, Route("")]
+
+
 		public IActionResult Authenticate([FromBody] LoginModel login)
 		{
             if (ModelState.IsValid)
@@ -37,11 +52,7 @@ namespace api.Controllers
 					return ValidationProblem();
 				}
 				var jwt = _jwtService.GenerateToken(user);
-				return Ok(new
-				{
-					developer = new DeveloperView(user),
-					token = jwt
-				});
+				return Ok(new DeveloperLogged(new DeveloperView(user),jwt));
 			}
 			return ValidationProblem();
 		}

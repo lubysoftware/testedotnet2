@@ -56,3 +56,9 @@ Desenvolver um serviço que seja capaz de gerar um lançamento de horas.
 
 Nome: Josué Placido da Silveira Junior <br/>
 E-mail: ozzyplacidojunior@hotmail.com
+
+###OBS
+
+Não consegui disponibilizar tempo hábil para implementar as seguintes validações:
+- Hora de inicio preceder a data de final no lançamento de horas;
+- Verificar disponibilidade do Desenvolvedor no período lançado.

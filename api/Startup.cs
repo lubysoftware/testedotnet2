@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using api.Services;
 using Infra;
@@ -44,6 +47,19 @@ namespace api
                             Url = new Uri("https://github.com/josueplacido")
                         }
                     });
+                
+                var xmlFile = $"api.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+                options.AddSecurityDefinition(
+                    "Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Copie 'Bearer ' + token'",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey
+                    });      
             });
             services.Configure<string>(Configuration.GetSection("Secret"));
             var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("Secret"));
@@ -79,7 +95,7 @@ namespace api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.RoutePrefix = "swagger";
+                c.RoutePrefix = string.Empty;
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doc API");
             });
             app.UseHttpsRedirection();

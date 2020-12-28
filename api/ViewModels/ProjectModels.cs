@@ -13,6 +13,17 @@ namespace api.ViewModels
         [MaxLength(150)]
         public string Name { get; set; }
     }
+    public class ProjectResponse
+    {
+        public Project Project { get; set; }
+        public string Message { get; set; }
+
+        public ProjectResponse(Project project, string message)
+        {
+            Project = project;
+            Message = message;
+        }
+    }
     public class ProjectList
     {
         public int Total { get; set; }
