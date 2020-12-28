@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201226024637_create")]
+    [Migration("20201228030938_create")]
     partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,13 +73,13 @@ namespace Infra.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Begin")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("End")
+                    b.Property<DateTime>("DtBegin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DtEnd")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ProjectId")
@@ -120,7 +120,7 @@ namespace Infra.Migrations
                         .IsRequired();
 
                     b.HasOne("Model.Project", "Project")
-                        .WithMany("PromocoesProdutos")
+                        .WithMany("DeveloperProjects")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

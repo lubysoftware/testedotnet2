@@ -66,8 +66,8 @@ namespace Infra.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Begin = table.Column<DateTime>(nullable: false),
-                    End = table.Column<DateTime>(nullable: false),
+                    DtBegin = table.Column<DateTime>(nullable: false),
+                    DtEnd = table.Column<DateTime>(nullable: false),
                     DeveloperId = table.Column<int>(nullable: false),
                     ProjectId = table.Column<int>(nullable: false)
                 },

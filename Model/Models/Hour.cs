@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Model
 {
@@ -11,14 +12,16 @@ namespace Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [DataType(DataType.Date)]
-        public DateTime Begin { get; set; }
+        public DateTime DtBegin { get; set; }
         [DataType(DataType.Date)]
-        public DateTime End { get; set; }
+        public DateTime DtEnd { get; set; }
         public int DeveloperId { get; set; }
         [ForeignKey("DeveloperId")]
+        [JsonIgnore]
         public virtual Developer Developer { get; set; }
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
+        [JsonIgnore]
         public virtual Project Project { get; set; }
         public override bool Equals(object obj)
         {
@@ -46,7 +49,7 @@ namespace Model
         }
         public override string ToString()
         {
-            return $"{DeveloperId} {Begin.ToShortDateString()}-{End.ToShortDateString()}";
+            return $"{DeveloperId} {DtBegin.ToShortDateString()} - {DtEnd.ToShortDateString()}";
         }
     }
 }

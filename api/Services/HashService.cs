@@ -5,9 +5,6 @@ using System.Text;
 
 namespace api.Services
 {
-    /// <summary>
-    /// Classe com o serviço de Criptografia de senha.
-    /// </summary>
     public class HashService 
     {
         static readonly string PasswordHash = "P@@Sw0rd";

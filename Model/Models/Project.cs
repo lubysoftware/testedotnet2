@@ -18,7 +18,7 @@ namespace Model
         [MaxLength(150)]
         public string Name { get; set; }
         public virtual ICollection<Hour> Hours { get; set; }
-        public ICollection<DeveloperProject> PromocoesProdutos { get; set; }
+        public ICollection<DeveloperProject> DeveloperProjects { get; set; }
         public override bool Equals(object obj)
         {
             if (obj == null)

@@ -12,9 +12,11 @@ namespace Infra
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Hour> Hours { get; set; }
+        public DbSet<RankModel> Rank { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<RankModel>().HasNoKey();
             modelBuilder.Entity<Developer>(entity =>
             {
                 entity.HasMany(dev => dev.Hours).WithOne(hour => hour.Developer).HasForeignKey(hour => hour.DeveloperId);

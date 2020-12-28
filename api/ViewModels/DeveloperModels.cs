@@ -8,6 +8,18 @@ using System.Threading.Tasks;
 
 namespace api.ViewModels
 {
+    public class HourRegisterModel
+    {
+        [Required]
+        public int ProjectId { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime Begin { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime End { get; set; }
+    }
     public class DeveloperList
     {
         public int Total { get; set; }
@@ -25,7 +37,30 @@ namespace api.ViewModels
         public virtual string Password { get; set; }
 
     }
+    public class DeveloperLogged
+    {
+        public DeveloperView Developer { get; set; }
+        public string Token { get; set; }
 
+        public DeveloperLogged(DeveloperView developer, string token)
+        {
+            Developer = developer;
+            Token = token;
+        }
+    }
+
+    //public class 
+    public class DeveloperResponse
+    {
+        public Developer Developer { get; set; }
+        public string Message { get; set; }
+
+        public DeveloperResponse(Developer dev, string message)
+        {
+            Developer = dev;
+            Message = message;
+        }
+    }
     public class EditDeveloperModel
     {
         [Required]

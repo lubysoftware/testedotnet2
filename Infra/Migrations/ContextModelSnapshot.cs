@@ -71,13 +71,13 @@ namespace Infra.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Begin")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("End")
+                    b.Property<DateTime>("DtBegin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DtEnd")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ProjectId")
@@ -118,7 +118,7 @@ namespace Infra.Migrations
                         .IsRequired();
 
                     b.HasOne("Model.Project", "Project")
-                        .WithMany("PromocoesProdutos")
+                        .WithMany("DeveloperProjects")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
