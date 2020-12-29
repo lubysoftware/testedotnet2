@@ -1,5 +1,6 @@
 ﻿using System;
 using Tasks.Domain.Utils.Bases;
+using Tasks.Domain.Utils.Hash;
 
 namespace Tasks.Domain.Commands.Developers
 {
@@ -19,10 +20,29 @@ namespace Tasks.Domain.Commands.Developers
             string cpf, 
             string password
         ) : base(id) {
+            this.Password = MD5Crypto.Encode(TasksStartup.Secret + password);
+            this.SetData(
+                name: name,
+                login: login,
+                cpf: cpf
+            );
+        }
+
+        public void SetData(
+            string name,
+            string login,
+            string cpf
+        ) {
             this.Name = name;
             this.Login = login;
             this.CPF = cpf;
-            this.Password = password;
+        }
+
+        public bool ValidatePassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password)) return false;
+            var hash = MD5Crypto.Encode(TasksStartup.Secret + password);
+            return hash.Equals(Password);
         }
     }
 }
