@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Tasks.Domain.Utils.Bases;
 using Tasks.Domain.Utils.Hash;
 
@@ -10,6 +12,8 @@ namespace Tasks.Domain.Commands.Developers
         public string Login { get; private set; }
         public string CPF { get; private set; }
         public string Password { get; private set; }
+
+        public virtual IEnumerable<DeveloperProject> DeveloperProjects { get; private set; }
 
         protected Developer() : base() { }
 

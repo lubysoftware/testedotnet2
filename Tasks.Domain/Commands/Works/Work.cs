@@ -11,7 +11,7 @@ namespace Tasks.Domain.Commands.Works
 
         protected Work() : base() { }
 
-        public Wrok(
+        public Work(
             Guid id, 
             DateTime startTime,
             DateTime endTime,

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Tasks.Domain.Commands.Developers;
 using Tasks.Domain.Utils.Bases;
 
 namespace Tasks.Domain.Commands.Projects
@@ -7,6 +9,8 @@ namespace Tasks.Domain.Commands.Projects
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
+
+        public virtual IEnumerable<DeveloperProject> DeveloperProjects { get; private set; }
 
         protected Project() : base() { }
 
