@@ -7,7 +7,7 @@ namespace Tasks.Domain.Commands.Projects
 {
     public class Project : EntityBase
     {
-        public string Name { get; private set; }
+        public string Title { get; private set; }
         public string Description { get; private set; }
 
         public virtual IEnumerable<DeveloperProject> DeveloperProjects { get; private set; }
@@ -16,21 +16,21 @@ namespace Tasks.Domain.Commands.Projects
 
         public Project(
             Guid id,
-            string name,
+            string title,
             string description
         ) : base(id)
         {
             this.SetData(
-                name: name,
+                title: title,
                 description: description
             );
         }
 
         public void SetData(
-            string name,
+            string title,
             string description
         ) {
-            this.Name = name;
+            this.Title = title;
             this.Description = description;
         }
     }
