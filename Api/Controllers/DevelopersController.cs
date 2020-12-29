@@ -14,27 +14,25 @@ namespace TesteDotnet.Controllers
     [ApiController]
     public class DevelopersController : ControllerBase
     {
-        private readonly Context _context;
         public readonly IRepository _repo;
 
-        public DevelopersController(Context context, IRepository repo)
+        public DevelopersController(IRepository repo)
         {
-            _context = context;
             _repo = repo;
         }
 
         // GET: api/Developers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Developer>>> GetDeveloper()
+        public ActionResult<IEnumerable<Developer>> GetDeveloper()
         {
-            return await _context.Developer.ToListAsync();
+            return _repo.GetAllDevelopers();
         }
 
         // GET: api/Developers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Developer>> GetDeveloper(int id)
+        public ActionResult<Developer> GetDeveloper(int id)
         {
-            var developer = await _context.Developer.FindAsync(id);
+            var developer = _repo.GetDeveloperById(id);
 
             if (developer == null)
             {
@@ -94,9 +92,9 @@ namespace TesteDotnet.Controllers
 
         // DELETE: api/Developers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDeveloper(int id)
+        public IActionResult DeleteDeveloper(int id)
         {
-            var developer = await _context.Developer.FindAsync(id);
+            var developer = _repo.GetDeveloperById(id);
             if (developer == null)
             {
                 return NotFound();
@@ -113,7 +111,11 @@ namespace TesteDotnet.Controllers
 
         private bool DeveloperExists(int id)
         {
-            return _context.Developer.Any(e => e.Id == id);
+            if (_repo.GetDeveloperById(id) != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -15,24 +15,26 @@ namespace TesteDotnet.Controllers
     public class EntriesController : ControllerBase
     {
         private readonly Context _context;
+        public readonly IRepository _repo;
 
-        public EntriesController(Context context)
+        public EntriesController(Context context, IRepository repo)
         {
             _context = context;
+            _repo = repo;
         }
 
         // GET: api/Entries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Entry>>> GetEntry()
+        public ActionResult<IEnumerable<Entry>> GetEntry()
         {
-            return await _context.Entry.ToListAsync();
+            return _repo.GetAllEntries();
         }
 
         // GET: api/Entries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Entry>> GetEntry(int id)
+        public ActionResult<Entry> GetEntry(int id)
         {
-            var entry = await _context.Entry.FindAsync(id);
+            var entry = _repo.GetEntryById(id);
 
             if (entry == null)
             {
@@ -45,18 +47,21 @@ namespace TesteDotnet.Controllers
         // PUT: api/Entries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEntry(int id, Entry entry)
+        public IActionResult PutEntry(int id, Entry entry)
         {
             if (id != entry.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(entry).State = EntityState.Modified;
+            _repo.Update(entry);
 
             try
             {
-                await _context.SaveChangesAsync();
+                if (_repo.SaveChanges())
+                {
+                    return Ok(entry);
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,39 +75,49 @@ namespace TesteDotnet.Controllers
                 }
             }
 
-            return NoContent();
+            return BadRequest("Entry not updated");
         }
 
         // POST: api/Entries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Entry>> PostEntry(Entry entry)
+        public ActionResult<Entry> PostEntry(Entry entry)
         {
-            _context.Entry.Add(entry);
-            await _context.SaveChangesAsync();
+            _repo.Add(entry);
+            if (_repo.SaveChanges())
+            {
+                return Ok(entry);
+            }
 
-            return CreatedAtAction("GetEntry", new { id = entry.Id }, entry);
+            return BadRequest("Entry not added");
         }
 
         // DELETE: api/Entries/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEntry(int id)
+        public IActionResult DeleteEntry(int id)
         {
-            var entry = await _context.Entry.FindAsync(id);
+            var entry = _repo.GetEntryById(id);
             if (entry == null)
             {
                 return NotFound();
             }
 
-            _context.Entry.Remove(entry);
-            await _context.SaveChangesAsync();
+            _repo.Delete(entry);
+            if (_repo.SaveChanges())
+            {
+                return Ok(entry);
+            }
 
-            return NoContent();
+            return BadRequest("Entry not deleted");
         }
 
         private bool EntryExists(int id)
         {
-            return _context.Entry.Any(e => e.Id == id);
+            if (_repo.GetEntryById(id) != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

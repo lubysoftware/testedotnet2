@@ -14,27 +14,25 @@ namespace TesteDotnet.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private readonly Context _context;
         public readonly IRepository _repo;
 
-        public ProjectsController(Context context, IRepository repo)
+        public ProjectsController(IRepository repo)
         {
-            _context = context;
             _repo = repo;
         }
 
         // GET: api/Projects
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Project>>> GetProject()
+        public ActionResult<IEnumerable<Project>> GetProject()
         {
-            return await _context.Project.ToListAsync();
+            return _repo.GetAllProjects();
         }
 
         // GET: api/Projects/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProject(int id)
+        public ActionResult<Project> GetProject(int id)
         {
-            var project = await _context.Project.FindAsync(id);
+            var project = _repo.GetProjectById(id);
 
             if (project == null)
             {
@@ -96,7 +94,7 @@ namespace TesteDotnet.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
-            var project = await _context.Project.FindAsync(id);
+            var project = _repo.GetProjectById(id);
             if (project == null)
             {
                 return NotFound();
@@ -113,7 +111,11 @@ namespace TesteDotnet.Controllers
 
         private bool ProjectExists(int id)
         {
-            return _context.Project.Any(e => e.Id == id);
+            if (_repo.GetProjectById(id) != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

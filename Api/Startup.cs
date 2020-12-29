@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TesteDotnet.Data;
 
 namespace TesteDotnet
@@ -24,7 +25,8 @@ namespace TesteDotnet
                     options.UseSqlServer(Configuration.GetConnectionString("Context")));
             services.AddScoped<IRepository, Repository>();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
