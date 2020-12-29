@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using TesteDotnet.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TesteDotnet.Controllers
 {
@@ -22,13 +19,15 @@ namespace TesteDotnet.Controllers
         }
 
         // GET: api/Developers
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Developer>> GetDeveloper()
         {
             return _repo.GetAllDevelopers();
         }
 
-        // GET: api/Developers/5
+        // GET: api/Developers/id
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Developer> GetDeveloper(int id)
         {
@@ -42,8 +41,9 @@ namespace TesteDotnet.Controllers
             return developer;
         }
 
-        // PUT: api/Developers/5
+        // PUT: api/Developers/id
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult PutDeveloper(int id, Developer developer)
         {
@@ -77,7 +77,7 @@ namespace TesteDotnet.Controllers
         }
 
         // POST: api/Developers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public ActionResult<Developer> PostDeveloper(Developer developer)
         {
@@ -90,7 +90,8 @@ namespace TesteDotnet.Controllers
             return BadRequest("Developer not added");
         }
 
-        // DELETE: api/Developers/5
+        // DELETE: api/Developers/id
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteDeveloper(int id)
         {

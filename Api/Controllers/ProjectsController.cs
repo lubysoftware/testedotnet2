@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using TesteDotnet.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TesteDotnet.Controllers
 {
@@ -22,13 +23,15 @@ namespace TesteDotnet.Controllers
         }
 
         // GET: api/Projects
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Project>> GetProject()
         {
             return _repo.GetAllProjects();
         }
 
-        // GET: api/Projects/5
+        // GET: api/Projects/id
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Project> GetProject(int id)
         {
@@ -42,8 +45,8 @@ namespace TesteDotnet.Controllers
             return project;
         }
 
-        // PUT: api/Projects/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: api/Projects/id
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult PutProject(int id, Project project)
         {
@@ -77,7 +80,7 @@ namespace TesteDotnet.Controllers
         }
 
         // POST: api/Projects
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public ActionResult<Project> PostProject(Project project)
         {
@@ -90,9 +93,10 @@ namespace TesteDotnet.Controllers
             return BadRequest("Project not added");
         }
 
-        // DELETE: api/Projects/5
+        // DELETE: api/Projects/id
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProject(int id)
+        public IActionResult DeleteProject(int id)
         {
             var project = _repo.GetProjectById(id);
             if (project == null)

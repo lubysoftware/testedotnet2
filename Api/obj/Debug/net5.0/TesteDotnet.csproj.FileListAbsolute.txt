@@ -154,3 +154,7 @@ C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\obj\Debug\net5.0\TesteDotnet
 C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\obj\Debug\net5.0\ref\TesteDotnet.dll
 C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\obj\Debug\net5.0\TesteDotnet.pdb
 C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\obj\Debug\net5.0\TesteDotnet.genruntimeconfig.cache
+C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\leona\OneDrive\Documentos\testedotnet2\Api\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

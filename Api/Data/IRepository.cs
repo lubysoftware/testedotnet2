@@ -16,6 +16,7 @@ namespace TesteDotnet.Data
 
         Developer GetDeveloperById(int developerId);
 
+        Developer GetDeveloperLogin(string email, string password);
         Project[] GetAllProjects();
 
         Project GetProjectById(int projectId);

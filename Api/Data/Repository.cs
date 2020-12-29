@@ -67,6 +67,16 @@ namespace TesteDotnet.Data
             return query.FirstOrDefault();
         }
 
+        public Developer GetDeveloperLogin(string email, string password)
+        {
+            IQueryable<Developer> query = _context.Developer;
+
+            query = query.AsNoTracking().OrderBy(dev => dev.Email)
+                .Where(dev => dev.Email == email && dev.Password == password);
+
+            return query.FirstOrDefault();
+        }
+
         public Project GetProjectById(int projectId)
         {
             IQueryable<Project> query = _context.Project;
