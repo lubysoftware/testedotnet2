@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Tasks.Domain.Utils.Bases;
 
 namespace Tasks.Domain.Commands.Works
@@ -8,6 +10,8 @@ namespace Tasks.Domain.Commands.Works
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
         public string Comment { get; private set; }
+
+        public virtual IEnumerable<WorkDeveloperProject> WorkDeveloperProjects { get; private set; }
 
         protected Work() : base() { }
 
