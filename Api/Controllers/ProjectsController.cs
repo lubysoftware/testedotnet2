@@ -15,10 +15,12 @@ namespace TesteDotnet.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly Context _context;
+        public readonly IRepository _repo;
 
-        public ProjectsController(Context context)
+        public ProjectsController(Context context, IRepository repo)
         {
             _context = context;
+            _repo = repo;
         }
 
         // GET: api/Projects
@@ -45,18 +47,21 @@ namespace TesteDotnet.Controllers
         // PUT: api/Projects/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProject(int id, Project project)
+        public IActionResult PutProject(int id, Project project)
         {
             if (id != project.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(project).State = EntityState.Modified;
+            _repo.Update(project);
 
             try
             {
-                await _context.SaveChangesAsync();
+                if (_repo.SaveChanges())
+                {
+                    return Ok(project);
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,18 +75,21 @@ namespace TesteDotnet.Controllers
                 }
             }
 
-            return NoContent();
+            return BadRequest("Project not updated");
         }
 
         // POST: api/Projects
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Project>> PostProject(Project project)
+        public ActionResult<Project> PostProject(Project project)
         {
-            _context.Project.Add(project);
-            await _context.SaveChangesAsync();
+            _repo.Add(project);
+            if (_repo.SaveChanges())
+            {
+                return Ok(project);
+            }
 
-            return CreatedAtAction("GetProject", new { id = project.Id }, project);
+            return BadRequest("Project not added");
         }
 
         // DELETE: api/Projects/5
@@ -94,10 +102,13 @@ namespace TesteDotnet.Controllers
                 return NotFound();
             }
 
-            _context.Project.Remove(project);
-            await _context.SaveChangesAsync();
+            _repo.Delete(project);
+            if (_repo.SaveChanges())
+            {
+                return Ok(project);
+            }
 
-            return NoContent();
+            return BadRequest("Project not deleted");
         }
 
         private bool ProjectExists(int id)

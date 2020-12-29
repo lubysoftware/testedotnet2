@@ -38,7 +38,12 @@ namespace TesteDotnet.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Developer");
                 });
@@ -82,6 +87,13 @@ namespace TesteDotnet.Migrations
                     b.ToTable("Project");
                 });
 
+            modelBuilder.Entity("Api.Models.Developer", b =>
+                {
+                    b.HasOne("Api.Models.Project", null)
+                        .WithMany("Developers")
+                        .HasForeignKey("ProjectId");
+                });
+
             modelBuilder.Entity("Api.Models.Entry", b =>
                 {
                     b.HasOne("Api.Models.Developer", "Developer")
@@ -91,7 +103,7 @@ namespace TesteDotnet.Migrations
                         .IsRequired();
 
                     b.HasOne("Api.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("Entries")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -99,6 +111,13 @@ namespace TesteDotnet.Migrations
                     b.Navigation("Developer");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Api.Models.Project", b =>
+                {
+                    b.Navigation("Developers");
+
+                    b.Navigation("Entries");
                 });
 #pragma warning restore 612, 618
         }

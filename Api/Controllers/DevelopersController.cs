@@ -15,10 +15,12 @@ namespace TesteDotnet.Controllers
     public class DevelopersController : ControllerBase
     {
         private readonly Context _context;
+        public readonly IRepository _repo;
 
-        public DevelopersController(Context context)
+        public DevelopersController(Context context, IRepository repo)
         {
             _context = context;
+            _repo = repo;
         }
 
         // GET: api/Developers
@@ -45,18 +47,21 @@ namespace TesteDotnet.Controllers
         // PUT: api/Developers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeveloper(int id, Developer developer)
+        public IActionResult PutDeveloper(int id, Developer developer)
         {
             if (id != developer.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(developer).State = EntityState.Modified;
+            _repo.Update(developer);
 
             try
             {
-                await _context.SaveChangesAsync();
+                if (_repo.SaveChanges())
+                {
+                    return Ok(developer);
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,18 +75,21 @@ namespace TesteDotnet.Controllers
                 }
             }
 
-            return NoContent();
+            return BadRequest("Developer not updated");
         }
 
         // POST: api/Developers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Developer>> PostDeveloper(Developer developer)
+        public ActionResult<Developer> PostDeveloper(Developer developer)
         {
-            _context.Developer.Add(developer);
-            await _context.SaveChangesAsync();
+            _repo.Add(developer);
+            if (_repo.SaveChanges())
+            {
+                return Ok(developer);
+            }
 
-            return CreatedAtAction("GetDeveloper", new { id = developer.Id }, developer);
+            return BadRequest("Developer not added");
         }
 
         // DELETE: api/Developers/5
@@ -94,10 +102,13 @@ namespace TesteDotnet.Controllers
                 return NotFound();
             }
 
-            _context.Developer.Remove(developer);
-            await _context.SaveChangesAsync();
+            _repo.Delete(developer);
+            if (_repo.SaveChanges())
+            {
+                return Ok(developer);
+            }
 
-            return NoContent();
+            return BadRequest("Developer not deleted");
         }
 
         private bool DeveloperExists(int id)
