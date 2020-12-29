@@ -19,5 +19,10 @@ namespace TesteDotnet.Data
         public new DbSet<Api.Models.Entry> Entry { get; set; }
 
         public DbSet<Api.Models.Project> Project { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Entry>().HasKey(entry => new { entry.DeveloperId, entry.ProjectId });
+        }
     }
 }

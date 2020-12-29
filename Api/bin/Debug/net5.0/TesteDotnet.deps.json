@@ -26,6 +26,8 @@
       "TesteDotnet/1.0.0": {
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "3.8.0",
+          "Microsoft.EntityFrameworkCore": "5.0.1",
+          "Microsoft.EntityFrameworkCore.Design": "5.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.1",
           "Microsoft.EntityFrameworkCore.Sqlite": "5.0.1",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.1",
