@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tasks.Domain._Common.Entities;
-using Tasks.Domain.Entities.Projects;
-using Tasks.Domain.Entities.Works;
+using Tasks.Domain.Projects.Entities;
+using Tasks.Domain.Works.Entities;
 
-namespace Tasks.Domain.Entities.Developers
+namespace Tasks.Domain.Developers.Entities
 {
     public class DeveloperProject : EntityBase
     {

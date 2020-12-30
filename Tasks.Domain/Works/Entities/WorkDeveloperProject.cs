@@ -1,8 +1,8 @@
 ﻿using System;
 using Tasks.Domain._Common.Entities;
-using Tasks.Domain.Entities.Developers;
+using Tasks.Domain.Developers.Entities;
 
-namespace Tasks.Domain.Entities.Works
+namespace Tasks.Domain.Works.Entities
 {
     public class WorkDeveloperProject : EntityBase
     {

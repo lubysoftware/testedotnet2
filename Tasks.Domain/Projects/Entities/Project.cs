@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tasks.Domain._Common.Entities;
-using Tasks.Domain.Entities.Developers;
+using Tasks.Domain.Developers.Entities;
 
-namespace Tasks.Domain.Entities.Projects
+namespace Tasks.Domain.Projects.Entities
 {
     public class Project : EntityBase
     {

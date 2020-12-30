@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Tasks.Domain._Common.Entities;
 
-namespace Tasks.Domain.Entities.Works
+namespace Tasks.Domain.Works.Entities
 {
     public class Work : EntityBase
     {

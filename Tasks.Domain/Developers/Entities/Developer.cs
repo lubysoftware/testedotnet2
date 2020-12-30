@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Tasks.Domain._Common.Crypto;
 using Tasks.Domain._Common.Entities;
 
-namespace Tasks.Domain.Entities.Developers
+namespace Tasks.Domain.Developers.Entities
 {
     public class Developer : EntityBase
     {
