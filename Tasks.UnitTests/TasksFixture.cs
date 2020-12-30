@@ -2,7 +2,6 @@
 using System;
 using Tasks.Domain;
 using Tasks.Ifrastructure.Contexts;
-using Tasks.UnitTests._Common.Factories;
 
 namespace Tasks.UnitTests
 {

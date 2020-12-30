@@ -14,7 +14,7 @@ namespace Tasks.Ifrastructure.Mapping
             builder.Property(d => d.CPF).HasMaxLength(11).IsRequired();
             builder.Property(d => d.Name).HasMaxLength(150).IsRequired();
             builder.Property(d => d.Login).HasMaxLength(150).IsRequired();
-            builder.Property(d => d.Password).HasMaxLength(80).IsRequired();
+            builder.Property(d => d.PasswordHash).HasMaxLength(80).IsRequired();
 
             builder.HasIndex(d => d.Login).IsUnique();
         }

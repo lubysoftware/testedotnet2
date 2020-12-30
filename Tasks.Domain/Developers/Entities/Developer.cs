@@ -10,7 +10,7 @@ namespace Tasks.Domain.Developers.Entities
         public string Name { get; private set; }
         public string Login { get; private set; }
         public string CPF { get; private set; }
-        public string Password { get; private set; }
+        public string PasswordHash { get; private set; }
 
         public virtual IEnumerable<DeveloperProject> DeveloperProjects { get; private set; }
 
@@ -24,7 +24,7 @@ namespace Tasks.Domain.Developers.Entities
             string password
         ) : base(id)
         {
-            this.Password = MD5Crypto.Encode(password);
+            this.PasswordHash = MD5Crypto.Encode(password);
             SetData(
                 name: name,
                 login: login,
@@ -47,7 +47,7 @@ namespace Tasks.Domain.Developers.Entities
         {
             if (string.IsNullOrWhiteSpace(password)) return false;
             var hash = MD5Crypto.Encode(password);
-            return hash.Equals(Password);
+            return hash.Equals(PasswordHash);
         }
     }
 }
