@@ -1,0 +1,9 @@
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\obj\Debug\netstandard2.0\Luby.domain.csprojAssemblyReference.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\obj\Debug\netstandard2.0\Luby.domain.AssemblyInfoInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\obj\Debug\netstandard2.0\Luby.domain.AssemblyInfo.cs
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\obj\Debug\netstandard2.0\Luby.domain.csproj.CoreCompileInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\bin\Debug\netstandard2.0\Luby.domain.deps.json
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\bin\Debug\netstandard2.0\Luby.domain.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\bin\Debug\netstandard2.0\Luby.domain.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\obj\Debug\netstandard2.0\Luby.domain.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.domain\obj\Debug\netstandard2.0\Luby.domain.pdb
