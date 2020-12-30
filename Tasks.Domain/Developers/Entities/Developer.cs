@@ -24,7 +24,7 @@ namespace Tasks.Domain.Developers.Entities
             string password
         ) : base(id)
         {
-            this.Password = MD5Crypto.Encode(TasksStartup.Secret + password);
+            this.Password = MD5Crypto.Encode(password);
             SetData(
                 name: name,
                 login: login,
@@ -46,7 +46,7 @@ namespace Tasks.Domain.Developers.Entities
         public bool ValidatePassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password)) return false;
-            var hash = MD5Crypto.Encode(TasksStartup.Secret + password);
+            var hash = MD5Crypto.Encode(password);
             return hash.Equals(Password);
         }
     }

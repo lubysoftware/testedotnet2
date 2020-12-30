@@ -35,6 +35,8 @@ namespace Tasks.API
 
             app.UseAuthorization();
 
+            app.ConfigureApplication(_configuration);
+
             app.MigrateDatabase<TasksContext>();
 
             app.UseEndpoints(endpoints =>
