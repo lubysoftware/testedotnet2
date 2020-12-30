@@ -18,9 +18,9 @@ namespace Tasks.Ifrastructure.Mapping.Developers
 
             builder.HasOne(dp => dp.Developer)
                 .WithMany(d => d.DeveloperProjects)
-                .HasForeignKey(dp => dp.ProjectId);
+                .HasForeignKey(dp => dp.DeveloperId);
 
-            builder.HasIndex(dp => new { dp.ProjectId, dp.Developer }).IsUnique();
+            builder.HasIndex(dp => new { dp.ProjectId, dp.DeveloperId }).IsUnique();
         }
     }
 }
