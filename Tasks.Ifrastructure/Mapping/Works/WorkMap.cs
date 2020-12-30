@@ -13,6 +13,7 @@ namespace Tasks.Ifrastructure.Mapping
             builder.HasKey(w => w.Id);
             builder.Property(w => w.StartTime).IsRequired();
             builder.Property(w => w.EndTime).IsRequired();
+            builder.Property(w => w.Comment).HasMaxLength(300).IsRequired();
 
             builder.HasIndex(w => w.StartTime);
             builder.HasIndex(w => w.EndTime);
