@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tasks.Ifrastructure.Context;
+using Tasks.Ifrastructure.Extensions;
 
 namespace Tasks.API
 {
@@ -19,9 +19,7 @@ namespace Tasks.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TasksContext>(
-                options => options.UseMySql(_configuration.GetConnectionString("Tasks"))
-            );
+            services.ConfigureDatabases(_configuration);
 
             services.AddControllers();
         }
@@ -36,6 +34,8 @@ namespace Tasks.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.MigrateDatabase<TasksContext>();
 
             app.UseEndpoints(endpoints =>
             {
