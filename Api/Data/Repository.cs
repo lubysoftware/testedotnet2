@@ -1,5 +1,6 @@
 ﻿using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace TesteDotnet.Data
@@ -27,6 +28,11 @@ namespace TesteDotnet.Data
         {
             IQueryable<Developer> query = _context.Developer;
 
+            query = query.Include(d => d.DeveloperProject)
+                .ThenInclude(dp => dp.Project);
+
+            query = query.Include(d => d.Entries);
+
             query = query.AsNoTracking().OrderBy(d => d.Id);
             return query.ToArray();
         }
@@ -36,6 +42,7 @@ namespace TesteDotnet.Data
             IQueryable<Entry> query = _context.Entry;
 
             query = query.AsNoTracking().OrderBy(d => d.Id);
+
             return query.ToArray();
         }
 
@@ -95,6 +102,31 @@ namespace TesteDotnet.Data
         public void Update<T>(T entity) where T : class
         {
             _context.Update(entity);
+        }
+
+        public bool IsDateAvailable(Entry entry)
+        {
+            IQueryable<Entry> query = _context.Entry;
+
+            query = query.AsNoTracking().OrderBy(e => e.Id).Where(e => e.DeveloperId == entry.DeveloperId)
+                .Where(e => 
+                e.InitialDate <= entry.InitialDate
+                && entry.InitialDate <= e.EndDate
+                || e.InitialDate <= entry.EndDate
+                && entry.EndDate <= e.EndDate);
+
+            Entry queryEntry = query.FirstOrDefault();
+            return queryEntry == null;
+        }
+
+        public bool DeveloperHasProject(int developerId, int projectId)
+        {
+            IQueryable<DeveloperProject> query = _context.DeveloperProject;
+
+            query = query.AsNoTracking().OrderBy(dp => dp.DeveloperId)
+                .Where(devPrj => devPrj.DeveloperId == developerId && devPrj.ProjectId == projectId);
+
+            return query.FirstOrDefault() != null;
         }
     }
 }

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using TesteDotnet.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 namespace TesteDotnet
 {
@@ -44,10 +45,12 @@ namespace TesteDotnet
 
             services.AddDbContext<Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Context")));
-            services.AddScoped<IRepository, Repository>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.AddAutoMapper(System.AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

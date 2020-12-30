@@ -1,4 +1,5 @@
 ﻿using Api.Models;
+using System;
 
 namespace TesteDotnet.Data
 {
@@ -25,5 +26,8 @@ namespace TesteDotnet.Data
 
         Entry GetEntryById(int entryId);
 
+        bool IsDateAvailable(Entry entry);
+
+        bool DeveloperHasProject(int developerId, int projectId);
     }
 }

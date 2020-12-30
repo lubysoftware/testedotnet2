@@ -4,6 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using TesteDotnet.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TesteDotnet.Helpers;
+using AutoMapper;
+using TesteDotnet.Dtos;
 
 namespace TesteDotnet.Controllers
 {
@@ -11,23 +16,26 @@ namespace TesteDotnet.Controllers
     [ApiController]
     public class DevelopersController : ControllerBase
     {
-        public readonly IRepository _repo;
+        private readonly IRepository _repo;
+        // HttpClient is intended to be instantiated once per application, rather than per-use.
+        static readonly HttpClient client = new HttpClient();
+        private IMapper _mapper { get; }
 
-        public DevelopersController(IRepository repo)
+        public DevelopersController(IRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         // GET: api/Developers
-        [Authorize]
         [HttpGet]
-        public ActionResult<IEnumerable<Developer>> GetDeveloper()
+        public ActionResult GetDeveloper()
         {
-            return _repo.GetAllDevelopers();
+            var developers = _repo.GetAllDevelopers();
+            return Ok(_mapper.Map<IEnumerable<DeveloperDto>>(developers));
         }
 
         // GET: api/Developers/id
-        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Developer> GetDeveloper(int id)
         {
@@ -79,15 +87,27 @@ namespace TesteDotnet.Controllers
         // POST: api/Developers
         [Authorize]
         [HttpPost]
-        public ActionResult<Developer> PostDeveloper(Developer developer)
+        public async Task<ActionResult> PostDeveloper(Developer developer)
         {
-            _repo.Add(developer);
-            if (_repo.SaveChanges())
+            if (!ValidateCpf.IsValidCpf(developer.CPF))
             {
-                return Ok(developer);
-            }
+                return BadRequest("Invalid CPF");
+            };
+            _repo.Add(developer);
+            _repo.SaveChanges();
 
-            return BadRequest("Developer not added");
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync("https://run.mocky.io/v3/067108b3-77a4-400b-af07-2db3141e95c9");
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                return Ok(responseBody);
+            }
+            catch (HttpRequestException e)
+            {
+                return BadRequest(e.StatusCode + " " + e.HelpLink);
+            }
         }
 
         // DELETE: api/Developers/id

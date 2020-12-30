@@ -23,7 +23,6 @@ namespace TesteDotnet.Controllers
         }
 
         // GET: api/Projects
-        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Project>> GetProject()
         {
@@ -31,7 +30,6 @@ namespace TesteDotnet.Controllers
         }
 
         // GET: api/Projects/id
-        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Project> GetProject(int id)
         {
