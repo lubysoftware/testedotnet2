@@ -1,8 +1,8 @@
 ﻿using Api.Models;
 using AutoMapper;
-using TesteDotnet.Dtos;
+using TesteDotnet.V1.Dtos;
 
-namespace TesteDotnet.Helpers
+namespace TesteDotnet.V1.Profiles
 {
     public class TesteDotnetProfile : Profile
     {

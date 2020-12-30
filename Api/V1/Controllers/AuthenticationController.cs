@@ -5,21 +5,35 @@ using Microsoft.Extensions.Configuration;
 using TesteDotnet.Data;
 using TesteDotnet.Services;
 
-namespace TesteDotnet.Controllers
+namespace TesteDotnet.V1.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Controller for Athentication and Token Generation
+    /// </summary>
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AuthenticationController : ControllerBase
     {
         private IRepository _repo { get; set; }
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="configuration"></param>
         public AuthenticationController(IRepository repository, IConfiguration configuration)
         {
             _repo = repository;
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Login into application
+        /// </summary>
+        /// <param name="developerLogin"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
@@ -43,6 +57,9 @@ namespace TesteDotnet.Controllers
         }
     }
 
+    /// <summary>
+    /// ViewModel for Login
+    /// </summary>
     public class DeveloperLogin
     {
         public string Email { get; set; }

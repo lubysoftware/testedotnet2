@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TesteDotnet</name>
+    </assembly>
+    <members>
+        <member name="T:TesteDotnet.V1.Controllers.AuthenticationController">
+            <summary>
+            Controller for Athentication and Token Generation
+            </summary>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.AuthenticationController.#ctor(TesteDotnet.Data.IRepository,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="repository"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.AuthenticationController.Authenticate(TesteDotnet.V1.Controllers.DeveloperLogin)">
+            <summary>
+            Login into application
+            </summary>
+            <param name="developerLogin"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TesteDotnet.V1.Controllers.DeveloperLogin">
+            <summary>
+            ViewModel for Login
+            </summary>
+        </member>
+        <member name="T:TesteDotnet.V1.Controllers.DevelopersController">
+            <summary>
+            Controller for Developers
+            </summary>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.#ctor(TesteDotnet.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.GetDeveloper">
+            <summary>
+            Return all developers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.GetDeveloper(System.Int32)">
+            <summary>
+            Return a unique developer with an ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.PutDeveloper(System.Int32,TesteDotnet.V1.Dtos.DeveloperDto)">
+            <summary>
+            Update a developer
+            </summary>
+            <param name="id"></param>
+            <param name="developer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.PostDeveloper(TesteDotnet.V1.Dtos.DeveloperDto)">
+            <summary>
+            Create a new Developer
+            </summary>
+            <param name="developer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.DeleteDeveloper(System.Int32)">
+            <summary>
+            Delete a Developer
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TesteDotnet.V1.Controllers.EntriesController">
+            <summary>
+            Controller for Entries
+            </summary>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.#ctor(TesteDotnet.Data.IRepository)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.GetEntry">
+            <summary>
+            Get all entries
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.GetEntry(System.Int32)">
+            <summary>
+            Get an Entry with an ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.PutEntry(System.Int32,Api.Models.Entry)">
+            <summary>
+            Update an entry
+            </summary>
+            <param name="id"></param>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.PostEntry(Api.Models.Entry)">
+            <summary>
+            Create an Entry
+            </summary>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.DeleteEntry(System.Int32)">
+            <summary>
+            Delete an Entry
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TesteDotnet.V1.Controllers.ProjectsController">
+            <summary>
+            Controller for Projects
+            </summary>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.#ctor(TesteDotnet.Data.IRepository)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.GetProject">
+            <summary>
+            Get all projects 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.GetProject(System.Int32)">
+            <summary>
+            Get a project using an ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.PutProject(System.Int32,Api.Models.Project)">
+            <summary>
+            Update a project
+            </summary>
+            <param name="id"></param>
+            <param name="project"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.PostProject(Api.Models.Project)">
+            <summary>
+            Create a project
+            </summary>
+            <param name="project"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.DeleteProject(System.Int32)">
+            <summary>
+            Delete a Project
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

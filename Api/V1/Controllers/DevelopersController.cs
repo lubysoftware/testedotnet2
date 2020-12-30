@@ -8,25 +8,37 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TesteDotnet.Helpers;
 using AutoMapper;
-using TesteDotnet.Dtos;
+using TesteDotnet.V1.Dtos;
 
-namespace TesteDotnet.Controllers
+namespace TesteDotnet.V1.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Controller for Developers
+    /// </summary>
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class DevelopersController : ControllerBase
     {
         private readonly IRepository _repo;
         // HttpClient is intended to be instantiated once per application, rather than per-use.
         static readonly HttpClient client = new HttpClient();
         private IMapper _mapper { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="mapper"></param>
         public DevelopersController(IRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Return all developers
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Developers
         [HttpGet]
         public ActionResult GetDeveloper()
@@ -35,6 +47,11 @@ namespace TesteDotnet.Controllers
             return Ok(_mapper.Map<IEnumerable<DeveloperDto>>(developers));
         }
 
+        /// <summary>
+        /// Return a unique developer with an ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Developers/id
         [HttpGet("{id}")]
         public ActionResult<Developer> GetDeveloper(int id)
@@ -49,11 +66,17 @@ namespace TesteDotnet.Controllers
             return developer;
         }
 
+        /// <summary>
+        /// Update a developer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="developer"></param>
+        /// <returns></returns>
         // PUT: api/Developers/id
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult PutDeveloper(int id, Developer developer)
+        public IActionResult PutDeveloper(int id, DeveloperDto developer)
         {
             if (id != developer.Id)
             {
@@ -84,10 +107,15 @@ namespace TesteDotnet.Controllers
             return BadRequest("Developer not updated");
         }
 
+        /// <summary>
+        /// Create a new Developer
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
         // POST: api/Developers
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostDeveloper(Developer developer)
+        public async Task<ActionResult> PostDeveloper(DeveloperDto developer)
         {
             if (!ValidateCpf.IsValidCpf(developer.CPF))
             {
@@ -110,6 +138,11 @@ namespace TesteDotnet.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete a Developer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/Developers/id
         [Authorize]
         [HttpDelete("{id}")]
