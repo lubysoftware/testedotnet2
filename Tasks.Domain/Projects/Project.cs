@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tasks.Domain.Commands.Developers;
-using Tasks.Domain.Utils.Bases;
+using Tasks.Domain._Utils.Bases;
+using Tasks.Domain.Developers;
 
-namespace Tasks.Domain.Commands.Projects
+namespace Tasks.Domain.Projects
 {
     public class Project : EntityBase
     {
@@ -20,7 +20,7 @@ namespace Tasks.Domain.Commands.Projects
             string description
         ) : base(id)
         {
-            this.SetData(
+            SetData(
                 title: title,
                 description: description
             );
@@ -29,7 +29,8 @@ namespace Tasks.Domain.Commands.Projects
         public void SetData(
             string title,
             string description
-        ) {
+        )
+        {
             this.Title = title;
             this.Description = description;
         }

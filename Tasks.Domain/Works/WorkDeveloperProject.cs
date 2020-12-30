@@ -1,15 +1,15 @@
 ﻿using System;
-using Tasks.Domain.Commands.Developers;
-using Tasks.Domain.Utils.Bases;
+using Tasks.Domain._Utils.Bases;
+using Tasks.Domain.Developers;
 
-namespace Tasks.Domain.Commands.Works
+namespace Tasks.Domain.Works
 {
     public class WorkDeveloperProject : EntityBase
     {
         public Guid DeveloperProjectId { get; private set; }
         public Guid WorkId { get; private set; }
 
-        public virtual DeveloperProject DeveloperProject { get; private set; } 
+        public virtual DeveloperProject DeveloperProject { get; private set; }
         public virtual Work Work { get; private set; }
 
         protected WorkDeveloperProject() : base() { }
@@ -18,7 +18,8 @@ namespace Tasks.Domain.Commands.Works
             Guid id,
             Guid developerProjectId,
             Guid workId
-        ) : base(id) { 
+        ) : base(id)
+        {
             DeveloperProjectId = developerProjectId;
             WorkId = workId;
         }

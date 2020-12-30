@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tasks.Domain.Commands.Developers;
+using Tasks.Domain.Developers;
 
 namespace Tasks.Ifrastructure.Mapping.Developers
 {

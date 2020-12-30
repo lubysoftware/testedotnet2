@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tasks.Domain.Utils.Bases;
+using Tasks.Domain._Utils.Bases;
 
-namespace Tasks.Domain.Commands.Works
+namespace Tasks.Domain.Works
 {
     public class Work : EntityBase
     {
@@ -15,13 +15,13 @@ namespace Tasks.Domain.Commands.Works
         protected Work() : base() { }
 
         public Work(
-            Guid id, 
+            Guid id,
             DateTime startTime,
             DateTime endTime,
             string comment
         ) : base(id)
         {
-            this.SetData(
+            SetData(
                 startTime: startTime,
                 endTime: endTime,
                 comment: comment
@@ -32,7 +32,8 @@ namespace Tasks.Domain.Commands.Works
             DateTime startTime,
             DateTime endTime,
             string comment
-        ) {
+        )
+        {
             StartTime = startTime;
             EndTime = endTime;
             Comment = comment;

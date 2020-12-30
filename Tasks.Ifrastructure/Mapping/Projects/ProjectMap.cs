@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tasks.Domain.Commands.Projects;
+using Tasks.Domain.Projects;
 
 namespace Tasks.Ifrastructure.Mapping
 {

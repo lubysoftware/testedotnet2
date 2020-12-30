@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tasks.Domain.Commands.Projects;
-using Tasks.Domain.Commands.Works;
-using Tasks.Domain.Utils.Bases;
+using Tasks.Domain._Utils.Bases;
+using Tasks.Domain.Projects;
+using Tasks.Domain.Works;
 
-namespace Tasks.Domain.Commands.Developers
+namespace Tasks.Domain.Developers
 {
     public class DeveloperProject : EntityBase
     {

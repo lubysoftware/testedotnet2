@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Tasks.Domain.Utils.Bases;
-using Tasks.Domain.Utils.Hash;
+using Tasks.Domain._Utils.Bases;
+using Tasks.Domain._Utils.Hash;
 
-namespace Tasks.Domain.Commands.Developers
+namespace Tasks.Domain.Developers
 {
     public class Developer : EntityBase
     {
@@ -19,13 +19,14 @@ namespace Tasks.Domain.Commands.Developers
 
         public Developer(
             Guid id,
-            string name, 
-            string login, 
-            string cpf, 
+            string name,
+            string login,
+            string cpf,
             string password
-        ) : base(id) {
+        ) : base(id)
+        {
             this.Password = MD5Crypto.Encode(TasksStartup.Secret + password);
-            this.SetData(
+            SetData(
                 name: name,
                 login: login,
                 cpf: cpf
@@ -36,7 +37,8 @@ namespace Tasks.Domain.Commands.Developers
             string name,
             string login,
             string cpf
-        ) {
+        )
+        {
             this.Name = name;
             this.Login = login;
             this.CPF = cpf;
