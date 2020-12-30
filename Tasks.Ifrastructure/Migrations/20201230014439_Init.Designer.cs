@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Tasks.Ifrastructure.Context;
+using Tasks.Ifrastructure.Contexts;
 
 namespace Tasks.Ifrastructure.Migrations
 {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
-namespace Tasks.Ifrastructure.Context
+namespace Tasks.Ifrastructure.Contexts
 {
     public class ContextFactory : IDesignTimeDbContextFactory<TasksContext>
     {

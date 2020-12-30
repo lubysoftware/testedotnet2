@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Tasks.Domain._Utils.Bases;
-using Tasks.Domain._Utils.Hash;
+using Tasks.Domain._Common.Crypto;
+using Tasks.Domain._Common.Entities;
 
-namespace Tasks.Domain.Developers
+namespace Tasks.Domain.Entities.Developers
 {
     public class Developer : EntityBase
     {

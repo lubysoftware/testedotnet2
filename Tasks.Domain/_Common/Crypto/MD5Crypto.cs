@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Tasks.Domain._Utils.Hash
+namespace Tasks.Domain._Common.Crypto
 {
     // font: https://stackoverflow.com/questions/3683274/encode-password-to-md5-using-keys
     public static class MD5Crypto

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tasks.Domain._Utils.Bases
+namespace Tasks.Domain._Common.Entities
 {
     public abstract class EntityBase
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tasks.Domain._Utils.Bases;
+using Tasks.Domain._Common.Entities;
 
-namespace Tasks.Domain.Works
+namespace Tasks.Domain.Entities.Works
 {
     public class Work : EntityBase
     {

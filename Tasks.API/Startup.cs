@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Tasks.Ifrastructure.Context;
+using Tasks.Ifrastructure.Contexts;
 using Tasks.Ifrastructure.Extensions;
 
 namespace Tasks.API

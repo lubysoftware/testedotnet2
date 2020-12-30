@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Tasks.Ifrastructure.Context
+namespace Tasks.Ifrastructure.Contexts
 {
     public class TasksContext : DbContext
     {
