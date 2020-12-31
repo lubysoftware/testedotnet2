@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tasks.Domain.Developers.Dtos
 {
-    public class CreateDeveloperDto
+    public class DeveloperCreateDto
     {
         public Guid Id { get; set; }
 

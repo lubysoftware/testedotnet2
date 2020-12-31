@@ -25,6 +25,7 @@ namespace Tasks.API
         {
             services.ConfigureDatabases(_configuration);
             services.ConfigureTokenJwt(_configuration);
+            services.ConfigureMocky(_configuration);
             services.ConfigureRepositories();
             services.ConfigureServices();
 
