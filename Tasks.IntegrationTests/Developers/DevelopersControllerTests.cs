@@ -12,9 +12,9 @@ using Xunit;
 
 namespace Tasks.IntegrationTests.Developers
 {
-    public class DeveloperControllerTests : BaseTest
+    public class DevelopersControllerTests : BaseTest
     {
-        public DeveloperControllerTests(TasksFixture fixture) : base(fixture, "/developers") { }
+        public DevelopersControllerTests(TasksFixture fixture) : base(fixture, "/developers") { }
 
         [Fact]
         public async void GetDeveloperByIdTest()
