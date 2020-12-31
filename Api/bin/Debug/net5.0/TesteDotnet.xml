@@ -53,6 +53,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.GetDeveloperWorkedHoursRank">
+            <summary>
+            Get rank of the 5 developers in a week
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:TesteDotnet.V1.Controllers.DevelopersController.PutDeveloper(System.Int32,TesteDotnet.V1.Dtos.DeveloperDto)">
             <summary>
             Update a developer

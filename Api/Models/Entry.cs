@@ -28,10 +28,11 @@ namespace Api.Models
         [Required]
         public int DeveloperId { get; set; }
 
-        public Developer Developer { get; set; }
-
         [Required]
         public int ProjectId { get; set; }
+
+        public Developer Developer { get; set; }
+ 
 
         public Project Project { get; set; }
     }

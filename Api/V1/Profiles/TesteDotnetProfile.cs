@@ -9,6 +9,8 @@ namespace TesteDotnet.V1.Profiles
         public TesteDotnetProfile()
         {
             CreateMap<Developer, DeveloperDto>();
+            CreateMap<Entry, EntryDto>();
+            CreateMap<Project, ProjectDto>();
         }
     }
 }

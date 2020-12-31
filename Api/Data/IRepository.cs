@@ -1,5 +1,6 @@
 ﻿using Api.Models;
 using System;
+using TesteDotnet.Models.ViewModels;
 
 namespace TesteDotnet.Data
 {
@@ -18,6 +19,9 @@ namespace TesteDotnet.Data
         Developer GetDeveloperById(int developerId);
 
         Developer GetDeveloperLogin(string email, string password);
+
+        WorkedHoursRank[] GetDeveloperRank();
+
         Project[] GetAllProjects();
 
         Project GetProjectById(int projectId);

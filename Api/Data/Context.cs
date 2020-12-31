@@ -2,6 +2,8 @@
 using Api.Models;
 using System.Collections.Generic;
 using System;
+using TesteDotnet.Models.ViewModels;
+using System.Data.Entity.Infrastructure;
 
 namespace TesteDotnet.Data
 {
@@ -12,18 +14,21 @@ namespace TesteDotnet.Data
         {
         }
 
-        public DbSet<Api.Models.Developer> Developer { get; set; }
+        public DbSet<Developer> Developer { get; set; }
 
-        public new DbSet<Api.Models.Entry> Entry { get; set; }
+        public new DbSet<Entry> Entry { get; set; }
 
-        public DbSet<Api.Models.Project> Project { get; set; }
+        public DbSet<Project> Project { get; set; }
 
-        public DbSet<Api.Models.DeveloperProject> DeveloperProject { get; set; }
+        public DbSet<DeveloperProject> DeveloperProject { get; set; }
+
+        public DbSet<WorkedHoursRank> WorkedHoursRank { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Developer>().HasKey(dev => new { dev.Id, dev.CPF });
             builder.Entity<DeveloperProject>().HasKey(devPrj => new { devPrj.DeveloperId, devPrj.ProjectId });
+            builder.Entity<WorkedHoursRank>().HasNoKey();
 
             builder.Entity<Developer>().HasData(new List<Developer>() { 
                 new Developer(1, "Leonardo", "12345678900", "abc@gmail.com", "1234"),

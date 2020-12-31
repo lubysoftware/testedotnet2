@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TesteDotnet.Helpers;
 using AutoMapper;
 using TesteDotnet.V1.Dtos;
+using TesteDotnet.Models.ViewModels;
 
 namespace TesteDotnet.V1.Controllers
 {
@@ -64,6 +65,25 @@ namespace TesteDotnet.V1.Controllers
             }
 
             return developer;
+        }
+
+        /// <summary>
+        /// Get rank of the 5 developers in a week
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("rank")]
+        public ActionResult<WorkedHoursRank> GetDeveloperWorkedHoursRank()
+        {
+            var workedHoursRank = _repo.GetDeveloperRank();
+
+            if (workedHoursRank == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(workedHoursRank);
         }
 
         /// <summary>

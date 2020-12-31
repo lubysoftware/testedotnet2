@@ -1,7 +1,9 @@
 ﻿using Api.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using TesteDotnet.Models.ViewModels;
 
 namespace TesteDotnet.Data
 {
@@ -127,6 +129,17 @@ namespace TesteDotnet.Data
                 .Where(devPrj => devPrj.DeveloperId == developerId && devPrj.ProjectId == projectId);
 
             return query.FirstOrDefault() != null;
+        }
+
+        public WorkedHoursRank[] GetDeveloperRank()
+        {
+            string stringQuery =
+                "SELECT TOP(5) [DeveloperId], SUM(DATEDIFF(HOUR, [InitialDate], [EndDate])) AS WorkedHours\n" +
+                "FROM [dbo].[Entry]\n" +
+                "WHERE [InitialDate] >= DATEADD(day, -7, GETDATE())\n" +
+                "GROUP BY [DeveloperId];";
+
+            return _context.WorkedHoursRank.FromSqlRaw(stringQuery).ToArray();
         }
     }
 }

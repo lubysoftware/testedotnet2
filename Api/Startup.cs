@@ -89,15 +89,32 @@ namespace TesteDotnet
                             Email = "leonardomd25@hotmail.com",
                         }
                     });
-
-                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                    {
-                        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                        Name = "Authorization",
-                        In = ParameterLocation.Header,
-                        Type = SecuritySchemeType.ApiKey
-                    });
                 };
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Please insert JWT token into field",
+                    Name = "Authorization",
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+                {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+                    }
+                });
 
                 var xmlCommentsFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
