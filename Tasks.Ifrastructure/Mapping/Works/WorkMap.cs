@@ -15,8 +15,9 @@ namespace Tasks.Ifrastructure.Mapping
             builder.Property(w => w.EndTime).IsRequired();
             builder.Property(w => w.Comment).HasMaxLength(300).IsRequired();
 
-            builder.HasIndex(w => w.StartTime);
-            builder.HasIndex(w => w.EndTime);
+            builder.HasOne(w => w.DeveloperProject)
+                .WithMany(dp => dp.Works)
+                .HasForeignKey(w => w.DeveloperProjectId);
         }
     }
 }

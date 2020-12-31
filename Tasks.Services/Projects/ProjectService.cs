@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Results;
+using Tasks.Domain.Developers.Dtos;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Projects.Dtos;
 using Tasks.Domain.Projects.Entities;
@@ -55,12 +56,19 @@ namespace Tasks.Service.Projects
             var existProject = await _projectRepository.ExistAsync(id);
             if (!existProject) return new Result<ProjectDetailDto>(Status.NotFund, $"Project with {nameof(id)} does not exist");
 
-            var project = await _projectRepository.GetByIdAsync(id);
+            var project = await _projectRepository.Query()
+                .Include(p => p.DeveloperProjects)
+                    .ThenInclude(dp => dp.Developer)
+                .SingleAsync(p => p.Id == id);
             var projectDetail = new ProjectDetailDto
             {
                 Id = project.Id,
                 Title = project.Title,
-                Description = project.Description
+                Description = project.Description,
+                Developers = project.DeveloperProjects.Select(dp => new DeveloperListDto { 
+                    Id = dp.DeveloperId,
+                    Name = dp.Developer.Name
+                })
             };
 
             return new Result<ProjectDetailDto>(projectDetail);

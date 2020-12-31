@@ -19,7 +19,8 @@ namespace Tasks.IntegrationTests.Projects
         [Fact]
         public async void GetProjectByIdTest()
         {
-            var project = EntitiesFactory.NewProject().Save();
+            var developer = EntitiesFactory.NewDeveloper().Save();
+            var project = EntitiesFactory.NewProject(developerIds: new [] { developer.Id }).Save();
 
             var (status, result) = await Request.GetAsync<ResultTest<ProjectDetailDto>>(new Uri($"{Uri}/{project.Id}"));
 
@@ -28,6 +29,10 @@ namespace Tasks.IntegrationTests.Projects
             Assert.Equal(project.Id, projectResult.Id);
             Assert.Equal(project.Title, projectResult.Title);
             Assert.Equal(project.Description, projectResult.Description);
+
+            var developerModel = projectResult.Developers.Single();
+            Assert.Equal(developer.Id, developerModel.Id);
+            Assert.Equal(developer.Name, developerModel.Name);
         }
 
         [Fact]
