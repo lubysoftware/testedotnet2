@@ -16,12 +16,13 @@ namespace Tasks.UnitTests._Common.Factories
         }
 
         public BuilderFactory<Developer> NewDeveloper(
+            string login = default,
             string password = default
         ) {
             var developer = new Developer(
                 id: Guid.Empty,
                 name: RandomHelper.RandomString(),
-                login: RandomHelper.RandomString(),
+                login: login ?? RandomHelper.RandomString(),
                 cpf: RandomHelper.RandomNumbers(11),
                 password: password ?? RandomHelper.RandomString()
             );

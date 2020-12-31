@@ -14,7 +14,7 @@ using Tasks.Domain.Developers.Services;
 using Tasks.Ifrastructure._Common.Application;
 using Tasks.Ifrastructure.Contexts;
 using Tasks.Ifrastructure.Extensions;
-using Tasks.IntegrationTests._Common;
+using Tasks.IntegrationTests._Common.Tools;
 using Tasks.UnitTests._Common.Factories;
 
 namespace Tasks.IntegrationTests
@@ -44,7 +44,7 @@ namespace Tasks.IntegrationTests
             Server = new TestServer(webHostBuilder);
             _services = Server.Services;
             Client = Server.CreateClient();
-            Client.BaseAddress = new Uri("https://localhost:44349/api");
+            Client.BaseAddress = new Uri("https://localhost:44325/api");
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(GenerateToken());
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

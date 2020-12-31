@@ -14,7 +14,7 @@ namespace Tasks.UnitTests.Developers.Entities
             var password = "321654";
             var expectedHash = MD5Crypto.Encode(password);
 
-            var developer = EntitiesFactory.NewDeveloper(password).Get();
+            var developer = EntitiesFactory.NewDeveloper(password: password).Get();
 
             Assert.Equal(expectedHash, developer.PasswordHash);
             Assert.NotEqual(password, developer.PasswordHash);
@@ -25,7 +25,7 @@ namespace Tasks.UnitTests.Developers.Entities
         [InlineData("123", "679875")]
         public void ValidatePasswordTest(string source, string target)
         {
-            var developer = EntitiesFactory.NewDeveloper(source).Get();
+            var developer = EntitiesFactory.NewDeveloper(password: source).Get();
             var expectedValid = source.Equals(target);
 
             var valid = developer.ValidatePassword(target);

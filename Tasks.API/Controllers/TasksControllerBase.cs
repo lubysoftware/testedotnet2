@@ -6,6 +6,7 @@ namespace Tasks.API.Controllers
 {
     [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class TasksControllerBase : ControllerBase
     {
         protected Result GetResult(Result result)

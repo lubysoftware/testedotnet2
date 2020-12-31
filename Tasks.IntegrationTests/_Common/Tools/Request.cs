@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tasks.Domain._Common.Enums;
 
-namespace Tasks.IntegrationTests._Common
+namespace Tasks.IntegrationTests._Common.Tools
 {
     public class Request
     {

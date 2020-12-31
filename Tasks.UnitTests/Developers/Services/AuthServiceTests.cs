@@ -29,7 +29,7 @@ namespace Tasks.UnitTests.Developers.Services
         public async void LoginWithSuccessTest()
         {
             var password = "senha";
-            var developer = EntitiesFactory.NewDeveloper(password).Get();
+            var developer = EntitiesFactory.NewDeveloper(password: password).Get();
             var loginDto = new LoginDto { Login = developer.Login, Password = password };
             _developerRepository.Setup(d => d.ExistByLoginAsync(developer.Login)).ReturnsAsync(true);
             _developerRepository.Setup(d => d.FindByLoginAsync(developer.Login)).ReturnsAsync(developer);
@@ -54,7 +54,7 @@ namespace Tasks.UnitTests.Developers.Services
         [InlineData("32156")]
         public async void LoginWithRejectTest(string password)
         {
-            var developer = EntitiesFactory.NewDeveloper("senha").Get();
+            var developer = EntitiesFactory.NewDeveloper(password: "senha").Get();
             var loginDto = new LoginDto { Login = developer.Login, Password = password };
             _developerRepository.Setup(d => d.ExistByLoginAsync(developer.Login)).ReturnsAsync(true);
             _developerRepository.Setup(d => d.FindByLoginAsync(developer.Login)).ReturnsAsync(developer);
