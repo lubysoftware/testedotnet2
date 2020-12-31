@@ -7,9 +7,12 @@ using Tasks.Domain._Common.Security;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.Developers.Services;
 using Tasks.Domain.External.Services;
+using Tasks.Domain.Projects.Repositories;
+using Tasks.Domain.Projects.Services;
 using Tasks.Ifrastructure._Common.Repositories;
 using Tasks.Ifrastructure.Contexts;
 using Tasks.Ifrastructure.Repositories.Developers;
+using Tasks.Ifrastructure.Repositories.Projects;
 
 namespace Tasks.Ifrastructure.Extensions
 {
@@ -37,11 +40,13 @@ namespace Tasks.Ifrastructure.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IMockyService, MockyService>();
             services.AddScoped<IDeveloperService, DeveloperService>();
+            services.AddScoped<IProjectService, ProjectService>();
         }   
         public static void ConfigureRepositories(this IServiceCollection services) 
         {
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
         }
     }
 }
