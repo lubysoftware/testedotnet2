@@ -21,6 +21,8 @@ namespace Tasks.API
         {
             services.ConfigureDatabases(_configuration);
             services.ConfigureTokenJwt(_configuration);
+            services.ConfigureRepositories();
+            services.ConfigureServices();
 
             services.AddControllers();
         }

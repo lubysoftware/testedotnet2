@@ -6,6 +6,6 @@ namespace Tasks.Domain.Developers.Repositories
 {
     public interface IDeveloperRepository : IRepository<Developer> {
         Task<bool> ExistByLoginAsync(string login);
-        Task<Developer> FindByEmailAsync(string login);
+        Task<Developer> FindByLoginAsync(string login);
     }
 }

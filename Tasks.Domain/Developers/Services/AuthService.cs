@@ -31,7 +31,7 @@ namespace Tasks.Domain.Developers.Services
             var defaultReject = new Result<TokenDto>(Status.Unauthorized, "Login or Password is not valid");
             var exists = await _developerRepository.ExistByLoginAsync(loginDto.Login);
             if (!exists) return defaultReject;
-            var developer = await _developerRepository.FindByEmailAsync(loginDto.Login);
+            var developer = await _developerRepository.FindByLoginAsync(loginDto.Login);
             if (!developer.ValidatePassword(loginDto.Password)) return defaultReject;
             return new Result<TokenDto>(await GenerateJwtTokenAsync(developer));
         }
@@ -65,7 +65,7 @@ namespace Tasks.Domain.Developers.Services
             {
                 Id = developer.Id,
                 Login = developer.Login,
-                Token = $"Bearer {handler.WriteToken(securityToken)}",
+                Token = $"Bearer{handler.WriteToken(securityToken)}",
                 CreatedAt = created,
                 ExpiresAt = expires
             };
