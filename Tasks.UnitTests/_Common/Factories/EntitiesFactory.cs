@@ -1,5 +1,6 @@
 ﻿using System;
 using Tasks.Domain.Developers.Entities;
+using Tasks.Domain.Projects.Entities;
 using Tasks.Ifrastructure.Contexts;
 using Tasks.UnitTests._Common.Builders;
 using Tasks.UnitTests._Common.Random;
@@ -22,7 +23,7 @@ namespace Tasks.UnitTests._Common.Factories
             string password = default
         ) {
             var developer = new Developer(
-                id: Guid.Empty,
+                id: id == default ? Guid.Empty : id,
                 name: name ?? RandomHelper.RandomString(),
                 login: login ?? RandomHelper.RandomString(),
                 cpf: RandomHelper.RandomNumbers(11),
@@ -30,6 +31,20 @@ namespace Tasks.UnitTests._Common.Factories
             );
 
             return new BuilderFactory<Developer>(developer, _context);
+        }
+
+        public BuilderFactory<Project> NewProject(
+            Guid id = default,
+            string title = default
+        )
+        {
+            var project = new Project(
+                id: id == default ? Guid.Empty : id,
+                title: title ?? RandomHelper.RandomString(),
+                description: RandomHelper.RandomString(450)
+            );
+
+            return new BuilderFactory<Project>(project, _context);
         }
     }
 }
