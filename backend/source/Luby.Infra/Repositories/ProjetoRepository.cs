@@ -5,14 +5,14 @@ using Luby.Infra.Context;
 
 namespace Luby.Infra.Repositories
 {
-    public class ProjetoRepository : Repository<Luby.Domain.Models.Projeto>
+    public class ProjetoRepository : Repository<Luby.Infra.Context.Projeto>
     {
 
         public ProjetoRepository(LubyContext context) : base(context)
         {}
-        public override Luby.Domain.Models.Projeto GetById(int id)
+        public override Luby.Infra.Context.Projeto GetById(int id)
         {
-            var query = _context.Set<Luby.Domain.Models.Projeto>().Where(e => e.Id == id);
+            var query = _context.Set<Luby.Infra.Context.Projeto>().Where(e => e.Id == id);
 
             if (query.Any())
             {
@@ -21,10 +21,16 @@ namespace Luby.Infra.Repositories
             return null;
         }
 
-        public override IEnumerable<Luby.Domain.Models.Projeto> GetAll()
+        public override IEnumerable<Luby.Infra.Context.Projeto> GetAll()
         {
-            var query = _context.Set<Luby.Domain.Models.Projeto>();
-            return query.Any() ? query.ToList() : new List<Luby.Domain.Models.Projeto>();
+            var query = _context.Set<Luby.Infra.Context.Projeto>();
+            return query.Any() ? query.ToList() : new List<Luby.Infra.Context.Projeto>();
+        }
+
+         public override int Save(Luby.Infra.Context.Projeto projeto ){
+            var query = _context.Projetos.Add(projeto);
+            return _context.SaveChanges();
+             
         }
     }
 }

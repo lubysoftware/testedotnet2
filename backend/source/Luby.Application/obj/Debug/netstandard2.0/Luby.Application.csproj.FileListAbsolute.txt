@@ -1,0 +1,9 @@
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netstandard2.0\Luby.Application.deps.json
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netstandard2.0\Luby.Application.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netstandard2.0\Luby.Application.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netstandard2.0\Luby.Application.csprojAssemblyReference.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netstandard2.0\Luby.Application.AssemblyInfoInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netstandard2.0\Luby.Application.AssemblyInfo.cs
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netstandard2.0\Luby.Application.csproj.CoreCompileInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netstandard2.0\Luby.Application.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netstandard2.0\Luby.Application.pdb

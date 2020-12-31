@@ -6,7 +6,7 @@ using Luby.Infra.Context;
 
 namespace Luby.Infra.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Luby.Infra.Context.BaseEntity
     {
         protected readonly LubyContext _context;
 
@@ -17,7 +17,7 @@ namespace Luby.Infra.Repositories
 
         public virtual TEntity GetById(int id)
         {
-            var query = _context.Set<TEntity>().Where(e=>e.Id == id);
+            var query = _context.Set<TEntity>().Where(e => e.Id == id);
             if (query.Any())
             {
                 return query.FirstOrDefault();
@@ -25,8 +25,9 @@ namespace Luby.Infra.Repositories
             return null;
         }
 
-        public virtual IEnumerable<TEntity>GetAll(){
-            var query =_context.Set<TEntity>();
+        public virtual IEnumerable<TEntity> GetAll()
+        {
+            var query = _context.Set<TEntity>();
 
             if (query.Any())
             {
@@ -36,7 +37,18 @@ namespace Luby.Infra.Repositories
             return new List<TEntity>();
         }
 
-        public virtual void Save(TEntity entity){
-            _context.Set<TEntity>().Add(entity);}
+        public virtual int Save(TEntity entity)
+        {
+            _context.Set<TEntity>().Add(entity);
+            return _context.SaveChanges();
         }
+
+        public virtual int Delete(TEntity entity)
+        {
+            _context.Set<TEntity>().Remove(entity);
+            return _context.SaveChanges();
+        }
+
+
+    }
 }

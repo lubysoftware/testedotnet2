@@ -9,6 +9,12 @@ dotnet sln add source/Luby.Application/Luby.Application.csproj
 
 dotnet add .\Luby.infra\Luby.infra.csproj reference .\Luby.domain\Luby.domain.csproj
 
+dotnet add .\Luby.web\Luby.web.csproj reference .\Luby.Domain\Luby.Domain.csproj
+dotnet add .\Luby.web\Luby.web.csproj reference .\Luby.Application\Luby.Application.csproj
+
+dotnet add .\Luby.Application\Luby.Application.csproj reference .\Luby.Domain\Luby.Domain.csproj
+dotnet add .\Luby.Application\Luby.Application.csproj reference .\Luby.Infra\Luby.Infra.csproj
+
 ### FONTES
 - https://github.com/rafael-act/testedotnet2
 - http://www.macoratti.net/20/07/aspnc_ucddd1.htm
@@ -17,6 +23,7 @@ dotnet add .\Luby.infra\Luby.infra.csproj reference .\Luby.domain\Luby.domain.cs
 - https://ajlopez.wordpress.com/2008/09/12/layered-architecture-in-domain-driven-design/
 - https://imasters.com.br/dotnet/criando-uma-webapi-utilizando-net-core-e-vs-code
 - https://www.youtube.com/watch?v=lrYElKHrGdY
+- https://www.youtube.com/watch?v=but7jqjopKM
 
 ### nuget
 - https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/5.0.0

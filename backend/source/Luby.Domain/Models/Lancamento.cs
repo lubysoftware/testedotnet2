@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Luby.Domain.Models
 {
-    public class Lancamento : BaseEntity
+    public class Lancamento //: BaseEntity
     {
         public Lancamento(string nome, string cpf, string cargo,
         string login, string senha,

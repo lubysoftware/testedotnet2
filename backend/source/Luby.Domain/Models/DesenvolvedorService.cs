@@ -11,17 +11,47 @@ namespace Luby.Domain.Models
             _desenvolvedorRepository = desenvolvedorRepository;
         }
 
-        public void Save(int id, string nome, string cargo, string email, string login, string senha)
+        public bool Save(int id, string nome, string cpf,string cargo, string email, string login, string senha)
         {
             var desenvolvedor = _desenvolvedorRepository.GetById(id);
 
             if (desenvolvedor == null)
             {
-                desenvolvedor = new Desenvolvedor(nome, cargo, email, login, senha);
-                _desenvolvedorRepository.Save(desenvolvedor);
+                desenvolvedor = new Desenvolvedor(nome,cpf, cargo, email, login, senha);
+                try
+                {
+                    _desenvolvedorRepository.Save(desenvolvedor);
+                    return true;
+                }
+                catch (System.Exception)
+                {
+                    return false;
+                }
+                
             }
             else
-                desenvolvedor.Update(nome, cargo, email, login, senha);
+                return true;//desenvolvedor.Update(nome, cpf,cargo, email, login, senha);
         }
+
+        public bool Delete (int id){
+              var desenvolvedor = _desenvolvedorRepository.GetById(id);
+
+            if (desenvolvedor != null)
+            {
+                try
+                {
+                 _desenvolvedorRepository.Delete(desenvolvedor);
+                 return true;   
+                }
+                catch (System.Exception)
+                {
+                    return false;
+                }
+                 
+            }
+            else
+                return false;
+        }
+            
     }
 }

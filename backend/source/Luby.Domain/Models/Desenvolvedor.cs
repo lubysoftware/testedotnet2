@@ -3,25 +3,27 @@ namespace Luby.Domain.Models
 {
     public class Desenvolvedor : BaseEntity
     {
-        public Desenvolvedor(string nome, string cargo,string email, string login, string senha)
+        public Desenvolvedor(string nome, string cpf,string cargo,string email, string login, string senha)
         {
-            this.cargo = cargo;
-            this.login = login;
-            this.nome = nome;
-            this.senha = senha;
-            this.email=email;
-            ValidaDesenvolvedor(cargo, login, nome, senha,email);
+            this.Cargo = cargo;
+            this.Cpf = cpf;
+            this.Login = login;
+            this.Nome = nome;
+            this.Senha = senha;
+            this.Email=email;
+            ValidaDesenvolvedor(cpf,cargo, login, nome, senha,email);
         }
 
-        public string nome { get; set; }
-        public string cargo { get; set; }
+        public string Nome { get; set; }
+        public string Cpf { get; set; }
+        public string Cargo { get; set; }
 
-        public string email { get; set; }
+        public string Email { get; set; }
 
-        public string login { get; set; }
-        public string senha { get; set; }
+        public string Login { get; set; }
+        public string Senha { get; set; }
 
-        public void Update(string nome, string cargo, string email, string login, string senha)
+        public void Update(string nome, string cpf,string cargo, string email, string login, string senha)
         {
             if (string.IsNullOrEmpty(nome))
             {
@@ -30,6 +32,10 @@ namespace Luby.Domain.Models
             if (string.IsNullOrEmpty(cargo))
             {
                 throw new InvalidOperationException("O cargo é inválido ou vazio");
+            }
+            if (string.IsNullOrEmpty(cpf))
+            {
+                throw new InvalidOperationException("O cpf é inválido ou vazio");
             }
             if (string.IsNullOrEmpty(login))
             {
@@ -45,13 +51,17 @@ namespace Luby.Domain.Models
             }
         }
 
-        private void ValidaDesenvolvedor(string cargo,string login,string nome, string senha,string email)
+        private void ValidaDesenvolvedor(string cpf,string cargo,string login,string nome, string senha,string email)
         {
             if (string.IsNullOrEmpty(nome))
             {
                 throw new InvalidOperationException("O nome é inválido ou vazio");
             }
-            if (string.IsNullOrEmpty(cargo))
+            if (string.IsNullOrEmpty(cpf))
+            {
+                throw new InvalidOperationException("O cpf é inválido ou vazio");
+            }
+             if (string.IsNullOrEmpty(cargo))
             {
                 throw new InvalidOperationException("O cargo é inválido ou vazio");
             }

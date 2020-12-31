@@ -256,14 +256,14 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
-      "Luby.domain/1.0.0": {
+      "Luby.Domain/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETCoreApp,Version=v3.1",
         "compile": {
-          "bin/placeholder/Luby.domain.dll": {}
+          "bin/placeholder/Luby.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Luby.domain.dll": {}
+          "bin/placeholder/Luby.Domain.dll": {}
         }
       }
     }
@@ -827,15 +827,15 @@
         "version.txt"
       ]
     },
-    "Luby.domain/1.0.0": {
+    "Luby.Domain/1.0.0": {
       "type": "project",
-      "path": "../Luby.domain/Luby.domain.csproj",
-      "msbuildProject": "../Luby.domain/Luby.domain.csproj"
+      "path": "../Luby.Domain/Luby.Domain.csproj",
+      "msbuildProject": "../Luby.Domain/Luby.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Luby.domain >= 1.0.0",
+      "Luby.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.0",
       "Pomelo.EntityFrameworkCore.MySql >= 5.0.0-alpha.2"
@@ -848,11 +848,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\luby.infra\\Luby.Infra.csproj",
+      "projectUniqueName": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Infra\\Luby.Infra.csproj",
       "projectName": "Luby.Infra",
-      "projectPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\luby.infra\\Luby.Infra.csproj",
+      "projectPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Infra\\Luby.Infra.csproj",
       "packagesPath": "C:\\Users\\Rafael\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\luby.infra\\obj\\",
+      "outputPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Infra\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -869,8 +869,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\Luby.domain.csproj": {
-              "projectPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\Luby.domain.csproj"
+            "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\Luby.Domain.csproj": {
+              "projectPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\Luby.Domain.csproj"
             }
           }
         }

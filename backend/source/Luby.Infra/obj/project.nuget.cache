@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kGHe6YVCg2ep/fbUPSEofG5CbF8NFfWkZ3wdDyIYeQbPWmvt5uYe8aUqGn06QZ6b8N2KnInOOq3AIRHfo8qiqg==",
+  "dgSpecHash": "l8S0YewuJ7yApN/pKqbAJEEXUEfU5fM2H7KC3++/XxiDDDzX76ZjolC7Ifp/Af5KNGloKpB/PWzLUa0tC7Hm2w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\luby.infra\\Luby.Infra.csproj",
+  "projectFilePath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Infra\\Luby.Infra.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafael\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Rafael\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

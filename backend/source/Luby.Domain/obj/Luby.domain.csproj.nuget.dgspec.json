@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\Luby.domain.csproj": {}
+    "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\Luby.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\Luby.domain.csproj": {
+    "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\Luby.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\Luby.domain.csproj",
-        "projectName": "Luby.domain",
-        "projectPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\Luby.domain.csproj",
+        "projectUniqueName": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\Luby.Domain.csproj",
+        "projectName": "Luby.Domain",
+        "projectPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\Luby.Domain.csproj",
         "packagesPath": "C:\\Users\\Rafael\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.domain\\obj\\",
+        "outputPath": "C:\\Users\\Rafael\\Desktop\\testeluby\\testedotnet2\\backend\\source\\Luby.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -20,13 +20,13 @@
           "C:\\Users\\Rafael\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netstandard2.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netstandard2.0": {
+          "netcoreapp3.1": {
             "projectReferences": {}
           }
         },
@@ -37,15 +37,7 @@
         }
       },
       "frameworks": {
-        "netstandard2.0": {
-          "dependencies": {
-            "NETStandard.Library": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
-            }
-          },
+        "netcoreapp3.1": {
           "imports": [
             "net461",
             "net462",
@@ -56,6 +48,11 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
         }
       }
