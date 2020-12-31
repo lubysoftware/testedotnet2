@@ -8,9 +8,10 @@ using Tasks.Domain._Common.Results;
 using Tasks.Domain.Developers.Dtos;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
+using Tasks.Domain.Developers.Services;
 using Tasks.Domain.External.Services;
 
-namespace Tasks.Domain.Developers.Services
+namespace Tasks.Service.Developers
 {
     public class DeveloperService : IDeveloperService
     {
@@ -19,7 +20,8 @@ namespace Tasks.Domain.Developers.Services
         public DeveloperService(
             IDeveloperRepository developerRepository,
             IMockyService mockyService
-        ) { 
+        )
+        {
             _developerRepository = developerRepository;
             _mockyService = mockyService;
         }
@@ -60,7 +62,8 @@ namespace Tasks.Domain.Developers.Services
             if (!existDeveloper) return new Result<DeveloperDetailDto>(Status.NotFund, $"Developer with {nameof(id)} does not exist");
 
             var developer = await _developerRepository.GetByIdAsync(id);
-            var developerDetail = new DeveloperDetailDto { 
+            var developerDetail = new DeveloperDetailDto
+            {
                 Id = developer.Id,
                 CPF = developer.CPF,
                 Login = developer.Login,
@@ -73,9 +76,10 @@ namespace Tasks.Domain.Developers.Services
         public async Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination)
         {
             var developersList = _developerRepository.Query()
-                .Skip(pagination.Offset)
+                .Skip(pagination.CalculateOffset())
                 .Take(pagination.Limit)
-                .Select(d => new DeveloperListDto { 
+                .Select(d => new DeveloperListDto
+                {
                     Id = d.Id,
                     Name = d.Name
                 })

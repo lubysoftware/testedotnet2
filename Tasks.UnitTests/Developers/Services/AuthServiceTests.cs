@@ -7,7 +7,7 @@ using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Security;
 using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.Domain.Developers.Repositories;
-using Tasks.Domain.Developers.Services;
+using Tasks.Service.Developers;
 using Tasks.UnitTests._Common;
 using Tasks.UnitTests._Common.Random;
 using Xunit;

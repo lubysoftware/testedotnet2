@@ -48,41 +48,53 @@ namespace Tasks.IntegrationTests.Projects
         [Fact]
         public async void CreateProjectTest()
         {
+            var developer = EntitiesFactory.NewDeveloper().Save();
             var projectDto = new ProjectCreateDto
             {
                 Id = Guid.NewGuid(),
                 Title = RandomHelper.RandomString(),
-                Description = RandomHelper.RandomString(490)
+                Description = RandomHelper.RandomString(490),
+                DeveloperIds = new [] { developer.Id } 
             };
 
             var (status, result) = await Request.PostAsync<ResultTest>(Uri, projectDto);
 
-            var projectDb = await DbContext.Projects.FindAsync(projectDto.Id);
+            var projectDb = await DbContext.Projects
+                .Include(p => p.DeveloperProjects)
+                .SingleAsync(p => p.Id == projectDto.Id);
             Assert.Equal(Status.Success, status);
             Assert.True(result.Success);
             Assert.Equal(projectDto.Title, projectDb.Title);
             Assert.Equal(projectDto.Description, projectDb.Description);
+            Assert.Single(projectDb.DeveloperProjects);
+            Assert.Contains(projectDb.DeveloperProjects, d => d.DeveloperId == developer.Id);
         }
 
         [Fact]
         public async void UpdateProjectTest()
         {
+            var developer = EntitiesFactory.NewDeveloper().Save();
             var project = EntitiesFactory.NewProject().Save();
             var projectDto = new ProjectUpdateDto
             {
                 Id = project.Id,
                 Title = RandomHelper.RandomString(),
-                Description = RandomHelper.RandomString(490)
+                Description = RandomHelper.RandomString(490),
+                DeveloperIds = new[] { developer.Id }
             };
 
             var (status, result) = await Request.PutAsync<ResultTest>(new Uri($"{Uri}/{project.Id}"), projectDto);
 
-            var projectDb = await DbContext.Projects.FindAsync(projectDto.Id);
+            var projectDb = await DbContext.Projects
+                .Include(p => p.DeveloperProjects)
+                .SingleAsync(p => p.Id == projectDto.Id);
             await DbContext.Entry(projectDb).ReloadAsync();
             Assert.Equal(Status.Success, status);
             Assert.True(result.Success);
             Assert.Equal(projectDto.Title, projectDb.Title);
             Assert.Equal(projectDto.Description, projectDb.Description);
+            Assert.Single(projectDb.DeveloperProjects);
+            Assert.Contains(projectDb.DeveloperProjects, d => d.DeveloperId == developer.Id);
         }
 
         [Fact]

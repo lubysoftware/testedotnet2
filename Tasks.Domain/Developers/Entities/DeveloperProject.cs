@@ -21,8 +21,9 @@ namespace Tasks.Domain.Developers.Entities
             Guid id,
             Guid developerId,
             Guid projectId
-        ) : base(id)
+        ) : base()
         {
+            Id = id;
             DeveloperId = developerId;
             ProjectId = projectId;
         }

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tasks.API\Tasks.API.csproj" />
-    <ProjectReference Include="..\Tasks.Domain\Tasks.Domain.csproj" />
     <ProjectReference Include="..\Tasks.UnitTests\Tasks.UnitTests.csproj" />
   </ItemGroup>
 

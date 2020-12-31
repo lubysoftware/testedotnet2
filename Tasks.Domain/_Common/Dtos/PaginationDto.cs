@@ -10,6 +10,6 @@ namespace Tasks.Domain._Common.Dtos
         [Range(1, 100)]
         public int Limit { get; set; }
 
-        internal int Offset => (Page - 1) * Limit;
+        public int CalculateOffset() => (Page - 1) * Limit;
     }
 }

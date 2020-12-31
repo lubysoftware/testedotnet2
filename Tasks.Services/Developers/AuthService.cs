@@ -10,8 +10,9 @@ using Tasks.Domain._Common.Security;
 using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
+using Tasks.Domain.Developers.Services;
 
-namespace Tasks.Domain.Developers.Services
+namespace Tasks.Service.Developers
 {
     public class AuthService : IAuthService
     {
@@ -21,7 +22,8 @@ namespace Tasks.Domain.Developers.Services
         public AuthService(
             IDeveloperRepository developerRepository,
             TokenConfiguration tokenConfiguration
-        ) {
+        )
+        {
             _developerRepository = developerRepository;
             _tokenConfiguration = tokenConfiguration;
         }

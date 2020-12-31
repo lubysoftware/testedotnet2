@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Tasks.Domain.Projects.Dtos
@@ -13,5 +14,7 @@ namespace Tasks.Domain.Projects.Dtos
 
         [MaxLength(500)]
         public string Description { get; set; }
+
+        public IEnumerable<Guid> DeveloperIds { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using Tasks.Domain;
 using Tasks.Ifrastructure.Contexts;
 
 namespace Tasks.UnitTests
@@ -16,8 +15,6 @@ namespace Tasks.UnitTests
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors();
             DbContext = new TasksContext(builder.Options);
-
-            TasksStartup.Configure();
         }
 
         public void Dispose()

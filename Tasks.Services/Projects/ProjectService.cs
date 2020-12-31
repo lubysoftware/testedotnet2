@@ -1,15 +1,18 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Results;
+using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Projects.Dtos;
 using Tasks.Domain.Projects.Entities;
 using Tasks.Domain.Projects.Repositories;
+using Tasks.Domain.Projects.Services;
 
-namespace Tasks.Domain.Projects.Services
+namespace Tasks.Service.Projects
 {
     public class ProjectService : IProjectService
     {
@@ -25,10 +28,12 @@ namespace Tasks.Domain.Projects.Services
             var existTitle = await _projectRepository.ExistByTitle(projectDto.Title);
             if (existTitle) return new Result(Status.Conflict, $"Project with {nameof(projectDto.Title)} already exist");
 
+            var projectId = projectDto.Id == Guid.Empty ? Guid.NewGuid() : projectDto.Id;
             var project = new Project(
-                id: projectDto.Id,
+                id: projectId,
                 title: projectDto.Title,
-                description: projectDto.Description
+                description: projectDto.Description,
+                developerProjects: GetDeveloperProjects(projectDto.DeveloperIds, projectId)
             );
 
             await _projectRepository.CreateAsync(project);
@@ -64,7 +69,7 @@ namespace Tasks.Domain.Projects.Services
         public async Task<IEnumerable<ProjectListDto>> ListProjectsAsync(PaginationDto pagination)
         {
             var projectsList = _projectRepository.Query()
-                .Skip(pagination.Offset)
+                .Skip(pagination.CalculateOffset())
                 .Take(pagination.Limit)
                 .Select(d => new ProjectListDto
                 {
@@ -83,14 +88,34 @@ namespace Tasks.Domain.Projects.Services
             var existTitle = await _projectRepository.ExistByTitle(projectDto.Title, projectDto.Id);
             if (existTitle) return new Result(Status.Conflict, $"Project with {nameof(projectDto.Title)} already exist");
 
-            var project = await _projectRepository.GetByIdAsync(projectDto.Id);
+            var project = await _projectRepository.Query()
+                .Include(p => p.DeveloperProjects)
+                .FirstOrDefaultAsync(p => p.Id == projectDto.Id);
             project.SetData(
                 title: projectDto.Title,
-                description: projectDto.Description
+                description: projectDto.Description,
+                developerProjects: GetDeveloperProjects(projectDto.DeveloperIds, project.Id)
             );
 
             await _projectRepository.UpdateAsync(project);
             return new Result();
+        }
+
+        private IEnumerable<DeveloperProject> GetDeveloperProjects(IEnumerable<Guid> developerIds, Guid projectId)
+        {
+            var develperProjects = new List<DeveloperProject>();
+            if (developerIds == null || !developerIds.Any()) return develperProjects;
+            foreach (var developerId in developerIds)
+            {
+                var developerProject = new DeveloperProject(
+                    id: default,
+                    developerId: developerId,
+                    projectId: projectId
+                );
+
+                develperProjects.Add(developerProject);
+            }
+            return develperProjects;
         }
     }
 }

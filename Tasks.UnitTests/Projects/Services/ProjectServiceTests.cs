@@ -1,12 +1,13 @@
 ﻿using Moq;
 using System;
+using MockQueryable.Moq;
 using System.Collections.Generic;
 using System.Linq;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain.Projects.Dtos;
 using Tasks.Domain.Projects.Entities;
 using Tasks.Domain.Projects.Repositories;
-using Tasks.Domain.Projects.Services;
+using Tasks.Service.Projects;
 using Tasks.UnitTests._Common;
 using Tasks.UnitTests._Common.Random;
 using Xunit;
@@ -76,10 +77,11 @@ namespace Tasks.UnitTests.Projects.Services
                 Description = RandomHelper.RandomString(350)
             };
             var project = EntitiesFactory.NewProject(id: projectDto.Id).Get();
+            var projects = new[] { project }.AsQueryable().BuildMock();
             _projectRepository.Setup(d => d.ExistAsync(projectDto.Id))
                 .ReturnsAsync(expectedStatus != Status.NotFund);
-            _projectRepository.Setup(d => d.GetByIdAsync(projectDto.Id))
-                .ReturnsAsync(project);
+            _projectRepository.Setup(d => d.Query())
+                .Returns(projects.Object);
             _projectRepository.Setup(d => d.ExistByTitle(projectDto.Title, projectDto.Id))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
 

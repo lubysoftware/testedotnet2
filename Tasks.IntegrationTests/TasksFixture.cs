@@ -10,10 +10,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using Tasks.API;
+using Tasks.CrossCutting;
 using Tasks.Domain.Developers.Services;
 using Tasks.Ifrastructure._Common.Application;
 using Tasks.Ifrastructure.Contexts;
-using Tasks.Ifrastructure.Extensions;
 using Tasks.IntegrationTests._Common.Tools;
 using Tasks.UnitTests._Common.Factories;
 
@@ -66,7 +66,7 @@ namespace Tasks.IntegrationTests
                 }
             };
 
-            services.ConfigureDatabases(_configuration);
+            services.AddDatabases(_configuration);
 
             var scope = services
                 .BuildServiceProvider()

@@ -9,11 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Linq;
 using System.Text;
+using Tasks.CrossCutting;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Results;
 using Tasks.Domain._Common.Security;
 using Tasks.Ifrastructure.Contexts;
-using Tasks.Ifrastructure.Extensions;
 
 namespace Tasks.API
 {
@@ -28,11 +28,12 @@ namespace Tasks.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureDatabases(_configuration);
+            services.AddServices();
+            services.AddRepositories();
+            services.AddDatabases(_configuration);
+
             services.ConfigureTokenJwt(_configuration);
             services.ConfigureMocky(_configuration);
-            services.ConfigureRepositories();
-            services.ConfigureServices();
 
             services.AddMvcCore()
                 .AddJsonOptions(options =>
@@ -82,8 +83,6 @@ namespace Tasks.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.ConfigureApplication(_configuration);
 
             app.MigrateDatabase<TasksContext>();
 
