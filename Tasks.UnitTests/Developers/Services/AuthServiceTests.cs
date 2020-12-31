@@ -1,5 +1,7 @@
 ﻿using Moq;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using Tasks.Domain._Common.Security;
 using Tasks.Domain.Developers.Dtos;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.Developers.Services;
@@ -11,9 +13,15 @@ namespace Tasks.UnitTests.Developers.Services
     public class AuthServiceTests : BaseTest
     {
         private readonly Mock<IDeveloperRepository> _developerRepository;
+        private readonly TokenConfiguration _tokenConfiguration;
 
         public AuthServiceTests(TasksFixture fixture) : base(fixture) {
             _developerRepository = new Mock<IDeveloperRepository>();
+            _tokenConfiguration = new TokenConfiguration { 
+                Issuer = "Issuer",
+                Signature = "uY76$657gD7D0YrsF%d8g7",
+                Seconds = 60
+            };
         }
 
         [Fact]
@@ -25,15 +33,16 @@ namespace Tasks.UnitTests.Developers.Services
             _developerRepository.Setup(d => d.ExistByLoginAsync(developer.Login)).ReturnsAsync(true);
             _developerRepository.Setup(d => d.FindByEmailAsync(developer.Login)).ReturnsAsync(developer);
 
-            var service = new AuthService(_developerRepository.Object);
+            var service = new AuthService(_developerRepository.Object, _tokenConfiguration);
             var result = await service.LoginAsync(loginDto);
 
             var data = result.Data;
-            var jwt = new JwtSecurityToken(data.Token);
             Assert.True(result.Success);
-            Assert.Equal(developer.Id, data.DeveloperId);
+            Assert.Equal(developer.Id, data.Id);
             Assert.Equal(developer.Login, data.Login);
             Assert.NotEmpty(data.Token);
+            Assert.StartsWith("Bearer ", data.Token);
+            var jwt = new JwtSecurityToken(data.Token.Split(' ').Last());
             Assert.NotEmpty(jwt.Claims);
         }
 
@@ -48,12 +57,11 @@ namespace Tasks.UnitTests.Developers.Services
             _developerRepository.Setup(d => d.ExistByLoginAsync(developer.Login)).ReturnsAsync(true);
             _developerRepository.Setup(d => d.FindByEmailAsync(developer.Login)).ReturnsAsync(developer);
 
-            var service = new AuthService(_developerRepository.Object);
+            var service = new AuthService(_developerRepository.Object, _tokenConfiguration);
             var result = await service.LoginAsync(loginDto);
 
-            var data = result.Data;
             Assert.False(result.Success);
-            Assert.Null(data.Token);
+            Assert.Null(result.Data);
         }
     }
 }

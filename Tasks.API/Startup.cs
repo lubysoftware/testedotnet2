@@ -20,6 +20,7 @@ namespace Tasks.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureDatabases(_configuration);
+            services.ConfigureTokenJwt(_configuration);
 
             services.AddControllers();
         }
