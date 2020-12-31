@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Tasks.Domain._Common.Results;
-using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.Domain.Developers.Services;
 
 namespace Tasks.API.Controllers

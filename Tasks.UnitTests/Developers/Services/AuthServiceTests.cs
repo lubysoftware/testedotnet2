@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Tasks.Domain._Common.Security;
-using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.Developers.Services;
 using Tasks.UnitTests._Common;

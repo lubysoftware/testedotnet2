@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tasks.Domain.Developers.Dtos
+namespace Tasks.Domain.Developers.Dtos.Auth
 {
     public class TokenDto
     {

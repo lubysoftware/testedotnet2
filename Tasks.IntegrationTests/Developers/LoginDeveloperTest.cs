@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Tasks.Domain._Common.Enums;
-using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.IntegrationTests._Common;
 using Tasks.IntegrationTests._Common.Results;
 using Tasks.IntegrationTests._Common.Tools;

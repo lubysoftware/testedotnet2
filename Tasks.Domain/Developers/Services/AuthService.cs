@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Results;
 using Tasks.Domain._Common.Security;
-using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
 
