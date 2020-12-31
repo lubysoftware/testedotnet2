@@ -25,9 +25,8 @@ namespace Luby.Infra.Repositories
             return null;
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
-        {
-            var query = _context.Set<TEntity>();
+        public virtual IEnumerable<TEntity>GetAll(){
+            var query =_context.Set<TEntity>();
 
             if (query.Any())
             {
@@ -37,9 +36,7 @@ namespace Luby.Infra.Repositories
             return new List<TEntity>();
         }
 
-        public virtual void Save(TEntity entity)
-        {
-            _context.Set<TEntity>().Add(entity);
+        public virtual void Save(TEntity entity){
+            _context.Set<TEntity>().Add(entity);}
         }
-    }
 }
