@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
@@ -11,9 +12,9 @@ namespace Tasks.Ifrastructure.Repositories.Developers
     {
         public DeveloperRepository(TasksContext context) : base(context) { }
 
-        public async Task<bool> ExistByLoginAsync(string login)
+        public async Task<bool> ExistByLoginAsync(string login, Guid ignoreId = default)
         {
-            return await _context.Developers.AnyAsync(d => d.Login == login);
+            return await _context.Developers.AnyAsync(d => d.Login == login && d.Id != ignoreId);
         }
 
         public async Task<Developer> FindByLoginAsync(string login)

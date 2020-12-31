@@ -5,7 +5,7 @@ using Tasks.Domain._Common.Enums;
 
 namespace Tasks.Domain._Common.Results
 {
-    public class Result<T> where T : class
+    public class Result<T>
     {
         [JsonIgnore] public Status Status { get; protected set; }
         public int? TotalRows { get; protected set; }
@@ -37,6 +37,13 @@ namespace Tasks.Domain._Common.Results
         {
             _errorMessages.AddRange(errors);
             Status = status;
+        }
+
+        public Result(Status status, IEnumerable<string> errors, T data) : this()
+        {
+            _errorMessages.AddRange(errors);
+            Status = status;
+            Data = data;
         }
     }
 

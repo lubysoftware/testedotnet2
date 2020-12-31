@@ -6,6 +6,7 @@ using Tasks.Domain._Common.Interfaces;
 using Tasks.Domain._Common.Security;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.Developers.Services;
+using Tasks.Domain.External.Services;
 using Tasks.Ifrastructure._Common.Repositories;
 using Tasks.Ifrastructure.Contexts;
 using Tasks.Ifrastructure.Repositories.Developers;
@@ -34,6 +35,7 @@ namespace Tasks.Ifrastructure.Extensions
         public static void ConfigureServices(this IServiceCollection services) 
         {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMockyService, MockyService>();
         }   
         public static void ConfigureRepositories(this IServiceCollection services) 
         {

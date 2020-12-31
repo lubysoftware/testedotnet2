@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Security;
 using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.Domain.Developers.Repositories;
@@ -29,27 +30,29 @@ namespace Tasks.UnitTests.Developers.Services
 
         public static IEnumerable<object[]> LoginDeveloperData()
         {
-            var loginDto = new LoginDto { Login = RandomHelper.RandomString(), Password = RandomHelper.RandomNumbers() };
-            yield return new object[] { false, loginDto };
-            yield return new object[] { false, loginDto, true };
-            yield return new object[] { true,  loginDto, true, true };
+            yield return new object[] { Status.Unauthorized };
+            yield return new object[] { Status.Unauthorized, true };
+            yield return new object[] { Status.Success, true, true };
         }
 
         [Theory]
         [MemberData(nameof(LoginDeveloperData))]
         public async void LoginDeveloperTest(
-            bool expectedSuccess,
-            LoginDto loginDto,
+            Status expectedStatus,
             bool persistedDeveloper = false,
             bool equalPassword = false
         ) {
+            var loginDto = new LoginDto { 
+                Login = RandomHelper.RandomString(), 
+                Password = RandomHelper.RandomNumbers() 
+            };
             var developer = EntitiesFactory.NewDeveloper(
                 login: loginDto.Login,
                 password: equalPassword ? loginDto.Password : null
             ).Get();
             if (persistedDeveloper)
             {
-                _developerRepository.Setup(d => d.ExistByLoginAsync(developer.Login)).ReturnsAsync(true);
+                _developerRepository.Setup(d => d.ExistByLoginAsync(developer.Login, default)).ReturnsAsync(true);
                 _developerRepository.Setup(d => d.FindByLoginAsync(developer.Login)).ReturnsAsync(developer);
             }
             
@@ -57,8 +60,8 @@ namespace Tasks.UnitTests.Developers.Services
             var result = await service.LoginAsync(loginDto);
 
             var data = result.Data;
-            Assert.Equal(expectedSuccess, result.Success);
-            if (expectedSuccess) { 
+            Assert.Equal(expectedStatus, result.Status);
+            if (expectedStatus == Status.Success) { 
                 Assert.Equal(developer.Id, data.Id);
                 Assert.Equal(developer.Login, data.Login);
                 Assert.Equal(TimeSpan.FromSeconds(_tokenConfiguration.Seconds), data.ExpiresAt - data.CreatedAt);
