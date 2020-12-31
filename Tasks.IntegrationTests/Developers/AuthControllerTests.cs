@@ -11,9 +11,9 @@ using Xunit;
 
 namespace Tasks.IntegrationTests.Developers
 {
-    public class LoginDeveloperTest : BaseTest
+    public class AuthControllerTests : BaseTest
     {
-        public LoginDeveloperTest(TasksFixture fixture) : base(fixture, "/auth/login") { }
+        public AuthControllerTests(TasksFixture fixture) : base(fixture, "/auth/login") { }
 
         [Theory]
         [InlineData(false)]
@@ -28,7 +28,7 @@ namespace Tasks.IntegrationTests.Developers
                 password: equalPassword ? loginDto.Password : null
             ).Save();
 
-            var (status, result) = await Request.Post<ResultTest<TokenDto>>(Uri, loginDto);
+            var (status, result) = await Request.PostAsync<ResultTest<TokenDto>>(Uri, loginDto);
             Assert.Equal(equalPassword ? Status.Success : Status.Unauthorized, status);
             if (equalPassword)
             {
