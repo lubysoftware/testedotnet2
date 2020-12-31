@@ -75,7 +75,6 @@ namespace Tasks.UnitTests.Developers.Services
         public static IEnumerable<object[]> DeveloperUpdateData()
         {
             yield return new object[] { Status.NotFund };
-            yield return new object[] { Status.Invalid };
             yield return new object[] { Status.Conflict };
             yield return new object[] { Status.Success };
         }
@@ -121,7 +120,7 @@ namespace Tasks.UnitTests.Developers.Services
         }
 
         [Theory]
-        [MemberData(nameof(DeveloperUpdateData))]
+        [MemberData(nameof(DeveloperDeleteData))]
         public async void DeleteDeveloperTest(Status expectedStatus)
         {
             var developer = EntitiesFactory.NewDeveloper().Get();

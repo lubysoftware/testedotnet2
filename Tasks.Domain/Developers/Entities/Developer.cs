@@ -24,23 +24,21 @@ namespace Tasks.Domain.Developers.Entities
             string password
         ) : base(id)
         {
+            this.CPF = cpf;
             this.PasswordHash = MD5Crypto.Encode(password);
             SetData(
                 name: name,
-                login: login,
-                cpf: cpf
+                login: login
             );
         }
 
         public void SetData(
             string name,
-            string login,
-            string cpf
+            string login
         )
         {
             this.Name = name;
             this.Login = login;
-            this.CPF = cpf;
         }
 
         public bool ValidatePassword(string password)

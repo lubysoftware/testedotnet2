@@ -9,7 +9,7 @@ namespace Tasks.Domain.Developers.Services
 {
     public interface IDeveloperService
     {
-        Task<DeveloperDetailDto> GetDeveloperByIdAsync(Guid id);
+        Task<Result<DeveloperDetailDto>> GetDeveloperByIdAsync(Guid id);
         Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination);
         Task<Result> CreateDeveloperAsync(DeveloperCreateDto developerDto);
         Task<Result> UpdateDeveloperAsync(DeveloperUpdateDto developerDto);
