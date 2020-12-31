@@ -72,7 +72,7 @@ namespace Tasks.Domain.Developers.Services
 
         public async Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination)
         {
-            return _developerRepository.Query()
+            var developersList = _developerRepository.Query()
                 .Skip(pagination.Offset)
                 .Take(pagination.Limit)
                 .Select(d => new DeveloperListDto { 
@@ -80,6 +80,8 @@ namespace Tasks.Domain.Developers.Services
                     Name = d.Name
                 })
                 .ToArray();
+
+            return await Task.FromResult(developersList);
         }
 
         public async Task<Result> UpdateDeveloperAsync(DeveloperUpdateDto developerDto)
