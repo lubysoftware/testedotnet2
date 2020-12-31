@@ -6,6 +6,7 @@
         Unauthorized = 401,
         NotFund = 404,
         Conflict = 409,
-        Invalid = 412
+        Invalid = 412,
+        Error = 500
     }
 }
