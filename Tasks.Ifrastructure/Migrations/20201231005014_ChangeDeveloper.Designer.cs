@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tasks.Ifrastructure.Contexts;
 
 namespace Tasks.Ifrastructure.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    partial class TasksContextModelSnapshot : ModelSnapshot
+    [Migration("20201231005014_ChangeDeveloper")]
+    partial class ChangeDeveloper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,16 +51,6 @@ namespace Tasks.Ifrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Developers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("86b6b3a7-965e-46dd-843d-661f6e76ded1"),
-                            CPF = "13467669085",
-                            Login = "pleno",
-                            Name = "Pleno",
-                            PasswordHash = "1VPRSEeaJokUzst3sriOag=="
-                        });
                 });
 
             modelBuilder.Entity("Tasks.Domain.Developers.Entities.DeveloperProject", b =>
