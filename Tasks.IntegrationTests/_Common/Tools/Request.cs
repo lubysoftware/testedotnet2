@@ -28,7 +28,7 @@ namespace Tasks.IntegrationTests._Common.Tools
                 var result = JsonConvert.DeserializeObject<TResult>(json);
                 return ((Status)response.StatusCode, result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return (Status.Error, null);
             }
@@ -45,7 +45,7 @@ namespace Tasks.IntegrationTests._Common.Tools
                 var result = JsonConvert.DeserializeObject<TResult>(json);
                 return ((Status)response.StatusCode, result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return (Status.Error, null);
             }
@@ -62,7 +62,7 @@ namespace Tasks.IntegrationTests._Common.Tools
                 var result = JsonConvert.DeserializeObject<TResult>(json);
                 return ((Status)response.StatusCode, result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return (Status.Error, null);
             }
@@ -77,7 +77,7 @@ namespace Tasks.IntegrationTests._Common.Tools
                 var result = JsonConvert.DeserializeObject<TResult>(json);
                 return ((Status)response.StatusCode, result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return (Status.Error, null);
             }

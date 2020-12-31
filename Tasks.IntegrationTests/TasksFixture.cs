@@ -46,7 +46,7 @@ namespace Tasks.IntegrationTests
             Client = Server.CreateClient();
             Client.BaseAddress = new Uri("https://localhost:44325/api");
             Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(GenerateToken());
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GenerateToken());
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             Request = new Request(Client);
         }

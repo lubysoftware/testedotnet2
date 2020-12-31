@@ -66,8 +66,7 @@ namespace Tasks.UnitTests.Developers.Services
                 Assert.Equal(developer.Login, data.Login);
                 Assert.Equal(TimeSpan.FromSeconds(_tokenConfiguration.Seconds), data.ExpiresAt - data.CreatedAt);
                 Assert.NotEmpty(data.Token);
-                Assert.StartsWith("Bearer", data.Token);
-                var jwt = new JwtSecurityToken(data.Token.Split("Bearer").Last());
+                var jwt = new JwtSecurityToken(data.Token);
                 Assert.NotEmpty(jwt.Claims);
             } else
             {

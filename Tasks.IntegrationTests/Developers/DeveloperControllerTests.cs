@@ -60,8 +60,8 @@ namespace Tasks.IntegrationTests.Developers
             var (status, result) = await Request.PostAsync<ResultTest>(Uri, developerDto);
 
             var developerDb = await DbContext.Developers.FindAsync(developerDto.Id);
-            Assert.True(result.Success);
             Assert.Equal(Status.Success, status);
+            Assert.True(result.Success);
             Assert.Equal(developerDto.Login, developerDb.Login);
             Assert.Equal(developerDto.Name, developerDb.Name);
             Assert.Equal(developerDto.CPF, developerDb.CPF);
@@ -81,8 +81,9 @@ namespace Tasks.IntegrationTests.Developers
             var (status, result) = await Request.PutAsync<ResultTest>(new Uri($"{Uri}/{developer.Id}"), developerDto);
 
             var developerDb = await DbContext.Developers.FindAsync(developerDto.Id);
-            Assert.True(result.Success);
+            await DbContext.Entry(developerDb).ReloadAsync();
             Assert.Equal(Status.Success, status);
+            Assert.True(result.Success);
             Assert.Equal(developerDto.Login, developerDb.Login);
             Assert.Equal(developerDto.Name, developerDb.Name);
         }
@@ -92,11 +93,11 @@ namespace Tasks.IntegrationTests.Developers
         {
             var developer = EntitiesFactory.NewDeveloper().Save();
 
-            var (status, result) = await Request.DeleteAsync<ResultTest>(new Uri($"{developer.Id}"));
+            var (status, result) = await Request.DeleteAsync<ResultTest>(new Uri($"{Uri}/{developer.Id}"));
 
             var existDeveloper = await DbContext.Developers.AnyAsync(d => d.Id == developer.Id);
-            Assert.True(result.Success);
             Assert.Equal(Status.Success, status);
+            Assert.True(result.Success);
             Assert.False(existDeveloper);
         }
     }

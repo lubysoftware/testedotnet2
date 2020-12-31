@@ -38,7 +38,7 @@ namespace Tasks.Domain.External.Services
                 var response = await client.GetAsync(route);
                 var stream = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<MockyResponseDto>(stream);
-                return new Result<string>(result.Message);
+                return new Result<string>(result.message);
             } catch
             {
                 return new Result<string>(Status.Error, "Erro to comunicate with Mocky");

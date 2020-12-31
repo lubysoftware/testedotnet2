@@ -36,6 +36,7 @@ namespace Tasks.Ifrastructure.Extensions
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IMockyService, MockyService>();
+            services.AddScoped<IDeveloperService, DeveloperService>();
         }   
         public static void ConfigureRepositories(this IServiceCollection services) 
         {

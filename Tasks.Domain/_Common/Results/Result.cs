@@ -35,13 +35,13 @@ namespace Tasks.Domain._Common.Results
 
         public Result(Status status, IEnumerable<string> errors) : this()
         {
-            _errorMessages.AddRange(errors);
+            if (errors != null) _errorMessages.AddRange(errors);
             Status = status;
         }
 
         public Result(Status status, IEnumerable<string> errors, T data) : this()
         {
-            _errorMessages.AddRange(errors);
+            if (errors != null) _errorMessages.AddRange(errors);
             Status = status;
             Data = data;
         }

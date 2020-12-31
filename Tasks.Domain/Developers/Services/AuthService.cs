@@ -65,7 +65,7 @@ namespace Tasks.Domain.Developers.Services
             {
                 Id = developer.Id,
                 Login = developer.Login,
-                Token = $"Bearer{handler.WriteToken(securityToken)}",
+                Token = handler.WriteToken(securityToken),
                 CreatedAt = created,
                 ExpiresAt = expires
             };

@@ -37,8 +37,7 @@ namespace Tasks.IntegrationTests.Developers
                 Assert.Equal(developer.Login, loginResult.Login);
                 Assert.Equal(TimeSpan.FromMinutes(5), loginResult.ExpiresAt - loginResult.CreatedAt);
                 Assert.NotEmpty(loginResult.Token);
-                Assert.StartsWith("Bearer", loginResult.Token);
-                var jwt = new JwtSecurityToken(loginResult.Token.Split("Bearer").Last());
+                var jwt = new JwtSecurityToken(loginResult.Token);
                 Assert.NotEmpty(jwt.Claims);
             }
         }
