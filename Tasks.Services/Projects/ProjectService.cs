@@ -80,9 +80,10 @@ namespace Tasks.Service.Projects
             return new Result<ProjectDetailDto>(projectDetail);
         }
 
-        public async Task<IEnumerable<ProjectListDto>> ListProjectsAsync(PaginationDto pagination)
+        public async Task<Result<IEnumerable<ProjectListDto>>> ListProjectsAsync(PaginationDto pagination)
         {
-            return await _projectRepository.Query()
+            var query = _projectRepository.Query();
+            var projects = await query
                 .Skip(pagination.CalculateOffset())
                 .Take(pagination.Limit)
                 .Select(d => new ProjectListDto
@@ -91,13 +92,17 @@ namespace Tasks.Service.Projects
                     Title = d.Title
                 })
                 .ToArrayAsync();
+
+            return new Result<IEnumerable<ProjectListDto>>(projects, await query.CountAsync());
         }
 
-        public async Task<IEnumerable<ProjectWorkListDto>> ListProjectWorksAsync(ProjectWorkSearchDto searchDto)
+        public async Task<Result<IEnumerable<ProjectWorkListDto>>> ListProjectWorksAsync(ProjectWorkSearchDto searchDto)
         {
-            return await _workRepository.Query()
+            var query = _workRepository.Query()
                 .Where(w => w.DeveloperProject.ProjectId == searchDto.ProjectId)
-                .Where(w => searchDto.DeveloperId == null || w.DeveloperProject.DeveloperId == searchDto.DeveloperId)
+                .Where(w => searchDto.DeveloperId == null || w.DeveloperProject.DeveloperId == searchDto.DeveloperId);
+            
+            var projectWorks = await query
                 .Skip(searchDto.CalculateOffset())
                 .Take(searchDto.Limit)
                 .Select(w => new ProjectWorkListDto
@@ -113,6 +118,8 @@ namespace Tasks.Service.Projects
                     },
                 })
                 .ToArrayAsync();
+
+            return new Result<IEnumerable<ProjectWorkListDto>>(projectWorks, await query.CountAsync());
         }
 
         public async Task<Result> UpdateProjectAsync(ProjectUpdateDto projectDto)

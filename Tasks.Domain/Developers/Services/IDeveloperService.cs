@@ -12,9 +12,9 @@ namespace Tasks.Domain.Developers.Services
     public interface IDeveloperService
     {
         Task<Result<DeveloperDetailDto>> GetDeveloperByIdAsync(Guid id);
-        Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination);
-        Task<IEnumerable<DeveloperWorkListDto>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto);
-        Task<IEnumerable<DeveloperRankingListDto>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto);
+        Task<Result<IEnumerable<DeveloperListDto>>> ListDevelopersAsync(PaginationDto pagination);
+        Task<Result<IEnumerable<DeveloperWorkListDto>>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto);
+        Task<Result<IEnumerable<DeveloperRankingListDto>>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto);
         Task<Result> CreateDeveloperAsync(DeveloperCreateDto developerDto);
         Task<Result> UpdateDeveloperAsync(DeveloperUpdateDto developerDto);
         Task<Result> DeleteDeveloperAsync(Guid id);

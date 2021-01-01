@@ -81,7 +81,7 @@ namespace Tasks.Service.Developers
             return new Result<DeveloperDetailDto>(developerDetail);
         }
 
-        public async Task<IEnumerable<DeveloperRankingListDto>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto)
+        public async Task<Result<IEnumerable<DeveloperRankingListDto>>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto)
         {
             var rawWorkList = await _workRepository.Query()
                 .Where(w => w.StartTime >= searchDto.StartTime)
@@ -91,7 +91,7 @@ namespace Tasks.Service.Developers
                 })
                 .ToArrayAsync();
 
-            return rawWorkList.GroupBy(w => w.Developer.Id)
+            var rankingList = rawWorkList.GroupBy(w => w.Developer.Id)
                 .Select(g => new DeveloperRankingListDto
                 {
                     Id = g.Key,
@@ -101,11 +101,14 @@ namespace Tasks.Service.Developers
                 })
                 .OrderByDescending(d => d.AvgHours)
                 .Take(5);
+
+            return new Result<IEnumerable<DeveloperRankingListDto>>(rankingList, rankingList.Count());
         }
 
-        public async Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination)
+        public async Task<Result<IEnumerable<DeveloperListDto>>> ListDevelopersAsync(PaginationDto pagination)
         {
-            return await _developerRepository.Query()
+            var query = _developerRepository.Query();
+            var developers = await query
                 .Skip(pagination.CalculateOffset())
                 .Take(pagination.Limit)
                 .Select(d => new DeveloperListDto
@@ -114,13 +117,17 @@ namespace Tasks.Service.Developers
                     Name = d.Name
                 })
                 .ToArrayAsync();
+
+            return new Result<IEnumerable<DeveloperListDto>>(developers, await query.CountAsync());
         }
 
-        public async Task<IEnumerable<DeveloperWorkListDto>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto)
+        public async Task<Result<IEnumerable<DeveloperWorkListDto>>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto)
         {
-            return await _workRepository.Query()
+            var query = _workRepository.Query()
                 .Where(w => w.DeveloperProject.DeveloperId == searchDto.DeveloperId)
-                .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId)
+                .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId);
+
+            var developerWorks = await query
                 .Skip(searchDto.CalculateOffset())
                 .Take(searchDto.Limit)
                 .Select(w => new DeveloperWorkListDto
@@ -137,6 +144,8 @@ namespace Tasks.Service.Developers
                     },
                 })
                 .ToArrayAsync();
+
+            return new Result<IEnumerable<DeveloperWorkListDto>>(developerWorks, await query.CountAsync());
         }
 
         public async Task<Result> UpdateDeveloperAsync(DeveloperUpdateDto developerDto)
