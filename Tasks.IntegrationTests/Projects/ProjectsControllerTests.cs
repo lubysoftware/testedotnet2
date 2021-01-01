@@ -5,6 +5,7 @@ using System.Linq;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain.Projects.Dtos;
+using Tasks.Domain.Projects.Dtos.Works;
 using Tasks.Domain.Works.Dtos;
 using Tasks.IntegrationTests._Common;
 using Tasks.IntegrationTests._Common.Results;
@@ -114,6 +115,35 @@ namespace Tasks.IntegrationTests.Projects
             Assert.Equal(Status.Success, status);
             Assert.True(result.Success);
             Assert.False(existProject);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async void ListWorkProjectAsync(bool withFilter)
+        {
+            var query = new ProjectWorkSearchDto { Page = 1, Limit = 1, DeveloperId = withFilter ? (Guid?)SessionDeveloper.Id : null };
+            var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
+            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+
+            var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<ProjectWorkListDto>>>(new Uri($"{Uri}/{project.Id}/works"), query);
+
+            var workList = result.Data;
+            Assert.Equal(Status.Success, status);
+            Assert.NotEmpty(workList);
+            Assert.True(workList.Count() == query.Limit);
+            Assert.All(workList, work =>
+            {
+                Assert.True(work.Hours > 0);
+                Assert.NotEmpty(work.Comment);
+                Assert.NotNull(work.Developer);
+                if (withFilter)
+                {
+                    Assert.Equal(SessionDeveloper.Id, work.Developer.Id);
+                    Assert.Equal(SessionDeveloper.Name, work.Developer.Name);
+                }
+            });
         }
 
         [Fact]

@@ -1,7 +1,7 @@
 ﻿using System;
 using Tasks.Domain.Developers.Dtos;
 
-namespace Tasks.Domain.Projects.Dtos
+namespace Tasks.Domain.Projects.Dtos.Works
 {
     public class ProjectWorkListDto
     {

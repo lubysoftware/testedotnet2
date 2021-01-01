@@ -9,6 +9,7 @@ using Tasks.Domain._Common.Results;
 using Tasks.Domain.Developers.Dtos;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Projects.Dtos;
+using Tasks.Domain.Projects.Dtos.Works;
 using Tasks.Domain.Projects.Entities;
 using Tasks.Domain.Projects.Repositories;
 using Tasks.Domain.Projects.Services;
@@ -87,6 +88,11 @@ namespace Tasks.Service.Projects
                 .ToArray();
 
             return await Task.FromResult(projectsList);
+        }
+
+        public Task<IEnumerable<ProjectWorkListDto>> ListProjectWorksAsync(ProjectWorkSearchDto searchDto)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Result> UpdateProjectAsync(ProjectUpdateDto projectDto)

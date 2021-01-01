@@ -5,6 +5,8 @@ using System.Linq;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Ranking;
+using Tasks.Domain.Developers.Dtos.Works;
 using Tasks.IntegrationTests._Common;
 using Tasks.IntegrationTests._Common.Results;
 using Tasks.UnitTests._Common.Random;
@@ -44,6 +46,59 @@ namespace Tasks.IntegrationTests.Developers
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(developerList);
             Assert.True(developerList.Count() == query.Limit);
+        }
+
+        [Fact]
+        public async void DeveloperRankingAsync()
+        {
+            var projectsToRemove = DbContext.Projects.ToArray();
+            var developersToRemove = DbContext.Developers.Where(d => d.Id != SessionDeveloper.Id).ToArray();
+            DbContext.Developers.RemoveRange(developersToRemove);
+            DbContext.Projects.RemoveRange(projectsToRemove);
+
+            var developerFirstPosition = EntitiesFactory.NewDeveloper().Save();
+            var developerSecondPosition = EntitiesFactory.NewDeveloper().Save();
+            var project = EntitiesFactory.NewProject(
+                developerIds: new[] { developerFirstPosition.Id, developerSecondPosition.Id }
+            ).Save();
+            var query = new DeveloperRankingSearchDto { ProjectId = project.Id };
+            EntitiesFactory.NewWork(
+                hours: 10,
+                id: Guid.NewGuid(), 
+                developerProjectId: project.DeveloperProjects
+                    .First(dp => dp.DeveloperId == developerFirstPosition.Id).Id
+            ).Save();
+            EntitiesFactory.NewWork(
+                hours: 20,
+                id: Guid.NewGuid(),
+                developerProjectId: project.DeveloperProjects
+                    .First(dp => dp.DeveloperId == developerFirstPosition.Id).Id
+            ).Save();
+            EntitiesFactory.NewWork(
+                hours: 12,
+                id: Guid.NewGuid(),
+                developerProjectId: project.DeveloperProjects
+                    .First(dp => dp.DeveloperId == developerSecondPosition.Id).Id
+            ).Save();
+
+            var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<DeveloperRankingListDto>>>(new Uri($"{Uri}/ranking"), query);
+
+            var developerList = result.Data;
+            Assert.Equal(Status.Success, status);
+            Assert.NotEmpty(developerList);
+            Assert.Equal(2, developerList.Count());
+
+            var firstPosition = developerList.ElementAt(0);
+            Assert.Equal(developerFirstPosition.Id, firstPosition.Id);
+            Assert.Equal(developerFirstPosition.Name, firstPosition.Name);
+            Assert.Equal(15, firstPosition.AvgHours);
+            Assert.Equal(30, firstPosition.SumHours);
+
+            var secondPosition = developerList.ElementAt(1);
+            Assert.Equal(developerFirstPosition.Id, secondPosition.Id);
+            Assert.Equal(developerFirstPosition.Name, secondPosition.Name);
+            Assert.Equal(12, secondPosition.AvgHours);
+            Assert.Equal(12, secondPosition.SumHours);
         }
 
         [Fact]
@@ -99,6 +154,35 @@ namespace Tasks.IntegrationTests.Developers
             Assert.Equal(Status.Success, status);
             Assert.True(result.Success);
             Assert.False(existDeveloper);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async void ListWorkDeveloperAsync(bool withFilter)
+        {
+            var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
+            var query = new DeveloperWorkSearchDto { Page = 1, Limit = 1, ProjectId = withFilter ? (Guid?)project.Id : null };
+            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+
+            var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<DeveloperWorkListDto>>>(new Uri($"{Uri}/{SessionDeveloper.Id}/works"), query);
+
+            var workList = result.Data;
+            Assert.Equal(Status.Success, status);
+            Assert.NotEmpty(workList);
+            Assert.True(workList.Count() == query.Limit);
+            Assert.All(workList, work =>
+            {
+                Assert.True(work.Hours > 0);
+                Assert.NotEmpty(work.Comment);
+                Assert.NotNull(work.Project);
+                if (withFilter)
+                {
+                    Assert.Equal(project.Id, work.Project.Id);
+                    Assert.Equal(project.Title, work.Project.Title);
+                }
+            });
         }
     }
 }

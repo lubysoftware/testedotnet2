@@ -71,16 +71,17 @@ namespace Tasks.UnitTests._Common.Factories
 
         public BuilderFactory<Work> NewWork(
             Guid id,
-            Guid developerProjectId
+            Guid developerProjectId,
+            int hours = 15
         )
         {
             var work = new Work(
                 id: id == Guid.Empty ? Guid.NewGuid() : id,
                 developerProjectId: developerProjectId,
-                startTime: DateTime.Now.AddMinutes(-15),
+                startTime: DateTime.Now.AddHours(-hours),
                 endTime: DateTime.Now, 
                 comment: RandomHelper.RandomString(250),
-                hours: 15
+                hours: hours
             );
 
             return new BuilderFactory<Work>(work, _context);

@@ -6,6 +6,8 @@ using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain._Common.Results;
 using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Ranking;
+using Tasks.Domain.Developers.Dtos.Works;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.Developers.Services;
@@ -73,6 +75,11 @@ namespace Tasks.Service.Developers
             return new Result<DeveloperDetailDto>(developerDetail);
         }
 
+        public Task<IEnumerable<DeveloperRankingListDto>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination)
         {
             var developersList = _developerRepository.Query()
@@ -86,6 +93,11 @@ namespace Tasks.Service.Developers
                 .ToArray();
 
             return await Task.FromResult(developersList);
+        }
+
+        public Task<IEnumerable<DeveloperWorkListDto>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Result> UpdateDeveloperAsync(DeveloperUpdateDto developerDto)
