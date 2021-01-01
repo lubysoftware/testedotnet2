@@ -6,7 +6,8 @@ using Tasks.Domain.Projects.Entities;
 namespace Tasks.Domain.Projects.Repositories
 {
     public interface IProjectRepository : IRepository<Project> {
-        Task<bool> ExistByTitle(string title, Guid ignoreId = default);
-        Task<bool> ExistDeveloperVinculated(Guid id, Guid developerId);
+        Task<bool> ExistByTitleAsync(string title, Guid ignoreId = default);
+        Task<bool> ExistDeveloperVinculatedAsync(Guid id, Guid developerId);
+        Task<Guid> GetDeveloperProjectIdAsync(Guid id, Guid developerId);
     }
 }

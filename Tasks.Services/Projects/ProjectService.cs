@@ -26,7 +26,7 @@ namespace Tasks.Service.Projects
 
         public async Task<Result> CreateProjectAsync(ProjectCreateDto projectDto)
         {
-            var existTitle = await _projectRepository.ExistByTitle(projectDto.Title);
+            var existTitle = await _projectRepository.ExistByTitleAsync(projectDto.Title);
             if (existTitle) return new Result(Status.Conflict, $"Project with {nameof(projectDto.Title)} already exist");
 
             var projectId = projectDto.Id == Guid.Empty ? Guid.NewGuid() : projectDto.Id;
@@ -93,7 +93,7 @@ namespace Tasks.Service.Projects
         {
             var existProject = await _projectRepository.ExistAsync(projectDto.Id);
             if (!existProject) return new Result(Status.NotFund, $"Project with {nameof(projectDto.Id)} does not exist");
-            var existTitle = await _projectRepository.ExistByTitle(projectDto.Title, projectDto.Id);
+            var existTitle = await _projectRepository.ExistByTitleAsync(projectDto.Title, projectDto.Id);
             if (existTitle) return new Result(Status.Conflict, $"Project with {nameof(projectDto.Title)} already exist");
 
             var project = await _projectRepository.Query()

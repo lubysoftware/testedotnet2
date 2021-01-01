@@ -30,6 +30,7 @@ namespace Tasks.UnitTests.Works.Services
             _workRepository = new Mock<IWorkRepository>();
             _developerRepository = new Mock<IDeveloperRepository>();
             _projectRepository = new Mock<IProjectRepository>();
+            _mockyRepository = new Mock<IMockyService>();
         }
 
         public static IEnumerable<object[]> WorkCreateData()
@@ -70,7 +71,9 @@ namespace Tasks.UnitTests.Works.Services
             };
             var worksPersisted = new List<Work>();
             _projectRepository.Setup(p => p.ExistAsync(project.Id)).ReturnsAsync(withProject);
-            _projectRepository.Setup(p => p.ExistDeveloperVinculated(project.Id, developer.Id))
+            _projectRepository.Setup(p => p.GetDeveloperProjectIdAsync(project.Id, developer.Id))
+                .ReturnsAsync(project.DeveloperProjects.Single().Id);
+            _projectRepository.Setup(p => p.ExistDeveloperVinculatedAsync(project.Id, developer.Id))
                 .ReturnsAsync(expectedStatus != Status.NotAllowed);
             _developerRepository.Setup(p => p.ExistAsync(developer.Id)).ReturnsAsync(withDeveloper);
             _workRepository.Setup(d => d.CreateAsync(Capture.In(worksPersisted)));
@@ -106,7 +109,6 @@ namespace Tasks.UnitTests.Works.Services
             yield return new object[] { Status.Invalid, DateTime.Now.AddMinutes(5), validEnd };
             yield return new object[] { Status.Invalid, validStart, DateTime.Now.AddMinutes(5) };
             yield return new object[] { Status.NotFund, validStart, validEnd };
-            yield return new object[] { Status.NotAllowed, validStart, validEnd };
             yield return new object[] { Status.Success, validStart, validEnd };
         }
 
@@ -133,10 +135,10 @@ namespace Tasks.UnitTests.Works.Services
                 Comment = RandomHelper.RandomString(180),
                 Hours = 250
             };
-            var works = new[] { work }.AsQueryable().BuildMock();
-            _projectRepository.Setup(p => p.ExistDeveloperVinculated(project.Id, developer.Id))
-                .ReturnsAsync(expectedStatus != Status.NotAllowed);
-            _workRepository.Setup(d => d.Query()).Returns(works.Object);
+            _workRepository.Setup(d => d.ExistAsync(workDto.Id))
+                .ReturnsAsync(expectedStatus != Status.NotFund);
+            _workRepository.Setup(d => d.GetByIdAsync(workDto.Id))
+                .ReturnsAsync(work);
             _mockyRepository.Setup(m => m.SendNotificationAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new Result<bool>(expectedStatus != Status.Error));
 
@@ -162,6 +164,7 @@ namespace Tasks.UnitTests.Works.Services
 
         public static IEnumerable<object[]> WorkDeleteData()
         {
+            yield return new object[] { Status.Error };
             yield return new object[] { Status.NotFund };
             yield return new object[] { Status.Success };
         }
@@ -180,6 +183,8 @@ namespace Tasks.UnitTests.Works.Services
                 .ReturnsAsync(expectedStatus != Status.NotFund);
             _workRepository.Setup(d => d.GetByIdAsync(work.Id))
                 .ReturnsAsync(work);
+            _mockyRepository.Setup(m => m.SendNotificationAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(new Result<bool>(expectedStatus != Status.Error));
 
             var service = new WorkService(
                 _workRepository.Object,
@@ -193,10 +198,7 @@ namespace Tasks.UnitTests.Works.Services
             if (expectedStatus == Status.Success)
             {
                 _workRepository.Verify(d => d.DeleteAsync(work), Times.Once);
-            }
-            else
-            {
-                _workRepository.Verify(d => d.DeleteAsync(work), Times.Never);
+                _mockyRepository.Verify(d => d.SendNotificationAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             }
         }
     }

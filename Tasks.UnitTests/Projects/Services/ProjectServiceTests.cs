@@ -39,7 +39,7 @@ namespace Tasks.UnitTests.Projects.Services
             };
             var projectsPersisted = new List<Project>();
             _projectRepository.Setup(d => d.CreateAsync(Capture.In(projectsPersisted)));
-            _projectRepository.Setup(d => d.ExistByTitle(projectDto.Title, default))
+            _projectRepository.Setup(d => d.ExistByTitleAsync(projectDto.Title, default))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
 
             var service = new ProjectService(_projectRepository.Object);
@@ -82,7 +82,7 @@ namespace Tasks.UnitTests.Projects.Services
                 .ReturnsAsync(expectedStatus != Status.NotFund);
             _projectRepository.Setup(d => d.Query())
                 .Returns(projects.Object);
-            _projectRepository.Setup(d => d.ExistByTitle(projectDto.Title, projectDto.Id))
+            _projectRepository.Setup(d => d.ExistByTitleAsync(projectDto.Title, projectDto.Id))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
 
             var service = new ProjectService(_projectRepository.Object);
