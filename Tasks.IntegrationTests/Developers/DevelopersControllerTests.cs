@@ -16,7 +16,7 @@ namespace Tasks.IntegrationTests.Developers
 {
     public class DevelopersControllerTests : BaseTest
     {
-        public DevelopersControllerTests(TasksFixture fixture) : base(fixture, "/developers") { }
+        public DevelopersControllerTests(TasksFixture fixture) : base(fixture, "developers") { }
 
         [Fact]
         public async void GetDeveloperByIdTest()

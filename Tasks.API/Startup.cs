@@ -28,6 +28,7 @@ namespace Tasks.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwagger();
             services.AddServices();
             services.AddRepositories();
             services.AddHttpContextAccessor();
@@ -85,6 +86,7 @@ namespace Tasks.API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.ConfigureSwagger();
             app.MigrateDatabase<TasksContext>();
 
             app.UseEndpoints(endpoints =>

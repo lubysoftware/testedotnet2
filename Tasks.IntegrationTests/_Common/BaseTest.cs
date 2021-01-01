@@ -21,7 +21,7 @@ namespace Tasks.IntegrationTests._Common
             EntitiesFactory = fixture.EntitiesFactory;
             DbContext = fixture.DbContext;
             SessionDeveloper = fixture.SessionDeveloper;
-            Uri = new Uri($"{fixture.Client.BaseAddress}{url}");
+            Uri = new Uri($"{fixture.Client.BaseAddress}/{url}");
         }
     }
 }

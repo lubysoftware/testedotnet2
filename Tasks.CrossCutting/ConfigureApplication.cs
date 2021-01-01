@@ -14,5 +14,15 @@ namespace Tasks.CrossCutting
                 context.Database.Migrate();
             }
         }
+
+        public static void ConfigureSwagger(this IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Luby Tasks API");
+                c.RoutePrefix = string.Empty;
+            });
+        }
     }
 }

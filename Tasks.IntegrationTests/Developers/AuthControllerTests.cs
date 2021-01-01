@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain.Developers.Dtos.Auth;
 using Tasks.IntegrationTests._Common;
@@ -13,7 +12,7 @@ namespace Tasks.IntegrationTests.Developers
 {
     public class AuthControllerTests : BaseTest
     {
-        public AuthControllerTests(TasksFixture fixture) : base(fixture, "/auth/login") { }
+        public AuthControllerTests(TasksFixture fixture) : base(fixture, "auth/login") { }
 
         [Theory]
         [InlineData(false)]

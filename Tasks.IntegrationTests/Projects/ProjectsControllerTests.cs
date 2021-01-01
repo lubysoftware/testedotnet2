@@ -16,7 +16,7 @@ namespace Tasks.IntegrationTests.Projects
 {
     public class ProjectsControllerTests : BaseTest
     {
-        public ProjectsControllerTests(TasksFixture fixture) : base(fixture, "/projects") { }
+        public ProjectsControllerTests(TasksFixture fixture) : base(fixture, "projects") { }
 
         [Fact]
         public async void GetProjectByIdTest()
