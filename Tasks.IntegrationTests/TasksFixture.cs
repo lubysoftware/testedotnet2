@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using Tasks.API;
 using Tasks.CrossCutting;
+using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Services;
 using Tasks.Ifrastructure._Common.Application;
 using Tasks.Ifrastructure.Contexts;
@@ -26,6 +27,7 @@ namespace Tasks.IntegrationTests
         public TestServer Server { get; private set; }
         public TasksContext DbContext { get; private set; }
         public EntitiesFactory EntitiesFactory { get; private set; }
+        public Developer SessionDeveloper { get; private set; }
         
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _services;
@@ -81,9 +83,9 @@ namespace Tasks.IntegrationTests
 
         private string GenerateToken()
         {
-            var defaultDeveloper = EntitiesFactory.NewDeveloper().Save();
+            SessionDeveloper = EntitiesFactory.NewDeveloper().Save();
             var authService = _services.GetService<IAuthService>();
-            return authService.GenerateJwtTokenAsync(defaultDeveloper).Result.Token;
+            return authService.GenerateJwtTokenAsync(SessionDeveloper).Result.Token;
         }
 
         public void Dispose()

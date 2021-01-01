@@ -5,6 +5,7 @@ using System.Linq;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Enums;
 using Tasks.Domain.Projects.Dtos;
+using Tasks.Domain.Works.Dtos;
 using Tasks.IntegrationTests._Common;
 using Tasks.IntegrationTests._Common.Results;
 using Tasks.UnitTests._Common.Random;
@@ -113,6 +114,77 @@ namespace Tasks.IntegrationTests.Projects
             Assert.Equal(Status.Success, status);
             Assert.True(result.Success);
             Assert.False(existProject);
+        }
+
+        [Fact]
+        public async void CreateWorkProjectAsync()
+        {
+            var project = EntitiesFactory.NewProject(developerIds: new [] { SessionDeveloper.Id }).Save();
+            var workDto = new WorkDto
+            {
+                Id = Guid.NewGuid(),
+                StartTime = DateTime.Now.AddMinutes(-30),
+                EndTime = DateTime.Now,
+                Comment = RandomHelper.RandomString(100),
+                Hours = 12
+            };
+
+            var (status, result) = await Request.PostAsync<ResultTest>(new Uri($"{Uri}/{project.Id}/works"), workDto);
+
+            var workDb = await DbContext.Works
+                .Include(w => w.DeveloperProject)
+                .FirstAsync(w => w.Id == workDto.Id);
+            Assert.Equal(Status.Success, status);
+            Assert.NotNull(workDb.DeveloperProject);
+            Assert.Equal(project.Id, workDb.DeveloperProject.ProjectId);
+            Assert.Equal(SessionDeveloper.Id, workDb.DeveloperProject.DeveloperId);
+            Assert.Equal(workDto.StartTime, workDb.StartTime);
+            Assert.Equal(workDto.EndTime, workDb.EndTime);
+            Assert.Equal(workDto.Comment, workDb.Comment);
+            Assert.Equal(workDto.Hours, workDb.Hours);
+        }
+
+        [Fact]
+        public async void UpdateWorkProjectAsync()
+        {
+            var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
+            var work = EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+            var workDto = new WorkDto
+            {
+                Id = work.Id,
+                StartTime = DateTime.Now.AddHours(-3),
+                EndTime = DateTime.Now.AddHours(-1),
+                Comment = RandomHelper.RandomString(105),
+                Hours = 30
+            };
+
+            var (status, result) = await Request.PutAsync<ResultTest>(new Uri($"{Uri}/{project.Id}/works/{work.Id}"), workDto);
+
+            var workDb = await DbContext.Works
+                .Include(w => w.DeveloperProject)
+                .FirstAsync(w => w.Id == workDto.Id);
+            Assert.Equal(Status.Success, status);
+            Assert.NotNull(workDb.DeveloperProject);
+            Assert.Equal(project.Id, workDb.DeveloperProject.ProjectId);
+            Assert.Equal(SessionDeveloper.Id, workDb.DeveloperProject.DeveloperId);
+            Assert.Equal(workDto.StartTime, workDb.StartTime);
+            Assert.Equal(workDto.EndTime, workDb.EndTime);
+            Assert.Equal(workDto.Comment, workDb.Comment);
+            Assert.Equal(workDto.Hours, workDb.Hours);
+        }
+
+        [Fact]
+        public async void DeleteWorkProjectAsync()
+        {
+            var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
+            var work = EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+
+            var (status, result) = await Request.DeleteAsync<ResultTest>(new Uri($"{Uri}/{project.Id}/works/{work.Id}"));
+
+            var existWorkProject = await DbContext.Works.AnyAsync(d => d.Id == work.Id);
+            Assert.Equal(Status.Success, status);
+            Assert.True(result.Success);
+            Assert.False(existWorkProject);
         }
     }
 }

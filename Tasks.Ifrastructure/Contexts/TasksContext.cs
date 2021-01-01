@@ -2,6 +2,7 @@
 using System.Reflection;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Projects.Entities;
+using Tasks.Domain.Works.Entities;
 using Tasks.Ifrastructure.Seeders;
 
 namespace Tasks.Ifrastructure.Contexts
@@ -10,6 +11,7 @@ namespace Tasks.Ifrastructure.Contexts
     {
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Work> Works { get; set; }
 
         public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
 
