@@ -6,7 +6,7 @@ namespace Tasks.Domain.Developers.Dtos.Ranking
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public int AvgHours { get; set; }
-        public int SumHours { get; set; }
+        public float AvgHours { get; set; }
+        public float SumHours { get; set; }
     }
 }

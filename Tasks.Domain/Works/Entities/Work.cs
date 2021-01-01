@@ -10,7 +10,7 @@ namespace Tasks.Domain.Works.Entities
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
         public string Comment { get; private set; }
-        public int Hours { get; private set; }
+        public float Hours { get; private set; }
 
         public virtual DeveloperProject DeveloperProject { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Tasks.Domain.Works.Entities
             DateTime startTime,
             DateTime endTime,
             string comment,
-            int hours
+            float hours
         ) : base(id)
         {
             this.DeveloperProjectId = developerProjectId;
@@ -38,7 +38,7 @@ namespace Tasks.Domain.Works.Entities
             DateTime startTime,
             DateTime endTime,
             string comment,
-            int hours
+            float hours
         )
         {
             StartTime = startTime;

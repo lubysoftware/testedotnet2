@@ -6,6 +6,7 @@ using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Results;
 using Tasks.Domain._Common.Session;
 using Tasks.Domain.Projects.Dtos;
+using Tasks.Domain.Projects.Dtos.Works;
 using Tasks.Domain.Projects.Services;
 using Tasks.Domain.Works.Dtos;
 using Tasks.Domain.Works.Services;
@@ -59,15 +60,21 @@ namespace Tasks.API.Controllers
             return GetResult(await _projectService.DeleteProjectAsync(id));
         }
 
+        [HttpGet("{id}/works")]
+        public async Task<Result<IEnumerable<ProjectWorkListDto>>> ListWorkProjectsAsync([FromQuery] ProjectWorkSearchClientDto searchDto, [FromRoute] Guid id)
+        {
+            return GetResult(await _projectService.ListProjectWorksAsync(new ProjectWorkSearchDto(searchDto, id)));
+        }
+
         [HttpPost("{id}/works")]
-        public async Task<Result> CreateWorkProjectAsync([FromBody] WorkDto workDto, [FromRoute] Guid id)
+        public async Task<Result> CreateWorkProjectAsync([FromBody] WorkClientDto workDto, [FromRoute] Guid id)
         {
             var workCreateDto = new WorkCreateDto(workDto, id, _context.Id);
             return GetResult(await _workService.CreateWorkAsync(workCreateDto));
         }
 
         [HttpPut("{id}/works/{workId}")]
-        public async Task<Result> UpdateWorkProjectAsync([FromBody] WorkDto workDto, [FromRoute] Guid workId)
+        public async Task<Result> UpdateWorkProjectAsync([FromBody] WorkClientDto workDto, [FromRoute] Guid workId)
         {
             workDto.Id = workId;
             return GetResult(await _workService.UpdateWorkAsync(new WorkUpdateDto(workDto)));

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,19 +13,24 @@ using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.Developers.Services;
 using Tasks.Domain.External.Services;
+using Tasks.Domain.Projects.Dtos;
+using Tasks.Domain.Works.Repositories;
 
 namespace Tasks.Service.Developers
 {
     public class DeveloperService : IDeveloperService
     {
         private readonly IDeveloperRepository _developerRepository;
+        private readonly IWorkRepository _workRepository;
         private readonly IMockyService _mockyService;
         public DeveloperService(
             IDeveloperRepository developerRepository,
+            IWorkRepository workRepository,
             IMockyService mockyService
         )
         {
             _developerRepository = developerRepository;
+            _workRepository = workRepository;
             _mockyService = mockyService;
         }
 
@@ -75,14 +81,31 @@ namespace Tasks.Service.Developers
             return new Result<DeveloperDetailDto>(developerDetail);
         }
 
-        public Task<IEnumerable<DeveloperRankingListDto>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto)
+        public async Task<IEnumerable<DeveloperRankingListDto>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto)
         {
-            throw new NotImplementedException();
+            var rawWorkList = await _workRepository.Query()
+                .Where(w => w.StartTime >= searchDto.StartTime)
+                .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId)
+                .Select(w => new {
+                    w.Hours, Developer = new { Id = w.DeveloperProject.DeveloperId, w.DeveloperProject.Developer.Name }
+                })
+                .ToArrayAsync();
+
+            return rawWorkList.GroupBy(w => w.Developer.Id)
+                .Select(g => new DeveloperRankingListDto
+                {
+                    Id = g.Key,
+                    Name = g.FirstOrDefault()?.Developer.Name,
+                    SumHours = g.Sum(w => w.Hours),
+                    AvgHours = g.Average(w => w.Hours)
+                })
+                .OrderByDescending(d => d.AvgHours)
+                .Take(5);
         }
 
         public async Task<IEnumerable<DeveloperListDto>> ListDevelopersAsync(PaginationDto pagination)
         {
-            var developersList = _developerRepository.Query()
+            return await _developerRepository.Query()
                 .Skip(pagination.CalculateOffset())
                 .Take(pagination.Limit)
                 .Select(d => new DeveloperListDto
@@ -90,14 +113,30 @@ namespace Tasks.Service.Developers
                     Id = d.Id,
                     Name = d.Name
                 })
-                .ToArray();
-
-            return await Task.FromResult(developersList);
+                .ToArrayAsync();
         }
 
-        public Task<IEnumerable<DeveloperWorkListDto>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto)
+        public async Task<IEnumerable<DeveloperWorkListDto>> ListDeveloperWorksAsync(DeveloperWorkSearchDto searchDto)
         {
-            throw new NotImplementedException();
+            return await _workRepository.Query()
+                .Where(w => w.DeveloperProject.DeveloperId == searchDto.DeveloperId)
+                .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId)
+                .Skip(searchDto.CalculateOffset())
+                .Take(searchDto.Limit)
+                .Select(w => new DeveloperWorkListDto
+                {
+                    Id = w.Id,
+                    StartTime = w.StartTime,
+                    EndTime = w.EndTime,
+                    Comment = w.Comment,
+                    Hours = w.Hours,
+                    Project = new ProjectListDto
+                    {
+                        Id = w.DeveloperProject.ProjectId,
+                        Title = w.DeveloperProject.Project.Title
+                    },
+                })
+                .ToArrayAsync();
         }
 
         public async Task<Result> UpdateDeveloperAsync(DeveloperUpdateDto developerDto)

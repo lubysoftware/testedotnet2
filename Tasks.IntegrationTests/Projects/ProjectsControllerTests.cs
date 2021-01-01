@@ -122,7 +122,7 @@ namespace Tasks.IntegrationTests.Projects
         [InlineData(false)]
         public async void ListWorkProjectAsync(bool withFilter)
         {
-            var query = new ProjectWorkSearchDto { Page = 1, Limit = 1, DeveloperId = withFilter ? (Guid?)SessionDeveloper.Id : null };
+            var query = new ProjectWorkSearchClientDto { Page = 1, Limit = 1, DeveloperId = withFilter ? (Guid?)SessionDeveloper.Id : null };
             var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
             EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
             EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
@@ -150,7 +150,7 @@ namespace Tasks.IntegrationTests.Projects
         public async void CreateWorkProjectAsync()
         {
             var project = EntitiesFactory.NewProject(developerIds: new [] { SessionDeveloper.Id }).Save();
-            var workDto = new WorkDto
+            var workDto = new WorkClientDto
             {
                 Id = Guid.NewGuid(),
                 StartTime = DateTime.Now.AddMinutes(-30),
@@ -179,7 +179,7 @@ namespace Tasks.IntegrationTests.Projects
         {
             var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
             var work = EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
-            var workDto = new WorkDto
+            var workDto = new WorkClientDto
             {
                 Id = work.Id,
                 StartTime = DateTime.Now.AddHours(-3),

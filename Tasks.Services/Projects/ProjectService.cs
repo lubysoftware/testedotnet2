@@ -13,16 +13,21 @@ using Tasks.Domain.Projects.Dtos.Works;
 using Tasks.Domain.Projects.Entities;
 using Tasks.Domain.Projects.Repositories;
 using Tasks.Domain.Projects.Services;
+using Tasks.Domain.Works.Repositories;
 
 namespace Tasks.Service.Projects
 {
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IWorkRepository _workRepository;
 
-        public ProjectService(IProjectRepository projectRepository)
-        {
+        public ProjectService(
+            IProjectRepository projectRepository,
+            IWorkRepository workRepository
+        ) {
             _projectRepository = projectRepository;
+            _workRepository = workRepository;
         }
 
         public async Task<Result> CreateProjectAsync(ProjectCreateDto projectDto)
@@ -77,7 +82,7 @@ namespace Tasks.Service.Projects
 
         public async Task<IEnumerable<ProjectListDto>> ListProjectsAsync(PaginationDto pagination)
         {
-            var projectsList = _projectRepository.Query()
+            return await _projectRepository.Query()
                 .Skip(pagination.CalculateOffset())
                 .Take(pagination.Limit)
                 .Select(d => new ProjectListDto
@@ -85,14 +90,29 @@ namespace Tasks.Service.Projects
                     Id = d.Id,
                     Title = d.Title
                 })
-                .ToArray();
-
-            return await Task.FromResult(projectsList);
+                .ToArrayAsync();
         }
 
-        public Task<IEnumerable<ProjectWorkListDto>> ListProjectWorksAsync(ProjectWorkSearchDto searchDto)
+        public async Task<IEnumerable<ProjectWorkListDto>> ListProjectWorksAsync(ProjectWorkSearchDto searchDto)
         {
-            throw new NotImplementedException();
+            return await _workRepository.Query()
+                .Where(w => w.DeveloperProject.ProjectId == searchDto.ProjectId)
+                .Where(w => searchDto.DeveloperId == null || w.DeveloperProject.DeveloperId == searchDto.DeveloperId)
+                .Skip(searchDto.CalculateOffset())
+                .Take(searchDto.Limit)
+                .Select(w => new ProjectWorkListDto
+                {
+                    Id = w.Id,
+                    StartTime = w.StartTime,
+                    EndTime = w.EndTime,
+                    Comment = w.Comment,
+                    Hours = w.Hours,
+                    Developer = new DeveloperListDto { 
+                        Id = w.DeveloperProject.DeveloperId,    
+                        Name = w.DeveloperProject.Developer.Name
+                    },
+                })
+                .ToArrayAsync();
         }
 
         public async Task<Result> UpdateProjectAsync(ProjectUpdateDto projectDto)

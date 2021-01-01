@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tasks.Domain.Works.Dtos
 {
-    public class WorkDto
+    public class WorkClientDto
     {
         public Guid Id { get; set; }
 
@@ -19,6 +19,6 @@ namespace Tasks.Domain.Works.Dtos
 
         [Required]
         [Range(0.1, 3000)]
-        public int Hours { get; set; }
+        public float Hours { get; set; }
     }
 }

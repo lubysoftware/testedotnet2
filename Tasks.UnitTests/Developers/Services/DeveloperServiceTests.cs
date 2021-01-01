@@ -10,6 +10,7 @@ using Tasks.Domain.Developers.Dtos;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Developers.Repositories;
 using Tasks.Domain.External.Services;
+using Tasks.Domain.Works.Repositories;
 using Tasks.Service.Developers;
 using Tasks.UnitTests._Common;
 using Tasks.UnitTests._Common.Random;
@@ -20,11 +21,13 @@ namespace Tasks.UnitTests.Developers.Services
     public class DeveloperServiceTests : BaseTest
     {
         private readonly Mock<IDeveloperRepository> _developerRepository;
+        private readonly Mock<IWorkRepository> _workRepository;
         private readonly Mock<IMockyService> _mockyRepository;
 
         public DeveloperServiceTests(TasksFixture fixture) : base(fixture)
         {
             _developerRepository = new Mock<IDeveloperRepository>();
+            _workRepository = new Mock<IWorkRepository>();
             _mockyRepository = new Mock<IMockyService>();
         }
 
@@ -55,7 +58,7 @@ namespace Tasks.UnitTests.Developers.Services
             _mockyRepository.Setup(m => m.ValidateCPFAsync(developerDto.CPF))
                 .ReturnsAsync(new Result<bool>(validCPF));
 
-            var service = new DeveloperService(_developerRepository.Object, _mockyRepository.Object);
+            var service = new DeveloperService(_developerRepository.Object, _workRepository.Object, _mockyRepository.Object);
             var result = await service.CreateDeveloperAsync(developerDto);
 
             Assert.Equal(expectedStatus, result.Status);
@@ -98,7 +101,7 @@ namespace Tasks.UnitTests.Developers.Services
             _developerRepository.Setup(d => d.ExistByLoginAsync(developerDto.Login, developerDto.Id))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
 
-            var service = new DeveloperService(_developerRepository.Object, _mockyRepository.Object);
+            var service = new DeveloperService(_developerRepository.Object, _workRepository.Object, _mockyRepository.Object);
             var result = await service.UpdateDeveloperAsync(developerDto);
 
             Assert.Equal(expectedStatus, result.Status);
@@ -130,7 +133,7 @@ namespace Tasks.UnitTests.Developers.Services
             _developerRepository.Setup(d => d.GetByIdAsync(developer.Id))
                 .ReturnsAsync(developer);
 
-            var service = new DeveloperService(_developerRepository.Object, _mockyRepository.Object);
+            var service = new DeveloperService(_developerRepository.Object, _workRepository.Object, _mockyRepository.Object);
             var result = await service.DeleteDeveloperAsync(developer.Id);
 
             Assert.Equal(expectedStatus, result.Status);

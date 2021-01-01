@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Results;
 using Tasks.Domain.Developers.Dtos;
+using Tasks.Domain.Developers.Dtos.Ranking;
+using Tasks.Domain.Developers.Dtos.Works;
 using Tasks.Domain.Developers.Services;
 
 namespace Tasks.API.Controllers
@@ -30,6 +32,12 @@ namespace Tasks.API.Controllers
             return GetResult(await _developerService.ListDevelopersAsync(paginationDto));
         }
 
+        [HttpGet("ranking")]
+        public async Task<Result<IEnumerable<DeveloperRankingListDto>>> ListWorkProjectsAsync([FromQuery] DeveloperRankingSearchDto searchDto)
+        {
+            return GetResult(await _developerService.ListDeveloperRankingAsync(searchDto));
+        }
+
         [HttpPost]
         public async Task<Result> CreateDeveloperAsync([FromBody] DeveloperCreateDto developerDto)
         {
@@ -47,6 +55,12 @@ namespace Tasks.API.Controllers
         public async Task<Result> DeleteDeveloperAsync([FromRoute] Guid id) 
         { 
             return GetResult(await _developerService.DeleteDeveloperAsync(id));
+        }
+
+        [HttpGet("{id}/works")]
+        public async Task<Result<IEnumerable<DeveloperWorkListDto>>> ListWorkProjectsAsync([FromQuery] DeveloperWorkSearchClientDto searchDto, [FromRoute] Guid id)
+        {
+            return GetResult(await _developerService.ListDeveloperWorksAsync(new DeveloperWorkSearchDto(searchDto, id)));
         }
     }
 }

@@ -8,11 +8,11 @@ namespace Tasks.Domain.Works.Dtos
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string Comment { get; set; }
-        public int Hours { get; set; }
+        public float Hours { get; set; }
 
         public WorkUpdateDto() { }
 
-        public WorkUpdateDto(WorkDto dto) : this()
+        public WorkUpdateDto(WorkClientDto dto) : this()
         {
             Id = dto.Id;
             StartTime = dto.StartTime;

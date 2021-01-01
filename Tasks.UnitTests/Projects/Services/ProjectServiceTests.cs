@@ -11,16 +11,19 @@ using Tasks.Service.Projects;
 using Tasks.UnitTests._Common;
 using Tasks.UnitTests._Common.Random;
 using Xunit;
+using Tasks.Domain.Works.Repositories;
 
 namespace Tasks.UnitTests.Projects.Services
 {
     public class ProjectServiceTests : BaseTest
     {
         private readonly Mock<IProjectRepository> _projectRepository;
+        private readonly Mock<IWorkRepository> _workRepository;
 
         public ProjectServiceTests(TasksFixture fixture) : base(fixture)
         { 
             _projectRepository = new Mock<IProjectRepository>();
+            _workRepository = new Mock<IWorkRepository>();
         }
         public static IEnumerable<object[]> ProjectCreateData()
         {
@@ -42,7 +45,7 @@ namespace Tasks.UnitTests.Projects.Services
             _projectRepository.Setup(d => d.ExistByTitleAsync(projectDto.Title, default))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
 
-            var service = new ProjectService(_projectRepository.Object);
+            var service = new ProjectService(_projectRepository.Object, _workRepository.Object);
             var result = await service.CreateProjectAsync(projectDto);
 
             Assert.Equal(expectedStatus, result.Status);
@@ -85,7 +88,7 @@ namespace Tasks.UnitTests.Projects.Services
             _projectRepository.Setup(d => d.ExistByTitleAsync(projectDto.Title, projectDto.Id))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
 
-            var service = new ProjectService(_projectRepository.Object);
+            var service = new ProjectService(_projectRepository.Object, _workRepository.Object);
             var result = await service.UpdateProjectAsync(projectDto);
 
             Assert.Equal(expectedStatus, result.Status);
@@ -117,7 +120,7 @@ namespace Tasks.UnitTests.Projects.Services
             _projectRepository.Setup(d => d.GetByIdAsync(project.Id))
                 .ReturnsAsync(project);
 
-            var service = new ProjectService(_projectRepository.Object);
+            var service = new ProjectService(_projectRepository.Object, _workRepository.Object);
             var result = await service.DeleteProjectAsync(project.Id);
 
             Assert.Equal(expectedStatus, result.Status);

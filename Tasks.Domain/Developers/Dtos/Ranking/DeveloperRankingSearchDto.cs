@@ -5,7 +5,7 @@ namespace Tasks.Domain.Developers.Dtos.Ranking
     public class DeveloperRankingSearchDto
     {
         public Guid? ProjectId { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         public DeveloperRankingSearchDto()
         {

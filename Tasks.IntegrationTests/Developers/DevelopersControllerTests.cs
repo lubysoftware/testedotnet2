@@ -61,7 +61,7 @@ namespace Tasks.IntegrationTests.Developers
             var project = EntitiesFactory.NewProject(
                 developerIds: new[] { developerFirstPosition.Id, developerSecondPosition.Id }
             ).Save();
-            var query = new DeveloperRankingSearchDto { ProjectId = project.Id };
+            var query = new DeveloperRankingSearchDto { ProjectId = project.Id, StartTime = default };
             EntitiesFactory.NewWork(
                 hours: 10,
                 id: Guid.NewGuid(), 
@@ -95,10 +95,39 @@ namespace Tasks.IntegrationTests.Developers
             Assert.Equal(30, firstPosition.SumHours);
 
             var secondPosition = developerList.ElementAt(1);
-            Assert.Equal(developerFirstPosition.Id, secondPosition.Id);
-            Assert.Equal(developerFirstPosition.Name, secondPosition.Name);
+            Assert.Equal(developerSecondPosition.Id, secondPosition.Id);
+            Assert.Equal(developerSecondPosition.Name, secondPosition.Name);
             Assert.Equal(12, secondPosition.AvgHours);
             Assert.Equal(12, secondPosition.SumHours);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async void ListWorkDeveloperAsync(bool withFilter)
+        {
+            var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
+            var query = new DeveloperWorkSearchClientDto { Page = 1, Limit = 1, ProjectId = withFilter ? (Guid?)project.Id : null };
+            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
+
+            var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<DeveloperWorkListDto>>>(new Uri($"{Uri}/{SessionDeveloper.Id}/works"), query);
+
+            var workList = result.Data;
+            Assert.Equal(Status.Success, status);
+            Assert.NotEmpty(workList);
+            Assert.True(workList.Count() == query.Limit);
+            Assert.All(workList, work =>
+            {
+                Assert.True(work.Hours > 0);
+                Assert.NotEmpty(work.Comment);
+                Assert.NotNull(work.Project);
+                if (withFilter)
+                {
+                    Assert.Equal(project.Id, work.Project.Id);
+                    Assert.Equal(project.Title, work.Project.Title);
+                }
+            });
         }
 
         [Fact]
@@ -154,35 +183,6 @@ namespace Tasks.IntegrationTests.Developers
             Assert.Equal(Status.Success, status);
             Assert.True(result.Success);
             Assert.False(existDeveloper);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public async void ListWorkDeveloperAsync(bool withFilter)
-        {
-            var project = EntitiesFactory.NewProject(developerIds: new[] { SessionDeveloper.Id }).Save();
-            var query = new DeveloperWorkSearchDto { Page = 1, Limit = 1, ProjectId = withFilter ? (Guid?)project.Id : null };
-            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
-            EntitiesFactory.NewWork(Guid.NewGuid(), project.DeveloperProjects.Single().Id).Save();
-
-            var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<DeveloperWorkListDto>>>(new Uri($"{Uri}/{SessionDeveloper.Id}/works"), query);
-
-            var workList = result.Data;
-            Assert.Equal(Status.Success, status);
-            Assert.NotEmpty(workList);
-            Assert.True(workList.Count() == query.Limit);
-            Assert.All(workList, work =>
-            {
-                Assert.True(work.Hours > 0);
-                Assert.NotEmpty(work.Comment);
-                Assert.NotNull(work.Project);
-                if (withFilter)
-                {
-                    Assert.Equal(project.Id, work.Project.Id);
-                    Assert.Equal(project.Title, work.Project.Title);
-                }
-            });
         }
     }
 }
