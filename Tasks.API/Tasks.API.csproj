@@ -12,5 +12,7 @@
     <ProjectReference Include="..\Tasks.CrossCutting\Tasks.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://docs.renovatebot.com/renovate-schema.json" /></VisualStudio></ProjectExtensions>
+
 
 </Project>

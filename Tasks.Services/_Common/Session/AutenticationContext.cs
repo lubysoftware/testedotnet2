@@ -7,20 +7,21 @@ namespace Tasks.Services._Common.Session
 {
     public class AutenticationContext : IAutenticationContext
     {
-        public Guid Id => GetClaimValue<Guid>(nameof(Id));
+        public bool IsAuthenticated => _context.HttpContext.User.Identity.IsAuthenticated;
+        public Guid Id => new Guid(GetClaimValue<string>(nameof(Id)));
         public string Login => GetClaimValue<string>(nameof(Login));
 
-        private readonly HttpContext _context;
+        private readonly IHttpContextAccessor _context;
 
-        public AutenticationContext(HttpContext context)
+        public AutenticationContext(IHttpContextAccessor context)
         {
             _context = context;
         }
 
         private T GetClaimValue<T>(string key)
         {
-            if (!_context.User.Identity.IsAuthenticated) return default;
-            var claim = _context.User.Claims.FirstOrDefault(c => c.Type == key);
+            if (!_context.HttpContext.User.Identity.IsAuthenticated) return default;
+            var claim = _context.HttpContext.User.Claims.FirstOrDefault(c => c.Type == key);
             if (claim == null) return default;
             return (T)Convert.ChangeType(claim.Value, typeof(T));
         }

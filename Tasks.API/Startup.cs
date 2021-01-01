@@ -30,6 +30,7 @@ namespace Tasks.API
         {
             services.AddServices();
             services.AddRepositories();
+            services.AddHttpContextAccessor();
             services.AddDatabases(_configuration);
 
             services.ConfigureTokenJwt(_configuration);

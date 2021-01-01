@@ -4,18 +4,28 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tasks.Domain._Common.Dtos;
 using Tasks.Domain._Common.Results;
+using Tasks.Domain._Common.Session;
 using Tasks.Domain.Projects.Dtos;
 using Tasks.Domain.Projects.Services;
+using Tasks.Domain.Works.Dtos;
+using Tasks.Domain.Works.Services;
 
 namespace Tasks.API.Controllers
 {
     public class ProjectsController : TasksControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IWorkService _workService;
+        private readonly IAutenticationContext _context;
 
-        public ProjectsController(IProjectService projectService)
-        {
+        public ProjectsController(
+            IProjectService projectService,
+            IWorkService workService,
+            IAutenticationContext context
+        ) {
             _projectService = projectService;
+            _workService = workService;
+            _context = context;
         }
 
         [HttpGet("{id}")]
@@ -47,6 +57,26 @@ namespace Tasks.API.Controllers
         public async Task<Result> DeleteProjectAsync([FromRoute] Guid id) 
         { 
             return GetResult(await _projectService.DeleteProjectAsync(id));
+        }
+
+        [HttpPost("{id}/works")]
+        public async Task<Result> CreateWorkProjectAsync([FromBody] WorkDto workDto, [FromRoute] Guid id)
+        {
+            var workCreateDto = new WorkCreateDto(workDto, id, _context.Id);
+            return GetResult(await _workService.CreateWorkAsync(workCreateDto));
+        }
+
+        [HttpPut("{id}/works/{workId}")]
+        public async Task<Result> UpdateWorkProjectAsync([FromBody] WorkDto workDto, [FromRoute] Guid workId)
+        {
+            workDto.Id = workId;
+            return GetResult(await _workService.UpdateWorkAsync(new WorkUpdateDto(workDto)));
+        }
+
+        [HttpDelete("{id}/works/{workId}")]
+        public async Task<Result> DeleteWorkProjectAsync([FromRoute] Guid workId)
+        {
+            return GetResult(await _workService.DeleteWorkAsync(workId));
         }
     }
 }

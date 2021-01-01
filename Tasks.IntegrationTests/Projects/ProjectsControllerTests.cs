@@ -138,8 +138,8 @@ namespace Tasks.IntegrationTests.Projects
             Assert.NotNull(workDb.DeveloperProject);
             Assert.Equal(project.Id, workDb.DeveloperProject.ProjectId);
             Assert.Equal(SessionDeveloper.Id, workDb.DeveloperProject.DeveloperId);
-            Assert.Equal(workDto.StartTime, workDb.StartTime);
-            Assert.Equal(workDto.EndTime, workDb.EndTime);
+            Assert.Equal(workDto.StartTime, workDb.StartTime, TimeSpan.FromSeconds(5));
+            Assert.Equal(workDto.EndTime, workDb.EndTime, TimeSpan.FromSeconds(5));
             Assert.Equal(workDto.Comment, workDb.Comment);
             Assert.Equal(workDto.Hours, workDb.Hours);
         }
@@ -163,12 +163,13 @@ namespace Tasks.IntegrationTests.Projects
             var workDb = await DbContext.Works
                 .Include(w => w.DeveloperProject)
                 .FirstAsync(w => w.Id == workDto.Id);
+            await DbContext.Entry(workDb).ReloadAsync();
             Assert.Equal(Status.Success, status);
             Assert.NotNull(workDb.DeveloperProject);
             Assert.Equal(project.Id, workDb.DeveloperProject.ProjectId);
             Assert.Equal(SessionDeveloper.Id, workDb.DeveloperProject.DeveloperId);
-            Assert.Equal(workDto.StartTime, workDb.StartTime);
-            Assert.Equal(workDto.EndTime, workDb.EndTime);
+            Assert.Equal(workDto.StartTime, workDb.StartTime, TimeSpan.FromSeconds(5));
+            Assert.Equal(workDto.EndTime, workDb.EndTime, TimeSpan.FromSeconds(5));
             Assert.Equal(workDto.Comment, workDb.Comment);
             Assert.Equal(workDto.Hours, workDb.Hours);
         }

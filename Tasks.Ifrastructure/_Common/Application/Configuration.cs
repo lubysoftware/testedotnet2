@@ -8,7 +8,7 @@ namespace Tasks.Ifrastructure._Common.Application
         public static IConfiguration GetConfiguration(string environment = default)
         {
             if (string.IsNullOrWhiteSpace(environment))
-                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
             return new ConfigurationBuilder()
                 .SetBasePath(Project.GetDirectory("Tasks.API"))
                 .AddJsonFile($"appsettings.{environment}.json")

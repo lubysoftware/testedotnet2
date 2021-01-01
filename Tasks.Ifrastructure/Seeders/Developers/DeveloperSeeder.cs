@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Ifrastructure._Common.Interfaces;
 
@@ -12,7 +11,7 @@ namespace Tasks.Ifrastructure.Seeders.Developers
         {
             return new List<Developer> { 
                 new Developer(
-                    id: Guid.NewGuid(),
+                    id: new Guid("86b6b3a7-965e-46dd-843d-661f6e76ded1"),
                     name: "Pleno",
                     login: "pleno",
                     cpf: "13467669085",

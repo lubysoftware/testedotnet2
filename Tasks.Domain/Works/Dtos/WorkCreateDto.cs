@@ -11,5 +11,18 @@ namespace Tasks.Domain.Works.Dtos
         public DateTime EndTime { get; set; }
         public string Comment { get; set; }
         public int Hours { get; set; }
+
+        public WorkCreateDto() { }
+
+        public WorkCreateDto(WorkDto dto, Guid projectId, Guid developerId) : this()
+        {
+            Id = dto.Id;
+            StartTime = dto.StartTime;
+            EndTime = dto.EndTime;
+            Comment = dto.Comment;
+            Hours = dto.Hours;
+            ProjectId = projectId;
+            DeveloperId = developerId;
+        }
     }
 }
