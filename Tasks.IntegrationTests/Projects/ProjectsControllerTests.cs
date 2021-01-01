@@ -40,15 +40,17 @@ namespace Tasks.IntegrationTests.Projects
         [Fact]
         public async void ListProjectsTest()
         {
+            EntitiesFactory.NewProject().Save();
+            EntitiesFactory.NewProject().Save();
             var query = new PaginationDto { Page = 1, Limit = 1 };
-            EntitiesFactory.NewProject().Save();
-            EntitiesFactory.NewProject().Save();
+            var expectedTotal = await DbContext.Projects.CountAsync();
 
             var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<ProjectListDto>>>(Uri, query);
 
             var projectList = result.Data;
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(projectList);
+            Assert.Equal(expectedTotal, result.TotalRows);
             Assert.True(projectList.Count() == query.Limit);
         }
 
@@ -132,6 +134,7 @@ namespace Tasks.IntegrationTests.Projects
             var workList = result.Data;
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(workList);
+            Assert.True(result.TotalRows > 0);
             Assert.True(workList.Count() == query.Limit);
             Assert.All(workList, work =>
             {

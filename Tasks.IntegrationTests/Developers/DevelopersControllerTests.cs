@@ -36,15 +36,17 @@ namespace Tasks.IntegrationTests.Developers
         [Fact]
         public async void ListDevelopersTest()
         {
+            EntitiesFactory.NewDeveloper().Save();
+            EntitiesFactory.NewDeveloper().Save();
             var query = new PaginationDto { Page = 1, Limit = 1 };
-            EntitiesFactory.NewDeveloper().Save();
-            EntitiesFactory.NewDeveloper().Save();
+            var expectedTotal = await DbContext.Developers.CountAsync();
 
             var (status, result) = await Request.GetAsync<ResultTest<IEnumerable<DeveloperListDto>>>(Uri, query);
 
             var developerList = result.Data;
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(developerList);
+            Assert.Equal(expectedTotal, result.TotalRows);
             Assert.True(developerList.Count() == query.Limit);
         }
 
@@ -87,6 +89,7 @@ namespace Tasks.IntegrationTests.Developers
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(developerList);
             Assert.Equal(2, developerList.Count());
+            Assert.Equal(2, result.TotalRows);
 
             var firstPosition = developerList.ElementAt(0);
             Assert.Equal(developerFirstPosition.Id, firstPosition.Id);
@@ -116,6 +119,7 @@ namespace Tasks.IntegrationTests.Developers
             var workList = result.Data;
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(workList);
+            Assert.True(result.TotalRows > 0);
             Assert.True(workList.Count() == query.Limit);
             Assert.All(workList, work =>
             {
