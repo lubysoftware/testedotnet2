@@ -10,6 +10,7 @@ namespace Tasks.Domain.Projects.Services
     public interface IProjectService {
         Task<Result<ProjectDetailDto>> GetProjectByIdAsync(Guid id);
         Task<IEnumerable<ProjectListDto>> ListProjectsAsync(PaginationDto paginationDto);
+        Task<IEnumerable<ProjectWorkListDto>> ListProjectWorksAsync(PaginationDto paginationDto);
         Task<Result> CreateProjectAsync(ProjectCreateDto projectDto);
         Task<Result> UpdateProjectAsync(ProjectUpdateDto projectDto);
         Task<Result> DeleteProjectAsync(Guid id);
