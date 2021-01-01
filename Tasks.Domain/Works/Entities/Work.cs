@@ -10,6 +10,7 @@ namespace Tasks.Domain.Works.Entities
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
         public string Comment { get; private set; }
+        public int Hours { get; private set; }
 
         public virtual DeveloperProject DeveloperProject { get; private set; }
 
@@ -20,26 +21,30 @@ namespace Tasks.Domain.Works.Entities
             Guid developerProjectId,
             DateTime startTime,
             DateTime endTime,
-            string comment
+            string comment,
+            int hours
         ) : base(id)
         {
             this.DeveloperProjectId = developerProjectId;
             SetData(
                 startTime: startTime,
                 endTime: endTime,
-                comment: comment
+                comment: comment,
+                hours: hours
             );
         }
 
         public void SetData(
             DateTime startTime,
             DateTime endTime,
-            string comment
+            string comment,
+            int hours
         )
         {
             StartTime = startTime;
             EndTime = endTime;
             Comment = comment;
+            Hours = hours;
         }
     }
 }

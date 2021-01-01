@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
 using Tasks.Ifrastructure._Common.Application;
 
 namespace Tasks.Ifrastructure.Contexts

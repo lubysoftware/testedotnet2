@@ -19,13 +19,13 @@ namespace Tasks.Service.External
             _mockyConfiguration = mockyConfiguration;
         }
 
-        public async Task<Result<bool>> SendNotification(string title, string message)
+        public async Task<Result<bool>> SendNotificationAsync(string title, string message)
         {
             var result = await GetAsync("a1b59b8e-577d-4996-a4c5-56215907d9dd");
             return new Result<bool>(result.Status, result.ErrorMessages, result.Data == "Enviado");
         }
 
-        public async Task<Result<bool>> ValidateCPF(string cpf)
+        public async Task<Result<bool>> ValidateCPFAsync(string cpf)
         {
             var result = await GetAsync("067108b3-77a4-400b-af07-2db3141e95c9");
             return new Result<bool>(result.Status, result.ErrorMessages, result.Data == "Autorizado");

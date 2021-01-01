@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Threading.Tasks;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Projects.Entities;
 using Tasks.Ifrastructure.Seeders;
@@ -18,6 +17,7 @@ namespace Tasks.Ifrastructure.Contexts
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             new TasksSeed().Seed(builder);
+
             base.OnModelCreating(builder);
         }
     }

@@ -46,7 +46,7 @@ namespace Tasks.Domain.Projects.Entities
             this.UpdateDeveloperProjects(developerProjects);
         }
 
-        public void UpdateDeveloperProjects(IEnumerable<DeveloperProject> developerProjects)
+        private void UpdateDeveloperProjects(IEnumerable<DeveloperProject> developerProjects)
         {
             if (developerProjects == null) return;
             _developerProjects.RemoveAll(dp => !developerProjects.Any(a => a.DeveloperId == dp.DeveloperId));

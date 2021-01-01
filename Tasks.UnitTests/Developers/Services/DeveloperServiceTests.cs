@@ -52,7 +52,7 @@ namespace Tasks.UnitTests.Developers.Services
             _developerRepository.Setup(d => d.CreateAsync(Capture.In(developersPersisted)));
             _developerRepository.Setup(d => d.ExistByLoginAsync(developerDto.Login, default))
                 .ReturnsAsync(expectedStatus == Status.Conflict);
-            _mockyRepository.Setup(m => m.ValidateCPF(developerDto.CPF))
+            _mockyRepository.Setup(m => m.ValidateCPFAsync(developerDto.CPF))
                 .ReturnsAsync(new Result<bool>(validCPF));
 
             var service = new DeveloperService(_developerRepository.Object, _mockyRepository.Object);
@@ -62,6 +62,7 @@ namespace Tasks.UnitTests.Developers.Services
             if (expectedStatus == Status.Success)
             {
                 _developerRepository.Verify(d => d.CreateAsync(It.IsAny<Developer>()), Times.Once);
+                _mockyRepository.Verify(d => d.ValidateCPFAsync(developerDto.CPF), Times.Once);
                 var developer = developersPersisted.Single();
                 Assert.Equal(developerDto.Name, developer.Name);
                 Assert.Equal(developerDto.Login, developer.Login);

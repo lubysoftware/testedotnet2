@@ -3,22 +3,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tasks.Domain.Works.Dtos
 {
-    public class WorkProjectCreateDto
+    public class WorkDto
     {
-        [Required]
-        public Guid ProjectId { get; set; }
-
-        [Required]
-        public Guid DeveloperId { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public DateTime StartTime { get; set; }
-        
+
         [Required]
         public DateTime EndTime { get; set; }
-        
+
         [Required]
         [MaxLength(300)]
         public string Comment { get; set; }
+
+        [Required]
+        [Range(0.1, 3000)]
+        public int Hours { get; set; }
     }
 }

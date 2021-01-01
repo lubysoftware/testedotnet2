@@ -30,7 +30,7 @@ namespace Tasks.Service.Developers
         {
             var existLogin = await _developerRepository.ExistByLoginAsync(developerDto.Login);
             if (existLogin) return new Result(Status.Conflict, $"Developer with {nameof(developerDto.Login)} already exist");
-            var validCpf = await _mockyService.ValidateCPF(developerDto.CPF);
+            var validCpf = await _mockyService.ValidateCPFAsync(developerDto.CPF);
             if (!validCpf.Success) return new Result(validCpf.Status, validCpf.ErrorMessages);
             if (!validCpf.Data) return new Result(Status.Invalid, $"Parameter {nameof(developerDto.CPF)} is not valid");
 

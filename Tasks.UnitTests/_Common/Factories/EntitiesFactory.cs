@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tasks.Domain.Developers.Entities;
 using Tasks.Domain.Projects.Entities;
+using Tasks.Domain.Works.Entities;
 using Tasks.Ifrastructure.Contexts;
 using Tasks.UnitTests._Common.Builders;
 using Tasks.UnitTests._Common.Random;
@@ -22,15 +23,24 @@ namespace Tasks.UnitTests._Common.Factories
             Guid id = default,
             string name = default,
             string login = default,
-            string password = default
+            string password = default,
+            IEnumerable<Guid> projectIds = default
         )
         {
+            var developerId = id == Guid.Empty ? Guid.NewGuid() : id;
             var developer = new Developer(
                 id: id == default ? Guid.Empty : id,
                 name: name ?? RandomHelper.RandomString(),
                 login: login ?? RandomHelper.RandomString(),
                 cpf: RandomHelper.RandomNumbers(11),
-                password: password ?? RandomHelper.RandomString()
+                password: password ?? RandomHelper.RandomString(),
+                developerProjects: projectIds?.Select(projectId =>
+                    new DeveloperProject(
+                        id: Guid.Empty,
+                        developerId: developerId,
+                        projectId: projectId
+                    )
+                )
             );
 
             return new BuilderFactory<Developer>(developer, _context);
@@ -57,6 +67,23 @@ namespace Tasks.UnitTests._Common.Factories
             );
 
             return new BuilderFactory<Project>(project, _context);
+        }
+
+        public BuilderFactory<Work> NewWork(
+            Guid id,
+            Guid developerProjectId
+        )
+        {
+            var work = new Work(
+                id: id == Guid.Empty ? Guid.NewGuid() : id,
+                developerProjectId: developerProjectId,
+                startTime: DateTime.Now.AddMinutes(-15),
+                endTime: DateTime.Now, 
+                comment: RandomHelper.RandomString(250),
+                hours: 15
+            );
+
+            return new BuilderFactory<Work>(work, _context);
         }
     }
 }
