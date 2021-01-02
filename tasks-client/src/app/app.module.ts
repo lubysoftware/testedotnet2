@@ -22,7 +22,7 @@ import { LayoutComponent } from './shared/components/layout/layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AvatarModule } from 'ngx-avatar';
 import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
-import { DeveloperListComponent } from './developer/developer-list/developer-list.component';
+import { DeveloperListComponent } from './developers/developer-list/developer-list.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
@@ -31,7 +31,8 @@ import { ConfirmDialogComponent } from './shared/components/dialogs/confirm-dial
 import { DialogService } from './shared/services/dialog.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxMaskModule } from 'ngx-mask';
-import { DeveloperFormComponent } from './developer/developer-form/developer-form.component';
+import { DeveloperFormComponent } from './developers/developer-form/developer-form.component';
+import { ProjectListComponent } from './projects/project-list/project-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DeveloperFormComponent } from './developer/developer-form/developer-for
     LayoutComponent,
     DeveloperListComponent,
     ConfirmDialogComponent,
-    DeveloperFormComponent
+    DeveloperFormComponent,
+    ProjectListComponent
   ],
   imports: [
     BrowserModule,

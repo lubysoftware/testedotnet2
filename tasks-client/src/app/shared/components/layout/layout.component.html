@@ -25,6 +25,10 @@
               <mat-icon>home</mat-icon>&nbsp;&nbsp;&nbsp;
               <div>Página Inicial</div>
           </a>
+          <a mat-list-item [routerLink]="['/projects']" [routerLinkActive]="['is-active']">
+              <mat-icon>developer_board</mat-icon>&nbsp;&nbsp;&nbsp;
+              <div>Projetos</div>
+          </a>
           <a mat-list-item [routerLink]="['/developers']" [routerLinkActive]="['is-active']">
               <mat-icon>code</mat-icon>&nbsp;&nbsp;&nbsp;
               <div>Desenvolvedores</div>

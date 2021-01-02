@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { tap } from 'rxjs/operators';
 import { LoginDto } from 'src/app/auth/dtos/login.dto';
 import { TokenDto } from 'src/app/auth/dtos/token.dto';
-import { DeveloperDetailDto } from 'src/app/developer/dtos/developer-detail.dto';
+import { DeveloperDetailDto } from 'src/app/developers/dtos/developer-detail.dto';
 import { environment } from 'src/environments/environment';
 import { Result } from '../models/result';
 import { ResultType } from '../models/result-type';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DeveloperDetailDto } from 'src/app/developer/dtos/developer-detail.dto';
+import { DeveloperDetailDto } from 'src/app/developers/dtos/developer-detail.dto';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({

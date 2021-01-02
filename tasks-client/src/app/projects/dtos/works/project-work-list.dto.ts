@@ -1,4 +1,4 @@
-import { DeveloperListDto } from "src/app/developer/dtos/developer-list.dto";
+import { DeveloperListDto } from "src/app/developers/dtos/developer-list.dto";
 
 export interface ProjectWorkListDto {
   id: string;
