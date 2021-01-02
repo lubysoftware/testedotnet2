@@ -72,12 +72,22 @@ namespace Tasks.API
                 validation.ValidateIssuer = true;
                 validation.ClockSkew = TimeSpan.Zero;
             });
+
+
+            services.AddCors(o => o.AddPolicy("AllowOrigin", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+
+            app.UseCors("AllowOrigin");
 
             app.UseHttpsRedirection();
 

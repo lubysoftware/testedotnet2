@@ -13,6 +13,7 @@ import { LoginFormComponent } from './auth/login-form/login-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FlexLayoutModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatSnackBarModule,
     MatButtonModule,
     MatInputModule,
     MatCardModule,

@@ -66,6 +66,7 @@ namespace Tasks.Service.Developers
             var tokenDto = new TokenDto
             {
                 Id = developer.Id,
+                Name = developer.Name,
                 Login = developer.Login,
                 Token = handler.WriteToken(securityToken),
                 CreatedAt = created,
