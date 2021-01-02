@@ -11,6 +11,7 @@
         }
 
         public int DeveloperId { get; set; }
+
         public Developer Developer { get; set; }
 
         public int ProjectId { get; set; }

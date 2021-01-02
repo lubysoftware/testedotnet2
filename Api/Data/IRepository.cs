@@ -1,6 +1,8 @@
 ﻿using Api.Models;
-using System;
+using System.Threading.Tasks;
+using TesteDotnet.Helpers;
 using TesteDotnet.Models.ViewModels;
+using TesteDotnet.V1.Dtos;
 
 namespace TesteDotnet.Data
 {
@@ -14,21 +16,21 @@ namespace TesteDotnet.Data
 
         bool SaveChanges();
 
-        Developer[] GetAllDevelopers();
+        Task<PageList<Developer>> GetAllDevelopersAsync(PageParams pageParams);
 
-        Developer GetDeveloperById(int developerId);
+        Task<Developer> GetDeveloperByIdAsync(int developerId);
 
-        Developer GetDeveloperLogin(string email, string password);
+        Task<Developer> GetDeveloperLoginAsync(string email, string password);
 
-        WorkedHoursRank[] GetDeveloperRank();
+        Task<WorkedHoursRank[]> GetDeveloperRankAsync();
 
-        Project[] GetAllProjects();
+        Task<PageList<Project>> GetAllProjectsAsync(PageParams pageParams);
 
-        Project GetProjectById(int projectId);
+        Task<Project> GetProjectByIdAsync(int projectId);
 
-        Entry[] GetAllEntries();
+        Task<Entry[]> GetAllEntriesAsync();
 
-        Entry GetEntryById(int entryId);
+        Task<Entry> GetEntryByIdAsync(int entryId);
 
         bool IsDateAvailable(Entry entry);
 

@@ -36,6 +36,17 @@ namespace TesteDotnet.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkedHoursRank",
+                columns: table => new
+                {
+                    DeveloperId = table.Column<int>(type: "int", nullable: false),
+                    WorkedHours = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DeveloperProject",
                 columns: table => new
                 {
@@ -70,9 +81,9 @@ namespace TesteDotnet.Migrations
                     InitialDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeveloperId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
                     DeveloperId1 = table.Column<int>(type: "int", nullable: true),
-                    DeveloperCPF = table.Column<string>(type: "nvarchar(11)", nullable: true),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                    DeveloperCPF = table.Column<string>(type: "nvarchar(11)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,9 +107,18 @@ namespace TesteDotnet.Migrations
                 columns: new[] { "CPF", "Id", "Email", "Name", "Password" },
                 values: new object[,]
                 {
-                    { "12345678900", 1, "abc@gmail.com", "Leonardo", "1234" },
-                    { "12345678901", 2, "abc1@gmail.com", "Maria", "1234" },
-                    { "12345678902", 3, "abc2@gmail.com", "José", "1234" }
+                    { "54011152021", 1, "leonardo@gmail.com", "Leonardo", "1234" },
+                    { "83336894000", 2, "abc1@gmail.com", "Maria", "1234" },
+                    { "07426071006", 3, "abc2@gmail.com", "José", "1234" },
+                    { "01928079008", 4, "abc3@gmail.com", "Leonardo2", "1234" },
+                    { "13757262000", 5, "abc4@gmail.com", "Maria2", "1234" },
+                    { "70610579045", 6, "abc5@gmail.com", "José2", "1234" },
+                    { "05827793086", 7, "abc6@gmail.com", "Leonardo3", "1234" },
+                    { "65451565007", 8, "abc7@gmail.com", "Maria3", "1234" },
+                    { "40687197058", 9, "abc8@gmail.com", "José3", "1234" },
+                    { "28596429000", 10, "abc9@gmail.com", "Leonardo4", "1234" },
+                    { "54621768050", 11, "abc10@gmail.com", "Maria4", "1234" },
+                    { "55705968019", 12, "abc11@gmail.com", "José4", "1234" }
                 });
 
             migrationBuilder.InsertData(
@@ -125,8 +145,23 @@ namespace TesteDotnet.Migrations
                 columns: new[] { "Id", "DeveloperCPF", "DeveloperId", "DeveloperId1", "EndDate", "InitialDate", "ProjectId" },
                 values: new object[,]
                 {
-                    { 1, null, 1, null, new DateTime(2021, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 30, 14, 8, 34, 990, DateTimeKind.Local).AddTicks(6175), 1 },
-                    { 2, null, 2, null, new DateTime(2021, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 12, 30, 14, 8, 35, 2, DateTimeKind.Local).AddTicks(7430), 2 }
+                    { 16, null, 5, null, new DateTime(2021, 1, 19, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 19, 14, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 15, null, 4, null, new DateTime(2021, 1, 20, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 20, 14, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 14, null, 4, null, new DateTime(2021, 1, 19, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 19, 14, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 13, null, 3, null, new DateTime(2021, 1, 20, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 20, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 12, null, 3, null, new DateTime(2021, 1, 19, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 19, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 11, null, 3, null, new DateTime(2021, 1, 18, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 17, null, 5, null, new DateTime(2021, 1, 20, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 20, 14, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 10, null, 2, null, new DateTime(2021, 1, 19, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 19, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 8, null, 2, null, new DateTime(2021, 1, 17, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 7, null, 2, null, new DateTime(2021, 1, 16, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 16, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 5, null, 1, null, new DateTime(2021, 1, 19, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 19, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 4, null, 1, null, new DateTime(2021, 1, 18, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, null, 1, null, new DateTime(2021, 1, 17, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, null, 1, null, new DateTime(2021, 1, 16, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 16, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 1, null, 1, null, new DateTime(2021, 1, 15, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 15, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 9, null, 2, null, new DateTime(2021, 1, 18, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 18, 14, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 18, null, 6, null, new DateTime(2021, 1, 20, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 20, 14, 0, 0, 0, DateTimeKind.Unspecified), 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -157,6 +192,9 @@ namespace TesteDotnet.Migrations
 
             migrationBuilder.DropTable(
                 name: "Entry");
+
+            migrationBuilder.DropTable(
+                name: "WorkedHoursRank");
 
             migrationBuilder.DropTable(
                 name: "Developer");

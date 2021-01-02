@@ -40,7 +40,7 @@
             <param name="repo"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.GetDeveloper">
+        <member name="M:TesteDotnet.V1.Controllers.DevelopersController.GetDeveloper(TesteDotnet.Helpers.PageParams)">
             <summary>
             Return all developers
             </summary>
@@ -57,7 +57,6 @@
             <summary>
             Get rank of the 5 developers in a week
             </summary>
-            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:TesteDotnet.V1.Controllers.DevelopersController.PutDeveloper(System.Int32,TesteDotnet.V1.Dtos.DeveloperDto)">
@@ -65,14 +64,14 @@
             Update a developer
             </summary>
             <param name="id"></param>
-            <param name="developer"></param>
+            <param name="developerDto"></param>
             <returns></returns>
         </member>
         <member name="M:TesteDotnet.V1.Controllers.DevelopersController.PostDeveloper(TesteDotnet.V1.Dtos.DeveloperDto)">
             <summary>
             Create a new Developer
             </summary>
-            <param name="developer"></param>
+            <param name="developerDto"></param>
             <returns></returns>
         </member>
         <member name="M:TesteDotnet.V1.Controllers.DevelopersController.DeleteDeveloper(System.Int32)">
@@ -87,11 +86,12 @@
             Controller for Entries
             </summary>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.EntriesController.#ctor(TesteDotnet.Data.IRepository)">
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.#ctor(TesteDotnet.Data.IRepository,AutoMapper.IMapper)">
             <summary>
             
             </summary>
             <param name="repo"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:TesteDotnet.V1.Controllers.EntriesController.GetEntry">
             <summary>
@@ -106,19 +106,19 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.EntriesController.PutEntry(System.Int32,Api.Models.Entry)">
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.PutEntry(System.Int32,TesteDotnet.V1.Dtos.EntryDto)">
             <summary>
             Update an entry
             </summary>
             <param name="id"></param>
-            <param name="entry"></param>
+            <param name="entryDto"></param>
             <returns></returns>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.EntriesController.PostEntry(Api.Models.Entry)">
+        <member name="M:TesteDotnet.V1.Controllers.EntriesController.PostEntry(TesteDotnet.V1.Dtos.EntryDto)">
             <summary>
             Create an Entry
             </summary>
-            <param name="entry"></param>
+            <param name="entryDto"></param>
             <returns></returns>
         </member>
         <member name="M:TesteDotnet.V1.Controllers.EntriesController.DeleteEntry(System.Int32)">
@@ -133,13 +133,14 @@
             Controller for Projects
             </summary>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.#ctor(TesteDotnet.Data.IRepository)">
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.#ctor(TesteDotnet.Data.IRepository,AutoMapper.IMapper)">
             <summary>
             
             </summary>
             <param name="repo"></param>
+            <param name="mapper"></param>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.GetProject">
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.GetProject(TesteDotnet.Helpers.PageParams)">
             <summary>
             Get all projects 
             </summary>
@@ -152,19 +153,19 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.PutProject(System.Int32,Api.Models.Project)">
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.PutProject(System.Int32,TesteDotnet.V1.Dtos.ProjectDto)">
             <summary>
             Update a project
             </summary>
             <param name="id"></param>
-            <param name="project"></param>
+            <param name="projectDto"></param>
             <returns></returns>
         </member>
-        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.PostProject(Api.Models.Project)">
+        <member name="M:TesteDotnet.V1.Controllers.ProjectsController.PostProject(TesteDotnet.V1.Dtos.ProjectDto)">
             <summary>
             Create a project
             </summary>
-            <param name="project"></param>
+            <param name="projectDto"></param>
             <returns></returns>
         </member>
         <member name="M:TesteDotnet.V1.Controllers.ProjectsController.DeleteProject(System.Int32)">

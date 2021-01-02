@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using TesteDotnet.Data;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using TesteDotnet.V1.Dtos;
+using System.Threading.Tasks;
+using TesteDotnet.Helpers;
 
 namespace TesteDotnet.V1.Controllers
 {
@@ -16,13 +20,16 @@ namespace TesteDotnet.V1.Controllers
     public class ProjectsController : ControllerBase
     {
         public readonly IRepository _repo;
+        private IMapper _mapper { get; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="repo"></param>
-        public ProjectsController(IRepository repo)
+        /// <param name="mapper"></param>
+        public ProjectsController(IRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -30,10 +37,16 @@ namespace TesteDotnet.V1.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: api/Projects
+        // Pagination Example: v1/Projects?pageNumber=2&pageSize=10
         [HttpGet]
-        public ActionResult<IEnumerable<Project>> GetProject()
+        public async Task<ActionResult<IEnumerable<Project>>> GetProject([FromQuery] PageParams pageParams)
         {
-            return _repo.GetAllProjects();
+            var projects = await _repo.GetAllProjectsAsync(pageParams);
+            var projectsResult = _mapper.Map<IEnumerable<ProjectDto>>(projects);
+
+            Response.AddPagination(projects.CurrentPage, projects.PageSize, projects.TotalPages, projects.TotalCount);
+
+            return Ok(projectsResult);
         }
 
         /// <summary>
@@ -43,9 +56,9 @@ namespace TesteDotnet.V1.Controllers
         /// <returns></returns>
         // GET: api/Projects/id
         [HttpGet("{id}")]
-        public ActionResult<Project> GetProject(int id)
+        public async Task<ActionResult<Project>> GetProject(int id)
         {
-            var project = _repo.GetProjectById(id);
+            var project = await _repo.GetProjectByIdAsync(id);
 
             if (project == null)
             {
@@ -59,13 +72,14 @@ namespace TesteDotnet.V1.Controllers
         /// Update a project
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="project"></param>
+        /// <param name="projectDto"></param>
         /// <returns></returns>
         // PUT: api/Projects/id
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult PutProject(int id, Project project)
+        public async Task<IActionResult> PutProject(int id, ProjectDto projectDto)
         {
+            var project = _mapper.Map<Project>(projectDto);
             if (id != project.Id)
             {
                 return BadRequest();
@@ -82,7 +96,8 @@ namespace TesteDotnet.V1.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjectExists(id))
+                bool prjExists = await ProjectExists(id);
+                if (!prjExists)
                 {
                     return NotFound();
                 }
@@ -98,13 +113,14 @@ namespace TesteDotnet.V1.Controllers
         /// <summary>
         /// Create a project
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="projectDto"></param>
         /// <returns></returns>
         // POST: api/Projects
         [Authorize]
         [HttpPost]
-        public ActionResult<Project> PostProject(Project project)
+        public ActionResult<Project> PostProject(ProjectDto projectDto)
         {
+            var project = _mapper.Map<Project>(projectDto);
             _repo.Add(project);
             if (_repo.SaveChanges())
             {
@@ -122,9 +138,9 @@ namespace TesteDotnet.V1.Controllers
         // DELETE: api/Projects/id
         [Authorize]
         [HttpDelete("{id}")]
-        public IActionResult DeleteProject(int id)
+        public async Task<IActionResult> DeleteProject(int id)
         {
-            var project = _repo.GetProjectById(id);
+            var project = await _repo.GetProjectByIdAsync(id);
             if (project == null)
             {
                 return NotFound();
@@ -139,9 +155,10 @@ namespace TesteDotnet.V1.Controllers
             return BadRequest("Project not deleted");
         }
 
-        private bool ProjectExists(int id)
+        private async Task<bool> ProjectExists(int id)
         {
-            if (_repo.GetProjectById(id) != null)
+            var project = await _repo.GetProjectByIdAsync(id);
+            if (project != null)
             {
                 return true;
             }

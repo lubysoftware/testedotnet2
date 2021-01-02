@@ -1,9 +1,10 @@
 ﻿using Api.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using TesteDotnet.Helpers;
 using TesteDotnet.Models.ViewModels;
+using TesteDotnet.V1.Dtos;
 
 namespace TesteDotnet.Data
 {
@@ -26,7 +27,7 @@ namespace TesteDotnet.Data
             _context.Remove(entity);
         }
 
-        public Developer[] GetAllDevelopers()
+        public async Task<PageList<Developer>> GetAllDevelopersAsync(PageParams pageParams)
         {
             IQueryable<Developer> query = _context.Developer;
 
@@ -36,64 +37,66 @@ namespace TesteDotnet.Data
             query = query.Include(d => d.Entries);
 
             query = query.AsNoTracking().OrderBy(d => d.Id);
-            return query.ToArray();
+
+            return await PageList<Developer>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 
-        public Entry[] GetAllEntries()
+        public async Task<Entry[]> GetAllEntriesAsync()
         {
             IQueryable<Entry> query = _context.Entry;
 
             query = query.AsNoTracking().OrderBy(d => d.Id);
 
-            return query.ToArray();
+            return await query.ToArrayAsync();
         }
 
-        public Project[] GetAllProjects()
+        public async Task<PageList<Project>> GetAllProjectsAsync(PageParams pageParams)
         {
             IQueryable<Project> query = _context.Project;
 
             query = query.AsNoTracking().OrderBy(d => d.Id);
-            return query.ToArray();
+
+            return await PageList<Project>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 
-        public Developer GetDeveloperById(int developerId)
+        public async Task<Developer> GetDeveloperByIdAsync(int developerId)
         {
             IQueryable<Developer> query = _context.Developer;
 
             query = query.AsNoTracking().OrderBy(d => d.Id)
                 .Where(dev => dev.Id == developerId);
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Entry GetEntryById(int entryId)
+        public async Task<Entry> GetEntryByIdAsync(int entryId)
         {
             IQueryable<Entry> query = _context.Entry;
 
             query = query.AsNoTracking().OrderBy(d => d.Id)
                 .Where(prj => prj.Id == entryId);
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Developer GetDeveloperLogin(string email, string password)
+        public async Task<Developer> GetDeveloperLoginAsync(string email, string password)
         {
             IQueryable<Developer> query = _context.Developer;
 
             query = query.AsNoTracking().OrderBy(dev => dev.Email)
                 .Where(dev => dev.Email == email && dev.Password == password);
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
-        public Project GetProjectById(int projectId)
+        public async Task<Project> GetProjectByIdAsync(int projectId)
         {
             IQueryable<Project> query = _context.Project;
 
             query = query.AsNoTracking().OrderBy(d => d.Id)
                 .Where(prj => prj.Id == projectId);
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
         public bool SaveChanges()
@@ -131,15 +134,18 @@ namespace TesteDotnet.Data
             return query.FirstOrDefault() != null;
         }
 
-        public WorkedHoursRank[] GetDeveloperRank()
+        public async Task<WorkedHoursRank[]> GetDeveloperRankAsync()
         {
             string stringQuery =
-                "SELECT TOP(5) [DeveloperId], SUM(DATEDIFF(HOUR, [InitialDate], [EndDate])) AS WorkedHours\n" +
+                "SELECT TOP(5) [DeveloperId], [Name] AS DeveloperName, SUM(DATEDIFF(HOUR, [InitialDate], [EndDate])) AS WorkedHours\n" +
                 "FROM [dbo].[Entry]\n" +
+                "LEFT JOIN[dbo].[Developer]\n" +
+                "ON[dbo].[Entry].[DeveloperId] = [dbo].[Developer].[Id]\n" +
                 "WHERE [InitialDate] >= DATEADD(day, -7, GETDATE())\n" +
-                "GROUP BY [DeveloperId];";
+                "GROUP BY [DeveloperId], [Name]\n" +
+                "ORDER BY WorkedHours DESC;";
 
-            return _context.WorkedHoursRank.FromSqlRaw(stringQuery).ToArray();
+            return await _context.WorkedHoursRank.FromSqlRaw(stringQuery).ToArrayAsync();
         }
     }
 }

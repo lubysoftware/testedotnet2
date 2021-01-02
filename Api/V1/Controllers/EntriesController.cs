@@ -6,6 +6,8 @@ using TesteDotnet.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using System.Net.Http;
+using TesteDotnet.V1.Dtos;
+using AutoMapper;
 
 namespace TesteDotnet.V1.Controllers
 {
@@ -20,13 +22,16 @@ namespace TesteDotnet.V1.Controllers
         public readonly IRepository _repo;
         // HttpClient is intended to be instantiated once per application, rather than per-use.
         static readonly HttpClient client = new HttpClient();
+        private IMapper _mapper { get; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="repo"></param>
-        public EntriesController(IRepository repo)
+        /// <param name="mapper"></param>
+        public EntriesController(IRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -35,9 +40,10 @@ namespace TesteDotnet.V1.Controllers
         /// <returns></returns>
         // GET: api/Entries
         [HttpGet]
-        public ActionResult<IEnumerable<Entry>> GetEntry()
+        public async Task<ActionResult<IEnumerable<Entry>>> GetEntry()
         {
-            return _repo.GetAllEntries();
+            var entries = await _repo.GetAllEntriesAsync();
+            return Ok(_mapper.Map<IEnumerable<EntryDto>>(entries));
         }
 
         /// <summary>
@@ -47,9 +53,9 @@ namespace TesteDotnet.V1.Controllers
         /// <returns></returns>
         // GET: api/Entries/5
         [HttpGet("{id}")]
-        public ActionResult<Entry> GetEntry(int id)
+        public async Task<ActionResult<Entry>> GetEntry(int id)
         {
-            var entry = _repo.GetEntryById(id);
+            var entry = await _repo.GetEntryByIdAsync(id);
 
             if (entry == null)
             {
@@ -63,14 +69,15 @@ namespace TesteDotnet.V1.Controllers
         /// Update an entry
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="entry"></param>
+        /// <param name="entryDto"></param>
         /// <returns></returns>
         // PUT: api/Entries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult PutEntry(int id, Entry entry)
+        public async Task<IActionResult> PutEntry(int id, EntryDto entryDto)
         {
+            var entry = _mapper.Map<Entry>(entryDto);
             if (id != entry.Id)
             {
                 return BadRequest();
@@ -96,7 +103,8 @@ namespace TesteDotnet.V1.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EntryExists(id))
+                bool entryExists = await EntryExists(id);
+                if (!entryExists)
                 {
                     return NotFound();
                 }
@@ -112,14 +120,15 @@ namespace TesteDotnet.V1.Controllers
         /// <summary>
         /// Create an Entry
         /// </summary>
-        /// <param name="entry"></param>
+        /// <param name="entryDto"></param>
         /// <returns></returns>
         // POST: api/Entries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostEntry(Entry entry)
+        public async Task<ActionResult> PostEntry(EntryDto entryDto)
         {
+            var entry = _mapper.Map<Entry>(entryDto);
             if (!_repo.IsDateAvailable(entry))
             {
                 return BadRequest("Entry dates not available");
@@ -154,9 +163,9 @@ namespace TesteDotnet.V1.Controllers
         // DELETE: api/Entries/5
         [Authorize]
         [HttpDelete("{id}")]
-        public IActionResult DeleteEntry(int id)
+        public async Task<IActionResult> DeleteEntry(int id)
         {
-            var entry = _repo.GetEntryById(id);
+            var entry = await _repo.GetEntryByIdAsync(id);
             if (entry == null)
             {
                 return NotFound();
@@ -171,9 +180,10 @@ namespace TesteDotnet.V1.Controllers
             return BadRequest("Entry not deleted");
         }
 
-        private bool EntryExists(int id)
+        private async Task<bool> EntryExists(int id)
         {
-            if (_repo.GetEntryById(id) != null)
+            var entry = await _repo.GetEntryByIdAsync(id);
+            if (entry != null)
             {
                 return true;
             }

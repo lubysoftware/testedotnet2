@@ -41,11 +41,16 @@ namespace TesteDotnet.V1.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: api/Developers
+        // Pagination Example: v1/Developers?pageNumber=2&pageSize=10
         [HttpGet]
-        public ActionResult GetDeveloper()
+        public async Task<ActionResult> GetDeveloper([FromQuery]PageParams pageParams)
         {
-            var developers = _repo.GetAllDevelopers();
-            return Ok(_mapper.Map<IEnumerable<DeveloperDto>>(developers));
+            var developers = await _repo.GetAllDevelopersAsync(pageParams);
+            var developersResult = _mapper.Map<IEnumerable<DeveloperDto>>(developers);
+
+            Response.AddPagination(developers.CurrentPage, developers.PageSize, developers.TotalPages, developers.TotalCount);
+
+            return Ok(developersResult);
         }
 
         /// <summary>
@@ -55,9 +60,9 @@ namespace TesteDotnet.V1.Controllers
         /// <returns></returns>
         // GET: api/Developers/id
         [HttpGet("{id}")]
-        public ActionResult<Developer> GetDeveloper(int id)
+        public async Task<ActionResult<Developer>> GetDeveloper(int id)
         {
-            var developer = _repo.GetDeveloperById(id);
+            var developer = await _repo.GetDeveloperByIdAsync(id);
 
             if (developer == null)
             {
@@ -70,13 +75,11 @@ namespace TesteDotnet.V1.Controllers
         /// <summary>
         /// Get rank of the 5 developers in a week
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpGet("rank")]
-        public ActionResult<WorkedHoursRank> GetDeveloperWorkedHoursRank()
+        public async Task<ActionResult<WorkedHoursRank>> GetDeveloperWorkedHoursRank()
         {
-            var workedHoursRank = _repo.GetDeveloperRank();
+            var workedHoursRank = await _repo.GetDeveloperRankAsync();
 
             if (workedHoursRank == null)
             {
@@ -90,14 +93,15 @@ namespace TesteDotnet.V1.Controllers
         /// Update a developer
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="developer"></param>
+        /// <param name="developerDto"></param>
         /// <returns></returns>
         // PUT: api/Developers/id
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult PutDeveloper(int id, DeveloperDto developer)
+        public async Task<IActionResult> PutDeveloper(int id, DeveloperDto developerDto)
         {
+            var developer = _mapper.Map<Developer>(developerDto);
             if (id != developer.Id)
             {
                 return BadRequest();
@@ -114,7 +118,8 @@ namespace TesteDotnet.V1.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DeveloperExists(id))
+                bool devExists = await DeveloperExists(id);
+                if (!devExists)
                 {
                     return NotFound();
                 }
@@ -130,13 +135,14 @@ namespace TesteDotnet.V1.Controllers
         /// <summary>
         /// Create a new Developer
         /// </summary>
-        /// <param name="developer"></param>
+        /// <param name="developerDto"></param>
         /// <returns></returns>
         // POST: api/Developers
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostDeveloper(DeveloperDto developer)
+        public async Task<ActionResult> PostDeveloper(DeveloperDto developerDto)
         {
+            var developer = _mapper.Map<Developer>(developerDto);
             if (!ValidateCpf.IsValidCpf(developer.CPF))
             {
                 return BadRequest("Invalid CPF");
@@ -166,9 +172,9 @@ namespace TesteDotnet.V1.Controllers
         // DELETE: api/Developers/id
         [Authorize]
         [HttpDelete("{id}")]
-        public IActionResult DeleteDeveloper(int id)
+        public async Task<IActionResult> DeleteDeveloper(int id)
         {
-            var developer = _repo.GetDeveloperById(id);
+            var developer = await _repo.GetDeveloperByIdAsync(id);
             if (developer == null)
             {
                 return NotFound();
@@ -183,9 +189,10 @@ namespace TesteDotnet.V1.Controllers
             return BadRequest("Developer not deleted");
         }
 
-        private bool DeveloperExists(int id)
+        private async Task<bool> DeveloperExists(int id)
         {
-            if (_repo.GetDeveloperById(id) != null)
+            var developer = await _repo.GetDeveloperByIdAsync(id);
+            if (developer == null)
             {
                 return true;
             }

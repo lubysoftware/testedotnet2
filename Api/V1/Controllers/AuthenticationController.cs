@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 using TesteDotnet.Data;
 using TesteDotnet.Services;
 
@@ -37,9 +38,9 @@ namespace TesteDotnet.V1.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public ActionResult<dynamic> Authenticate([FromBody] DeveloperLogin developerLogin)
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] DeveloperLogin developerLogin)
         {
-            Developer developer = _repo.GetDeveloperLogin(developerLogin.Email, developerLogin.Password);
+            Developer developer = await _repo.GetDeveloperLoginAsync(developerLogin.Email, developerLogin.Password);
             TokenService tokenService = new TokenService(Configuration);
 
             if (developer == null)
