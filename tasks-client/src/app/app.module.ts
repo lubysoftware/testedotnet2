@@ -18,7 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { LayoutComponent } from './shared/components/layout/layout/layout.component';
+import { LayoutComponent } from './shared/components/layout/layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AvatarModule } from 'ngx-avatar';
 import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
@@ -27,13 +27,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { CustomPaginator } from './shared/translations/custom-paginator-configuration';
+import { ConfirmDialogComponent } from './shared/components/dialogs/confirm-dialog/confirm-dialog.component';
+import { DialogService } from './shared/services/dialog.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
     LayoutComponent,
-    DeveloperListComponent
+    DeveloperListComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +50,7 @@ import { CustomPaginator } from './shared/translations/custom-paginator-configur
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatDialogModule,
     MatButtonModule,
     MatInputModule,
     MatTableModule,
@@ -60,6 +65,7 @@ import { CustomPaginator } from './shared/translations/custom-paginator-configur
   ],
   providers: [
     AuthGuard,
+    DialogService,
     HttpInterceptorProviders,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

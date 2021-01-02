@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ListSate } from 'src/app/shared/models/list-state';
 import { Pagination } from 'src/app/shared/models/pagination';
 import { DeveloperService } from 'src/app/shared/services/developer.service';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 import { DeveloperListDto } from '../dtos/developer-list.dto';
 
 @Component({
@@ -21,7 +22,8 @@ export class DeveloperListComponent implements OnInit {
 
   constructor(
     private readonly developerService: DeveloperService,
-    private readonly snackBar: MatSnackBar,
+    private readonly dialogService: DialogService,
+    private readonly snackBar: MatSnackBar
   ) { 
     this.search = { page: 1, limit: 10 } as Pagination;
     this.columns = ['name', 'actions'];
@@ -53,6 +55,20 @@ export class DeveloperListComponent implements OnInit {
   }
 
   remove(id: string) {
+    this.dialogService.confirmRemove('Tem certeza que deseja remover este desenvolvedor?').subscribe(confirmRemove => {
+      if (!confirmRemove) return;
 
+      this.developerService.delete(id).subscribe(result => {
+        if (result.success) {
+          this.snackBar.open('Desenvolvedor removido com Sucesso!', 'OK', { duration: 3000 });
+          const developers = this.dataSource.data.filter(c => c.id !== id);
+          this.listState.noItems = developers.length === 0;
+          this.dataSource = new MatTableDataSource<DeveloperListDto>(developers);
+          return;
+        }
+
+        this.snackBar.open('Erro ao remover desenvolvedor!', 'OK', { duration: 3000 });
+      });
+    });
   }
 }

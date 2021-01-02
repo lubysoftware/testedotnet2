@@ -1,0 +1,26 @@
+.dialog-header{
+    display: flex;
+    justify-content: space-between;
+    font-size: 15pt;
+    font-weight: bold;
+
+    mat-icon {
+        cursor: pointer;
+    }
+}
+
+.dialog-body {
+    max-width: 800px;
+    padding: 15px 0;
+    font-size: 12pt;
+    word-break: break-all;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    
+    button {
+        margin-left: 15px;    
+    }
+}
