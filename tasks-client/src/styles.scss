@@ -1,4 +1,114 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --primary: #673ab7;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.page-container {
+  position: relative;
+  padding: 16px !important;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: calc(100vh - 100px);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.loading-spinner {
+  padding: 30px 0;
+  left: 45%;
+  mat-spinner {
+      margin: auto;
+      width: 100px;
+      height: 100px;
+  }
+}
+
+.button-spinner-white circle {
+  stroke: #b6d1c3 !important;
+}
+
+.not-found {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  text-align: center;
+}
+
+.mat-sort-header-container {
+  justify-content: start !important;
+}
+
+.center-text .mat-sort-header-container {
+  justify-content: center !important;
+}
+
+.mat-card {
+  padding: 0 !important;
+
+  mat-card-header {
+      padding: 0 10px 0 0 !important;
+      color: white;
+      height: 60px !important;
+      background-color: #9e30b9 !important;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      z-index: 2;
+      top: 0;
+
+      mat-card-title {
+          margin: 0 auto !important;
+      }
+  }
+
+  mat-card-content {
+      padding: 0 !important;
+      margin-bottom: 50px !important;
+  }
+}
+
+
+table {
+  width: 100%;
+
+  th {
+    font-size: 20px !important;
+    color: black !important;
+    background-color: #ddb0e9 !important;
+    text-align: start;  
+    position: sticky;
+    z-index: 10 !important;
+    border-bottom: 3px solid #8a8a8a45;
+    top: 60px !important;
+  }
+
+  td {
+    outline: none;
+    cursor: pointer;
+  }
+  
+  td, th {
+    padding: 15px !important;
+  }
+}
+
+.mat-column-actions {
+  width: 25px;
+}
+
+mat-sidenav {
+  box-shadow: 1px 0px 10px #adadad;
+}
+
+mat-sidenav-content {
+  background-color: #eeeeee;
+}
+
+a[mat-fab] {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 10;
+}

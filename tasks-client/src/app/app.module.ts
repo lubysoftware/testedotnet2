@@ -13,6 +13,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './auth/login-form/login-form.component';
+import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,12 +22,18 @@ import { LayoutComponent } from './shared/components/layout/layout/layout.compon
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AvatarModule } from 'ngx-avatar';
 import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
+import { DeveloperListComponent } from './developer/developer-list/developer-list.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatMenuModule } from '@angular/material/menu';
+import { CustomPaginator } from './shared/translations/custom-paginator-configuration';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    LayoutComponent
+    LayoutComponent,
+    DeveloperListComponent
   ],
   imports: [
     BrowserModule,
@@ -41,16 +48,21 @@ import { HttpInterceptorProviders } from './shared/interceptors/provider-interce
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
+    MatTableModule,
     MatCardModule,
     MatIconModule,
+    MatMenuModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
     AvatarModule
   ],
   providers: [
     AuthGuard,
     HttpInterceptorProviders,
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() },
   ],
   bootstrap: [AppComponent]
 })
