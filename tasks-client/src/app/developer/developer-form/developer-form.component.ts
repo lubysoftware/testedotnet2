@@ -57,7 +57,7 @@ export class DeveloperFormComponent implements OnInit {
   }
 
   save() {
-    if (!this.valid()) return;
+    if (this.saving || !this.valid()) return;
 
     this.saving = true;
     const developer = this.form.getRawValue();
