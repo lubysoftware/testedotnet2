@@ -68,4 +68,10 @@ export class AuthService {
   check(): boolean {
     return localStorage.getItem('token') ? true : false;
   }
+
+  getAuthorization(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) return `Bearer ${token}`;
+    return null;
+  }
 }

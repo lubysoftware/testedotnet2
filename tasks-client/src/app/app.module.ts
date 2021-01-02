@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LayoutComponent } from './shared/components/layout/layout/layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AvatarModule } from 'ngx-avatar';
+import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AvatarModule } from 'ngx-avatar';
   ],
   providers: [
     AuthGuard,
+    HttpInterceptorProviders,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ],
   bootstrap: [AppComponent]
