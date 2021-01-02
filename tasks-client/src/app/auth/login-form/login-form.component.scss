@@ -1,0 +1,57 @@
+mat-card {
+  max-width: 400px;
+  margin: 10em auto;
+  text-align: center;
+}
+
+.bg-login {
+  background-image: url("../../../assets/images/gb-login.jpg");
+  display: table;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-position: center;
+  background-size: cover;
+}
+
+.title {
+  font-size: 20pt;
+  color: #434343;
+  padding: 25px;
+  margin: auto;
+}
+
+mat-icon {
+  margin-left: 10px;
+  color: #878787;
+  font-size: 20px;
+}
+
+.with-icon {
+  height: 25px;
+  width: 85%;
+}
+
+.signin-content {
+  padding: 60px 1rem;
+}
+
+.full-width-input {
+  width: 80%;
+}
+
+.margin-height-20 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 80%;
+  margin: 15px 0 !important;
+}
+
+.link {
+  border-bottom: 1px solid;
+  cursor: pointer;
+  color: blue;
+}
