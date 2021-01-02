@@ -1,0 +1,61 @@
+mat-sidenav-container {
+  width: 100%;
+  position: fixed;
+
+  mat-sidenav {
+    min-width: 12vw;
+  }
+
+  mat-nav-list {
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 185px);
+
+    a {
+      mat-icon { transition: all 0.3s ease; }
+      border-left: 7px solid #92b2fd;
+    }
+  }
+
+  mat-sidenav-content {
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+}
+
+.user-detail {
+  height: 112px;
+  background: #e9e9e9;
+
+  .info {
+    line-height: 25pt;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.is-active{
+  border-left: 7px solid #1d59ff !important;
+  background-color: #bddaff !important;
+  &:hover {
+    background-color: #e2e8ff !important;
+  }
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  font-size: 50px;
+  margin-right: 15px;
+}
+
+.name {
+  font-size: 15pt;
+}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}

@@ -49,4 +49,23 @@ export class AuthService {
       }
     );
   }
+
+  public getCurrentDeveloper() : DeveloperDetailDto | null {
+    if (this.currentDeveloper) return this.currentDeveloper;
+
+    const developer = localStorage.getItem('developer');
+    if (developer)
+      this.currentDeveloper = JSON.parse(atob(developer)) as DeveloperDetailDto;
+
+    if (!this.currentDeveloper) {
+      this.router.navigate(['/login']);
+      return null;
+    }
+
+    return this.currentDeveloper;
+  }
+
+  check(): boolean {
+    return localStorage.getItem('token') ? true : false;
+  }
 }
