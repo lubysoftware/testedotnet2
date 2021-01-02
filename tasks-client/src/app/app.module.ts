@@ -30,6 +30,8 @@ import { CustomPaginator } from './shared/translations/custom-paginator-configur
 import { ConfirmDialogComponent } from './shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { DialogService } from './shared/services/dialog.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgxMaskModule } from 'ngx-mask';
+import { DeveloperFormComponent } from './developer/developer-form/developer-form.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     LoginFormComponent,
     LayoutComponent,
     DeveloperListComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DeveloperFormComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    AvatarModule
+    AvatarModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     AuthGuard,

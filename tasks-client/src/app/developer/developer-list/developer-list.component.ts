@@ -68,6 +68,8 @@ export class DeveloperListComponent implements OnInit {
         }
 
         this.snackBar.open('Erro ao remover desenvolvedor!', 'OK', { duration: 3000 });
+      }, () => {
+        this.snackBar.open('Erro ao remover desenvolvedor!', 'OK', { duration: 3000 });
       });
     });
   }

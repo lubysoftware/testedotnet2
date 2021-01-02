@@ -6,11 +6,13 @@ import { environment } from './../../../environments/environment';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Status } from '../models/status.enum';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private readonly authService: AuthService,
+    private readonly snackBar: MatSnackBar,
     private readonly router: Router
   ) { }
 
@@ -26,6 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
       .pipe(
         catchError(err => {
           if (err instanceof HttpErrorResponse && err.status === Status.Unauthorized) {
+            this.snackBar.open('Sessão expirou!', 'OK', { duration: 3000 });
             this.router.navigate(['login']);
           }
           return throwError(err);
