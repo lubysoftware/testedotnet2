@@ -8,6 +8,7 @@ import { ProjectFormComponent } from './projects/project-form/project-form.compo
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { WorkListComponent } from './works/work-list/work-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginFormComponent },
@@ -21,6 +22,8 @@ const routes: Routes = [
     { path: 'projects', component: ProjectListComponent, canActivate: [AuthGuard] },
     { path: 'projects/new', component: ProjectFormComponent, canActivate: [AuthGuard] },
     { path: 'projects/edit/:id', component: ProjectFormComponent, canActivate: [AuthGuard] },
+
+    { path: 'works', component: WorkListComponent, canActivate: [AuthGuard] },
   ] }
 ];
 

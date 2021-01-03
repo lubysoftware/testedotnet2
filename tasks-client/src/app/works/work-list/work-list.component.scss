@@ -1,0 +1,15 @@
+table th {
+  &.mat-column-startTime { max-width: 100px; }
+  &.mat-column-endTime { max-width: 100px; }
+  &.mat-column-hours { max-width: 25px; }
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, 
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, 
+  .mat-accent .mat-pseudo-checkbox-checked, 
+  .mat-accent .mat-pseudo-checkbox-indeterminate, 
+  .mat-pseudo-checkbox-checked, 
+  .mat-pseudo-checkbox-indeterminate {
+  
+    background-color: rgb(183, 0, 255) !important;
+}

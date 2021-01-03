@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipsModule, MAT_CHIPS_DEFAULT_OPTIONS } from '@angular/material/chips';
@@ -39,6 +40,10 @@ import { ProjectListComponent } from './projects/project-list/project-list.compo
 import { ProjectFormComponent } from './projects/project-form/project-form.component';
 import { DeveloperRankingComponent } from './developers/developer-ranking/developer-ranking.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { WorkListComponent } from './works/work-list/work-list.component';
+import { AutocompleteComponent } from './shared/components/autocomplete/autocomplete.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -50,9 +55,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DeveloperFormComponent,
     ProjectListComponent,
     ProjectFormComponent,
-    DeveloperRankingComponent
+    DeveloperRankingComponent,
+    WorkListComponent,
+    AutocompleteComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -72,6 +80,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatMenuModule,
     FormsModule,
+    MatSelectModule,
+    MatCheckboxModule,
     MatAutocompleteModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,

@@ -5,10 +5,10 @@ import { ProjectCreateDto } from 'src/app/projects/dtos/project-create.dto';
 import { ProjectDetailDto } from 'src/app/projects/dtos/project-detail.dto';
 import { ProjectListDto } from 'src/app/projects/dtos/project-list.dto';
 import { ProjectUpdateDto } from 'src/app/projects/dtos/project-update.dto';
+import { ProjectWorkDetailDto } from 'src/app/projects/dtos/works/project-work-detail.dto';
 import { ProjectWorkListDto } from 'src/app/projects/dtos/works/project-work-list.dto';
 import { ProjectWorkSearchDto } from 'src/app/projects/dtos/works/project-work-search.dto';
-import { WorkCreateDto } from 'src/app/works/dtos/work-create.dto';
-import { WorkUpdateDto } from 'src/app/works/dtos/work-update.dto';
+import { WorkDto } from 'src/app/works/dtos/work.dto';
 import { environment } from 'src/environments/environment';
 import { Rest } from '../http/rest';
 import { Pagination } from '../models/pagination';
@@ -46,15 +46,19 @@ export class ProjectService {
     return this.http.delete<Result>(`${this.url}/${id}`);
   }
 
+  getWork(id: string, projectId: string): Observable<ResultType<ProjectWorkDetailDto>> {
+    return this.http.get<ResultType<ProjectWorkDetailDto>>(`${this.url}/${projectId}/works/${id}`);
+  }
+
   listWorks(search: ProjectWorkSearchDto): Observable<ResultType<ProjectWorkListDto[]>> {
     return this.http.get<ResultType<ProjectWorkListDto[]>>(`${this.url}/works`, Rest.GetParams(search));
   }
 
-  createWork(work: WorkCreateDto): Observable<Result> {
+  createWork(work: WorkDto): Observable<Result> {
     return this.http.post<Result>(`${this.url}/${work.projectId}/works`, work);
   }
 
-  updateWork(work: WorkUpdateDto): Observable<Result> {
+  updateWork(work: WorkDto): Observable<Result> {
     return this.http.put<Result>(`${this.url}/${work.projectId}/works/${work.id}`, work);
   }
 

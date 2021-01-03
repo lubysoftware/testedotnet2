@@ -1,4 +1,4 @@
-export interface WorkUpdateDto {
+export interface WorkDto {
   id: string;
   projectId: string;
   startTime: string;

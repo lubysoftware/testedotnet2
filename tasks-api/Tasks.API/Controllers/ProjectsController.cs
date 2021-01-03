@@ -41,6 +41,12 @@ namespace Tasks.API.Controllers
             return GetResult(await _projectService.ListProjectsAsync(paginationDto));
         }
 
+        [HttpGet("works")]
+        public async Task<Result<IEnumerable<ProjectWorkListDto>>> ListWorkProjectsAsync([FromQuery] ProjectWorkSearchDto searchDto)
+        {
+            return GetResult(await _projectService.ListProjectWorksAsync(searchDto));
+        }
+
         [HttpPost]
         public async Task<Result> CreateProjectAsync([FromBody] ProjectCreateDto projectDto)
         {
@@ -60,10 +66,10 @@ namespace Tasks.API.Controllers
             return GetResult(await _projectService.DeleteProjectAsync(id));
         }
 
-        [HttpGet("{id}/works")]
-        public async Task<Result<IEnumerable<ProjectWorkListDto>>> ListWorkProjectsAsync([FromQuery] ProjectWorkSearchClientDto searchDto, [FromRoute] Guid id)
+        [HttpGet("{id}/works/{workId}")]
+        public async Task<Result<ProjectWorkDetailDto>> GetWorkProjectAsync([FromRoute] Guid workId)
         {
-            return GetResult(await _projectService.ListProjectWorksAsync(new ProjectWorkSearchDto(searchDto, id)));
+            return GetResult(await _projectService.GetProjectWorkByIdAsync(workId));
         }
 
         [HttpPost("{id}/works")]

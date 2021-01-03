@@ -19,6 +19,7 @@ export class ProjectListComponent implements OnInit {
   listState: ListSate;
   columns: string[];
   search: Pagination;
+  
   constructor(
     private readonly projectService: ProjectService,
     private readonly dialogService: DialogService,

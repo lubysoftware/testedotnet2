@@ -80,6 +80,40 @@ namespace Tasks.Service.Projects
             return new Result<ProjectDetailDto>(projectDetail);
         }
 
+        public async Task<Result<ProjectWorkDetailDto>> GetProjectWorkByIdAsync(Guid id)
+        {
+            var existWork = await _workRepository.ExistAsync(id);
+            if (!existWork) return new Result<ProjectWorkDetailDto>(Status.NotFund, $"Work with {nameof(id)} does not exist");
+
+            var work = await _workRepository.Query()
+                .Include(w => w.DeveloperProject)
+                    .ThenInclude(dp => dp.Project)
+                .Include(w => w.DeveloperProject)
+                    .ThenInclude(dp => dp.Developer)
+                .SingleAsync(p => p.Id == id);
+
+            var workDetail = new ProjectWorkDetailDto
+            {
+                Id = work.Id,
+                StartTime = work.StartTime,
+                EndTime = work.EndTime,
+                Comment = work.Comment,
+                Hours = work.Hours,
+                Project = new ProjectListDto
+                {
+                    Id = work.DeveloperProject.ProjectId,
+                    Title = work.DeveloperProject.Project.Title
+                },
+                Developer = new DeveloperListDto
+                {
+                    Id = work.DeveloperProject.DeveloperId,
+                    Name = work.DeveloperProject.Developer.Name
+                }
+            };
+
+            return new Result<ProjectWorkDetailDto>(workDetail);
+        }
+
         public async Task<Result<IEnumerable<ProjectListDto>>> ListProjectsAsync(PaginationDto pagination)
         {
             var query = _projectRepository.Query();
@@ -99,7 +133,7 @@ namespace Tasks.Service.Projects
         public async Task<Result<IEnumerable<ProjectWorkListDto>>> ListProjectWorksAsync(ProjectWorkSearchDto searchDto)
         {
             var query = _workRepository.Query()
-                .Where(w => w.DeveloperProject.ProjectId == searchDto.ProjectId)
+                .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId)
                 .Where(w => searchDto.DeveloperId == null || w.DeveloperProject.DeveloperId == searchDto.DeveloperId);
             
             var projectWorks = await query
@@ -112,10 +146,9 @@ namespace Tasks.Service.Projects
                     EndTime = w.EndTime,
                     Comment = w.Comment,
                     Hours = w.Hours,
-                    Developer = new DeveloperListDto { 
-                        Id = w.DeveloperProject.DeveloperId,    
-                        Name = w.DeveloperProject.Developer.Name
-                    },
+                    ProjectId = w.DeveloperProject.ProjectId,
+                    ProjectTitle = w.DeveloperProject.Project.Title,
+                    DeveloperName = w.DeveloperProject.Developer.Name
                 })
                 .ToArrayAsync();
 
