@@ -54,6 +54,7 @@ E-mail: paulo202015@outlook.com.br
  - As migrations são executadas automaticamente ao iniciar o projeto, sendo necessário ajustar a connection string para conexão
 
 ##### Client:
+ - Foi desenvolvido usando a versão 11.0.5 do Angular
 ###### Requisitos:
  - Nodejs instalado
 
