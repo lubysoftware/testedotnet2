@@ -1,0 +1,24 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Ranking dos desenvolvedores</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <div class="list-ranking" fxLayout="row" fxLayoutAlign="start start">
+      <mat-card class="card-ranking" *ngFor="let developer of developersRanking">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image">
+            <ngx-avatar class="avatar" [name]="developer.name" [size]="50" [round]="true">
+            </ngx-avatar>
+          </div>
+          <mat-card-title>{{ developer.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong matTooltip="Médias das horas trabalhadas na semana">Média:</strong> {{ formatNumber(developer.avgHours) }}</p>
+          <p><strong matTooltip="Total de horas trabalhadas na semana">Total:</strong> {{ formatNumber(developer.sumHours) }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-card-content>
+</mat-card>

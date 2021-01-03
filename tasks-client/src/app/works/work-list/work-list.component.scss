@@ -1,0 +1,17 @@
+table.mat-table th {
+  &.mat-column-startTime { width: 100px; }
+  &.mat-column-endTime { width: 100px; }
+  &.mat-column-project { width: 15%; }
+  &.mat-column-developer { width: 15%; }
+  &.mat-column-hours { width: 25px; }
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, 
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, 
+  .mat-accent .mat-pseudo-checkbox-checked, 
+  .mat-accent .mat-pseudo-checkbox-indeterminate, 
+  .mat-pseudo-checkbox-checked, 
+  .mat-pseudo-checkbox-indeterminate {
+  
+    background-color: rgb(183, 0, 255) !important;
+}

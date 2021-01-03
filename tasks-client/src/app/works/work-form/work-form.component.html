@@ -1,0 +1,57 @@
+<mat-card class="card-form">
+  <mat-card-header fxLayout="row">
+      <button (click)="close()" fxLayoutAlign="start" mat-icon-button matTooltip="Voltar" aria-label="Voltar">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      <div fxFlex="100%">
+        <mat-card-title>
+          {{ isNew ? 'Cadastro de Atividade' : '' }}
+          {{ !isNew && work ? 'Edição de Atividade' : '' }}
+          {{ !isNew && !work ? 'Carregando...' : '' }}
+        </mat-card-title>
+      </div>
+      <button (click)="close()" mat-icon-button matTooltip="Fechar" *ngIf="id && !form.dirty" aria-label="Fechar">
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button mat-icon-button class="button-spinner-white" matTooltip="Salvar" aria-label="Salvar" *ngIf="!id || form.dirty" (click)="save()">
+        <mat-icon [style.padding-left.px]="5" *ngIf="saving">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>  
+        <mat-icon *ngIf="!saving">check</mat-icon>
+      </button>
+  </mat-card-header>
+  <mat-card-content>
+      <form [formGroup]="form" autocomplete="off">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <mat-form-field fxFlex="30" *ngIf="isNew">
+            <mat-select formControlName="projectId" placeholder="Projeto">
+                <mat-option *ngFor="let project of projects" [value]="project.id">{{ project.title }}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field [fxFlex]="isNew ? 65 : 100">
+              <input matInput formControlName="comment" placeholder="Descrição" maxlength="300" required />
+              <mat-error>O campo Descrição é obrigatório!</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <mat-form-field fxFlex="30">
+            <input matInput [matDatepicker]="pickerStartTime" formControlName="startTime" (focus)="pickerStartTime.open()" placeholder="Data Início" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerStartTime"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStartTime></mat-datepicker>
+            <mat-error>O campo Data Início é obrigatório!</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="30">
+            <input matInput [matDatepicker]="pickerEndTime" formControlName="endTime" (focus)="pickerEndTime.open()" placeholder="Data Fim" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerEndTime"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEndTime></mat-datepicker>
+            <mat-error>O campo Data Fim é obrigatório!</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="30">
+              <input type="number" matInput formControlName="hours" placeholder="Horas" min="0.1" max="3000" required />
+              <mat-error>O campo Horas é obrigatório!</mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+  </mat-card-content>
+</mat-card>

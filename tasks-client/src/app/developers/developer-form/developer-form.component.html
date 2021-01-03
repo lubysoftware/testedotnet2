@@ -1,0 +1,47 @@
+<mat-card class="card-form">
+  <mat-card-header fxLayout="row">
+      <button (click)="close()" fxLayoutAlign="start" mat-icon-button matTooltip="Voltar" aria-label="Voltar">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      <div fxFlex="100%">
+        <mat-card-title>
+          {{ isNew ? 'Cadastro de Desenvolvedor' : '' }}
+          {{ !isNew && developer ? 'Edição de Desenvolvedor' : '' }}
+          {{ !isNew && !developer ? 'Carregando...' : '' }}
+        </mat-card-title>
+      </div>
+      <button (click)="close()" mat-icon-button matTooltip="Fechar" *ngIf="id && !form.dirty" aria-label="Fechar">
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button mat-icon-button class="button-spinner-white" matTooltip="Salvar" aria-label="Salvar" *ngIf="!id || form.dirty" (click)="save()">
+        <mat-icon [style.padding-left.px]="5" *ngIf="saving">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>  
+        <mat-icon *ngIf="!saving">check</mat-icon>
+      </button>
+  </mat-card-header>
+  <mat-card-content>
+      <form [formGroup]="form" autocomplete="off">
+          <div fxLayout="row" fxLayoutAlign="space-between">
+              <mat-form-field fxFlex="48">
+                  <input matInput formControlName="name" placeholder="Nome" maxlength="150" required />
+                  <mat-error>O campo nome é obrigatório!</mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="48">
+                  <input matInput formControlName="login" placeholder="Login" maxlength="150" required />
+                  <mat-error>O campo login é obrigatório!</mat-error>
+              </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="isNew">
+              <mat-form-field fxFlex="48">
+                  <input matInput formControlName="cpf" placeholder="CPF" maxlength="14" required mask="000.000.000-00"/>
+                  <mat-error>O campo cpf é obrigatório!</mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="48">
+                  <input type="password" matInput formControlName="password" maxlength="50" placeholder="Senha" required />
+                  <mat-error>O campo senha é obrigatório!</mat-error>
+              </mat-form-field>
+          </div>
+      </form>
+  </mat-card-content>
+</mat-card>

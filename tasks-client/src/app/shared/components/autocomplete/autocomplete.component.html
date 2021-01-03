@@ -1,0 +1,17 @@
+<form [formGroup]="form">
+    <mat-form-field class="field-space" formGroupName="field">
+        <input matInput [placeholder]="name" (keyup)="$event.stopPropagation()"
+            [formControlName]="display" [matAutocomplete]="fieldAutoComplete" (blur)="textByOption()">
+        <button [disabled]="group.controls[display].disabled" mat-icon-button type="button" matSuffix (click)="clear()">
+            <mat-icon>clear</mat-icon>
+        </button>
+        <mat-autocomplete #fieldAutoComplete="matAutocomplete" (optionSelected)="select($event.option.value)"
+            [displayWith]="displayOption">
+            <mat-option *ngFor="let value of filtred | async" [value]="value">
+                <div fxFlexLayout="row">
+                    <span fxFlex>{{ value[display] }}</span>
+                </div>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>
