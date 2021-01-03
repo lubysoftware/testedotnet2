@@ -22,14 +22,14 @@
   </mat-card-header>
   <mat-card-content>
       <form [formGroup]="form" autocomplete="off">
-        <div fxLayout="row" *ngIf="isNew" fxLayoutAlign="space-between">
-          <mat-form-field fxFlex="30">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <mat-form-field fxFlex="30" *ngIf="isNew">
             <mat-select formControlName="projectId" placeholder="Projeto">
                 <mat-option *ngFor="let project of projects" [value]="project.id">{{ project.title }}
                 </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field fxFlex="65">
+          <mat-form-field [fxFlex]="isNew ? 65 : 100">
               <input matInput formControlName="comment" placeholder="Descrição" maxlength="300" required />
               <mat-error>O campo Descrição é obrigatório!</mat-error>
           </mat-form-field>

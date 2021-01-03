@@ -124,10 +124,8 @@ export class WorkListComponent implements OnInit {
     this.loadWorks();
   }
 
-  formatDateTime(date: string): string {
+  formatDate(date: string): string {
     const dateObj = new Date(date);
-    const dateStr = dateObj.toLocaleDateString('pt-Br');
-    const timeStr = dateObj.toLocaleTimeString('pt-Br');
-    return `${dateStr} ${timeStr}`;
+    return dateObj.toLocaleDateString('pt-Br');
   }
 }
