@@ -62,7 +62,7 @@ export class ProjectService {
     return this.http.put<Result>(`${this.url}/${work.projectId}/works/${work.id}`, work);
   }
 
-  deleteWork(projectId: string, id: string): Observable<Result>{
+  deleteWork(id: string, projectId: string): Observable<Result>{
     return this.http.delete<Result>(`${this.url}/${projectId}/works/${id}`);
   }
 }

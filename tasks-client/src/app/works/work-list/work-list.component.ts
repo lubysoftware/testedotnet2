@@ -75,6 +75,23 @@ export class WorkListComponent implements OnInit {
   }
 
   remove(id: string, projectId: string) {
+    this.dialogService.confirmRemove('Tem certeza que deseja remover a atividade?').subscribe(confirmRemove => {
+      if (!confirmRemove) return;
+
+      this.projectService.deleteWork(id, projectId).subscribe(result => {
+        if (result.success) {
+          this.snackBar.open('Atividade removida com Sucesso!', 'OK', { duration: 3000 });
+          const works = this.dataSource.data.filter(c => c.id !== id);
+          this.listState.noItems = works.length === 0;
+          this.dataSource = new MatTableDataSource<ProjectWorkListDto>(works);
+          return;
+        }
+
+        this.snackBar.open('Erro ao remover atividade!', 'OK', { duration: 3000 });
+      }, () => {
+        this.snackBar.open('Erro ao remover atividade!', 'OK', { duration: 3000 });
+      });
+    });
   }
   
   onShowSearch() {
