@@ -1,0 +1,14 @@
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Application.deps.json
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Application.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Application.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Domain.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Infra.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Domain.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\bin\Debug\netcoreapp3.1\Luby.Infra.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.csprojAssemblyReference.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.AssemblyInfoInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.AssemblyInfo.cs
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.csproj.CoreCompileInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.csproj.CopyComplete
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Application\obj\Debug\netcoreapp3.1\Luby.Application.pdb

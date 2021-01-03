@@ -1,0 +1,15 @@
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.Infra.deps.json
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.Infra.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.Infra.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.domain.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.domain.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.csprojAssemblyReference.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.AssemblyInfoInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.AssemblyInfo.cs
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.csproj.CoreCompileInputs.cache
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.csproj.CopyComplete
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.dll
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.Infra.runtimeconfig.json
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\bin\Debug\netcoreapp3.1\Luby.Infra.runtimeconfig.dev.json
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\luby.infra\obj\Debug\netcoreapp3.1\Luby.Infra.genruntimeconfig.cache
