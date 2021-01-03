@@ -100,6 +100,7 @@ export class DeveloperFormComponent implements OnInit {
   }
 
   valid(): boolean {
+    this.form.markAllAsTouched();
     if (this.form.invalid) {
       this.snackBar.open('Existem campos inválidos!', 'OK', { duration: 3000 });
       return false;

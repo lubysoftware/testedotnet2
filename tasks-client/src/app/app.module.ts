@@ -11,6 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipsModule, MAT_CHIPS_DEFAULT_OPTIONS } from '@angular/material/chips';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 import { MatTableModule } from '@angular/material/table';
@@ -33,6 +36,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NgxMaskModule } from 'ngx-mask';
 import { DeveloperFormComponent } from './developers/developer-form/developer-form.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
+import { ProjectFormComponent } from './projects/project-form/project-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,8 @@ import { ProjectListComponent } from './projects/project-list/project-list.compo
     DeveloperListComponent,
     ConfirmDialogComponent,
     DeveloperFormComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    ProjectFormComponent
   ],
   imports: [
     BrowserModule,
@@ -59,10 +64,12 @@ import { ProjectListComponent } from './projects/project-list/project-list.compo
     MatButtonModule,
     MatInputModule,
     MatTableModule,
+    MatChipsModule,
     MatCardModule,
     MatIconModule,
     MatMenuModule,
     FormsModule,
+    MatAutocompleteModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
@@ -73,6 +80,7 @@ import { ProjectListComponent } from './projects/project-list/project-list.compo
     AuthGuard,
     DialogService,
     HttpInterceptorProviders,
+    { provide: MAT_CHIPS_DEFAULT_OPTIONS, useValue: { separatorKeyCodes: [ENTER, COMMA] } },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },
   ],
