@@ -26,7 +26,7 @@ export class DeveloperListComponent implements OnInit {
     private readonly snackBar: MatSnackBar
   ) { 
     this.search = { page: 1, limit: 10 } as Pagination;
-    this.columns = ['name', 'actions'];
+    this.columns = ['avatar', 'name', 'actions'];
     this.listState = new ListSate();
   }
 

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="card-list">
   <mat-card-header color="primary">
       <mat-card-title>Desenvolvedores</mat-card-title>
   </mat-card-header>
@@ -15,6 +15,13 @@
       </div>
       <div *ngIf="listState.done" class="table-row-cursor-pointer">
           <table mat-table [dataSource]="dataSource">
+              <ng-container matColumnDef="avatar">
+                <th [style.width.px]="80" mat-header-cell *matHeaderCellDef>Avatar</th>
+                <td mat-cell *matCellDef="let developer" [routerLink]="['edit', developer.id]">
+                  <ngx-avatar class="avatar" [name]="developer.name" size="60" [round]="true">
+                  </ngx-avatar>
+                </td>
+              </ng-container>
               <ng-container matColumnDef="name">
                   <th mat-header-cell *matHeaderCellDef>Nome</th>
                   <td mat-cell *matCellDef="let developer" [routerLink]="['edit', developer.id]">{{ developer.name }}</td>
@@ -33,7 +40,7 @@
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="columns"></tr>
-              <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+              <tr mat-row *matRowDef="let developer; columns: columns;"></tr>
           </table>
           <mat-paginator [length]="listState.totalItems" [pageSize]="search.limit" [pageIndex]="search.page -1"
               [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true" (page)="pageChange($event)">

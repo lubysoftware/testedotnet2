@@ -88,8 +88,8 @@ namespace Tasks.IntegrationTests.Developers
             var developerList = result.Data;
             Assert.Equal(Status.Success, status);
             Assert.NotEmpty(developerList);
-            Assert.Equal(2, developerList.Count());
-            Assert.Equal(2, result.TotalRows);
+            Assert.Equal(3, developerList.Count());
+            Assert.Equal(3, result.TotalRows);
 
             var firstPosition = developerList.ElementAt(0);
             Assert.Equal(developerFirstPosition.Id, firstPosition.Id);

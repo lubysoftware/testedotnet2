@@ -83,21 +83,23 @@ namespace Tasks.Service.Developers
 
         public async Task<Result<IEnumerable<DeveloperRankingListDto>>> ListDeveloperRankingAsync(DeveloperRankingSearchDto searchDto)
         {
-            var rawWorkList = await _workRepository.Query()
-                .Where(w => w.StartTime >= searchDto.StartTime)
-                .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId)
-                .Select(w => new {
-                    w.Hours, Developer = new { Id = w.DeveloperProject.DeveloperId, w.DeveloperProject.Developer.Name }
+            var rawDeveloperList = await _developerRepository.Query()
+                .Select(d => new {
+                    Developer = new { d.Id, d.Name },
+                    Works = d.DeveloperProjects
+                        .SelectMany(dp => dp.Works)
+                        .Where(w => w.StartTime >= searchDto.StartTime)
+                        .Where(w => searchDto.ProjectId == null || w.DeveloperProject.ProjectId == searchDto.ProjectId)
                 })
                 .ToArrayAsync();
 
-            var rankingList = rawWorkList.GroupBy(w => w.Developer.Id)
-                .Select(g => new DeveloperRankingListDto
+            var rankingList = rawDeveloperList
+                .Select(d => new DeveloperRankingListDto
                 {
-                    Id = g.Key,
-                    Name = g.FirstOrDefault()?.Developer.Name,
-                    SumHours = g.Sum(w => w.Hours),
-                    AvgHours = g.Average(w => w.Hours)
+                    Id = d.Developer.Id,
+                    Name = d.Developer.Name,
+                    SumHours = d.Works.Sum(w => w.Hours),
+                    AvgHours = d.Works.Any() ? d.Works.Average(w => w.Hours) : 0
                 })
                 .OrderByDescending(d => d.AvgHours)
                 .Take(5);

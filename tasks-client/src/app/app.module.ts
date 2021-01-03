@@ -37,6 +37,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { DeveloperFormComponent } from './developers/developer-form/developer-form.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { ProjectFormComponent } from './projects/project-form/project-form.component';
+import { DeveloperRankingComponent } from './developers/developer-ranking/developer-ranking.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ProjectFormComponent } from './projects/project-form/project-form.compo
     ConfirmDialogComponent,
     DeveloperFormComponent,
     ProjectListComponent,
-    ProjectFormComponent
+    ProjectFormComponent,
+    DeveloperRankingComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,7 @@ import { ProjectFormComponent } from './projects/project-form/project-form.compo
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatTooltipModule,
     AvatarModule,
     NgxMaskModule.forRoot(),
   ],
