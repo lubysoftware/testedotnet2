@@ -1,3 +1,4 @@
+using System;
 using Luby.Domain.Interfaces;
 using System.Collections.Generic;
 
@@ -12,19 +13,17 @@ namespace Luby.Domain.Models
             _lancamentoRepository = lancamentoRepository;
         }
 
-        public void Save(int id, string nome, string cpf, string cargo,
-        string login, string senha,
-        List<Desenvolvedor> lst_Desenvolvedores, List<Projeto> lst_Projetos)
+        public void Save(int id,DateTime DtInicio, DateTime DtFim, int IdDesenvolvedor, int IdProjeto)
         {
             var lancamento = _lancamentoRepository.GetById(id);
 
             if (lancamento == null)
             {
-                lancamento = new Lancamento(nome, cpf, cargo, login, senha,lst_Desenvolvedores,lst_Projetos);
+                lancamento = new Lancamento(id, DtInicio,  DtFim,  IdDesenvolvedor, IdProjeto);
                 _lancamentoRepository.Save(lancamento);
             }
             else
-                lancamento.Update(nome, cpf, cargo, login, senha,lst_Desenvolvedores,lst_Projetos);
+                lancamento.Update( DtInicio,  DtFim,  IdDesenvolvedor, IdProjeto);
         }
     }
 }

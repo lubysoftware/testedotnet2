@@ -24,6 +24,7 @@ dotnet add .\Luby.Application\Luby.Application.csproj reference .\Luby.Infra\Lub
 - https://imasters.com.br/dotnet/criando-uma-webapi-utilizando-net-core-e-vs-code
 - https://www.youtube.com/watch?v=lrYElKHrGdY
 - https://www.youtube.com/watch?v=but7jqjopKM
+- http://www.macoratti.net/19/04/aspncore_jwt1.htm
 
 ### nuget
 - https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/5.0.0

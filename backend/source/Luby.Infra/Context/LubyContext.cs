@@ -26,8 +26,7 @@ namespace Luby.Infra.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;database=luby;user=root", Microsoft.EntityFrameworkCore.ServerVersion.FromString("10.1.37-mariadb"));
+//                optionsBuilder.UseMySql("server=localhost;database=luby;user=root", Microsoft.EntityFrameworkCore.ServerVersion.FromString("10.1.37-mariadb"));
             }
         }
 
@@ -42,7 +41,7 @@ namespace Luby.Infra.Context
                     .HasColumnName("id");
 
                 entity.Property(e => e.Cargo)
-                    .HasColumnType("int(11)")
+                    .HasColumnType("varchar(255)")
                     .HasColumnName("cargo");
 
                 entity.Property(e => e.Cpf)
@@ -66,7 +65,7 @@ namespace Luby.Infra.Context
                     .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Nome)
-                    .HasColumnType("int(11)")
+                    .HasColumnType("varchar(255)")
                     .HasColumnName("nome");
 
                 entity.Property(e => e.Senha)
@@ -129,7 +128,7 @@ namespace Luby.Infra.Context
                     .HasColumnName("id");
 
                 entity.Property(e => e.Nome)
-                    .HasColumnType("int(11)")
+                    .HasColumnType("varchar(255)")
                     .HasColumnName("nome");
             });
 

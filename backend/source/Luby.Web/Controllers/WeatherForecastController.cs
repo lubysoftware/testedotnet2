@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Luby.Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace Luby.Web.Controllers
         {
             _logger = logger;
         }
-
+   [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

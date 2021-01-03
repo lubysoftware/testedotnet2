@@ -6,7 +6,7 @@ using Luby.Infra.Context;
 
 namespace Luby.Infra.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Luby.Infra.Context.BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Luby.Domain.Models.BaseEntity
     {
         protected readonly LubyContext _context;
 

@@ -5,32 +5,49 @@ using Luby.Infra.Context;
 
 namespace Luby.Infra.Repositories
 {
-    public class ProjetoRepository : Repository<Luby.Infra.Context.Projeto>
+    public class ProjetoRepository : Repository<Luby.Domain.Models.Projeto>
     {
 
         public ProjetoRepository(LubyContext context) : base(context)
-        {}
-        public override Luby.Infra.Context.Projeto GetById(int id)
+        { }
+        public override Luby.Domain.Models.Projeto GetById(int id)
         {
             var query = _context.Set<Luby.Infra.Context.Projeto>().Where(e => e.Id == id);
 
             if (query.Any())
             {
-                return query.First();
+                var first = query.First();
+                var result = new Luby.Domain.Models.Projeto(first.Nome);
+                return result;
             }
             return null;
         }
 
-        public override IEnumerable<Luby.Infra.Context.Projeto> GetAll()
+        public override IEnumerable<Luby.Domain.Models.Projeto> GetAll()
         {
             var query = _context.Set<Luby.Infra.Context.Projeto>();
-            return query.Any() ? query.ToList() : new List<Luby.Infra.Context.Projeto>();
+            var result = new List<Luby.Domain.Models.Projeto>();
+            if (query.Any())
+            {
+                foreach (var item in query)
+                {
+                    var projeto = new Luby.Domain.Models.Projeto(item.Nome);
+                    result.Add(projeto);
+                }
+                return result;
+            }
+            else return new List<Luby.Domain.Models.Projeto>();
         }
 
-         public override int Save(Luby.Infra.Context.Projeto projeto ){
-            var query = _context.Projetos.Add(projeto);
+        public override int Save(Luby.Domain.Models.Projeto projeto)
+        {
+            var prj =new Luby.Infra.Context.Projeto(){
+                Id=projeto.Id,
+                Nome=projeto.Nome
+            };
+            var query = _context.Projetos.Add(prj);
             return _context.SaveChanges();
-             
+
         }
     }
 }

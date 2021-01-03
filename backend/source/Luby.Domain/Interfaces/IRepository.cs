@@ -9,6 +9,5 @@ namespace Luby.Domain.Interfaces
          IEnumerable <TEntity>GetAll();
          int Save(TEntity entity);
          int Delete(TEntity entity);
-  
     }
 }

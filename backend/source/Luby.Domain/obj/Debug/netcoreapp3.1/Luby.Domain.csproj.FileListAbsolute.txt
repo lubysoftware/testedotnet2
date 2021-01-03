@@ -6,3 +6,4 @@ C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Domain\obj\De
 C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Domain\obj\Debug\netcoreapp3.1\Luby.Domain.csproj.CoreCompileInputs.cache
 C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Domain\obj\Debug\netcoreapp3.1\Luby.Domain.dll
 C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Domain\obj\Debug\netcoreapp3.1\Luby.Domain.pdb
+C:\Users\Rafael\Desktop\testeluby\testedotnet2\backend\source\Luby.Domain\obj\Debug\netcoreapp3.1\Luby.Domain.csprojAssemblyReference.cache

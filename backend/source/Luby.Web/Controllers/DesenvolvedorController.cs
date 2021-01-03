@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Luby.Domain.Interfaces;
 using Luby.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Luby.Web.Controllers
 {
@@ -31,21 +33,23 @@ namespace Luby.Web.Controllers
         /// <response code="200">A lista de desenvolvedores foi obtida com sucesso!</response>
         /// <response code="500">Ocorreu um erro ao obter a lista.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(List<Desenvolvedor>),200)]
+        [Authorize]
+        [ProducesResponseType(typeof(List<Desenvolvedor>), 200)]
         [ProducesResponseType(500)]
         public ActionResult<List<Desenvolvedor>> Get()
         {
             var desenvolvedores = _desenvolvedorRepository.GetAll();
-            var result=new List<Desenvolvedor>();
+            var result = new List<Desenvolvedor>();
             foreach (var item in desenvolvedores)
             {
-                result.Add(_desenvolvedorRepository.ConverterParaDominio(item));
+                var dev =new Desenvolvedor(item.Nome, item.Cpf, item.Cargo, item.Email, item.Login, item.Senha);
+                result.Add(dev);
             }
-            return result;
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Desenvolvedor> GetById(int id)
+        public async Task<ActionResult<Desenvolvedor>> GetById(int id)
         {
 
             var desenvolvedor = _desenvolvedorRepository.GetById(id);
@@ -53,7 +57,7 @@ namespace Luby.Web.Controllers
             {
                 return NotFound(new { message = $"Desenvolvedor de id={id} não encontrado" });
             }
-            return desenvolvedor;
+            return Ok(desenvolvedor);
         }
 
         [HttpPost]
@@ -95,6 +99,6 @@ namespace Luby.Web.Controllers
             _desenvolvedorService.Delete(id);
             return Ok();
         }
-        
+
     }
 }
