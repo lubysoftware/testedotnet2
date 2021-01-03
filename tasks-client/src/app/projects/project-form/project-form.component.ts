@@ -66,6 +66,7 @@ export class ProjectFormComponent implements OnInit {
       this.project = result.data;
       this.selectedDevelopers = this.project.developers;
       this.form.patchValue(this.project);
+      this.form.controls.developerIds.setValue('');
     }, () => {
       this.snackBar.open('Falha ao carregar projeto!', 'OK', { duration: 3000 });
     });
@@ -138,7 +139,7 @@ export class ProjectFormComponent implements OnInit {
       map(value => typeof value === 'string' ? value : value.name),
       map(name => {
         if (typeof name !== 'string') return [];
-        const unselectedDevelopers = this.developers.filter(d => !this.selectedDevelopers.some(sd => sd === d));
+        const unselectedDevelopers = this.developers.filter(d => !this.selectedDevelopers.some(sd => sd.id === d.id));
         if (!name) return unselectedDevelopers.slice();
         const search = _.deburr(name).toLowerCase();
         return unselectedDevelopers.filter(type => _.deburr(type.name).toLowerCase().indexOf(search) !== -1);
@@ -154,6 +155,7 @@ export class ProjectFormComponent implements OnInit {
   selectDeveloper(event: MatAutocompleteSelectedEvent): void {
     this.selectedDevelopers.push(event.option.value as DeveloperListDto);
     this.developerIdsInput.nativeElement.value = '';
+    this.form.controls.developerIds.setValue('');
     this.form.markAsDirty();
   }
   
@@ -164,6 +166,7 @@ export class ProjectFormComponent implements OnInit {
       const developer = this.developers.find(d => d.name === search);
       if (developer) {
         this.selectedDevelopers.push(developer);
+        this.form.controls.developerIds.setValue('');
         this.form.markAsDirty();
       }
     }
@@ -173,6 +176,7 @@ export class ProjectFormComponent implements OnInit {
 
   removeDeveloper(developer: DeveloperListDto): void {
     this.selectedDevelopers = this.selectedDevelopers.filter(d => d.id !== developer.id);
+    this.form.controls.developerIds.setValue('');
     this.form.markAsDirty();
   }
 }
