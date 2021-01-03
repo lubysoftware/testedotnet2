@@ -37,7 +37,7 @@ export class LoginFormComponent implements OnInit {
     var loginDto = this.form.getRawValue() as LoginDto;
     this.authService.login(loginDto).subscribe(result => {
       if (!result.success) {
-       this.snackBar.open('Erro ao realizar login', 'OK', { duration: 3000 });
+       this.snackBar.open('Falha ao realizar login', 'OK', { duration: 3000 });
        return;
       }
 
@@ -52,7 +52,7 @@ export class LoginFormComponent implements OnInit {
         this.snackBar.open('Usuário ou Senha Incorreto', 'OK', { duration: 3000 });
         return;
       }
-      this.snackBar.open('Erro ao realizar login', 'OK', { duration: 3000 });
+      this.snackBar.open('Falha ao realizar login', 'OK', { duration: 3000 });
     });
   }
 

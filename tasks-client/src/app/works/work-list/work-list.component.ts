@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ProjectWorkListDto } from 'src/app/projects/dtos/works/project-work-list.dto';
 import { ProjectWorkSearchDto } from 'src/app/projects/dtos/works/project-work-search.dto';
 import { AutocompleteComponent } from 'src/app/shared/components/autocomplete/autocomplete.component';
@@ -25,12 +26,16 @@ export class WorkListComponent implements OnInit {
   
   @ViewChild('projects', { static: false }) projects: AutocompleteComponent;
 
+  currentDeveloperId: string;
+
   constructor(
     private readonly authService: AuthService,
     private readonly projectService: ProjectService,
     private readonly dialogService: DialogService,
-    private readonly snackBar: MatSnackBar
+    private readonly snackBar: MatSnackBar,
+    private readonly router: Router
   ) { 
+    this.currentDeveloperId = this.authService.getCurrentDeveloper()?.id ?? '';
     this.search = { page: 1, limit: 10, viewAll: false, projectId: null } as ProjectWorkSearchDto;
     this.columns = ['comment', 'startTime', 'endTime', 'project', 'developer', 'hours', 'actions'];
     this.listState = new ListSate();
@@ -43,7 +48,7 @@ export class WorkListComponent implements OnInit {
 
   loadWorks() {
     this.listState.reset();
-    this.search.developerId = this.search.viewAll ? null : this.authService.getCurrentDeveloper()?.id ?? null;
+    this.search.developerId = this.search.viewAll ? null : this.currentDeveloperId;
     this.projectService.listWorks(this.search).subscribe(result => {
       if (!result.success) {
         this.snackBar.open('Falha ao carregar lista de atividades', 'OK', { duration: 3000 });
@@ -74,14 +79,20 @@ export class WorkListComponent implements OnInit {
     this.loadWorks();
   }
 
-  remove(id: string, projectId: string) {
+  edit(work: ProjectWorkListDto) {
+    if (work.developerId !== this.currentDeveloperId) return;
+    this.router.navigate(['works', 'edit', work.id, { projectId: work.projectId }]);
+  }
+
+  remove(work: ProjectWorkListDto) {
+    if (work.developerId !== this.currentDeveloperId) return;
     this.dialogService.confirmRemove('Tem certeza que deseja remover a atividade?').subscribe(confirmRemove => {
       if (!confirmRemove) return;
 
-      this.projectService.deleteWork(id, projectId).subscribe(result => {
+      this.projectService.deleteWork(work.id, work.projectId).subscribe(result => {
         if (result.success) {
           this.snackBar.open('Atividade removida com Sucesso!', 'OK', { duration: 3000 });
-          const works = this.dataSource.data.filter(c => c.id !== id);
+          const works = this.dataSource.data.filter(c => c.id !== work.id);
           this.listState.noItems = works.length === 0;
           this.dataSource = new MatTableDataSource<ProjectWorkListDto>(works);
           return;

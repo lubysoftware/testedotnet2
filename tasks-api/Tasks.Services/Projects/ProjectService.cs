@@ -148,6 +148,7 @@ namespace Tasks.Service.Projects
                     Hours = w.Hours,
                     ProjectId = w.DeveloperProject.ProjectId,
                     ProjectTitle = w.DeveloperProject.Project.Title,
+                    DeveloperId = w.DeveloperProject.DeveloperId,
                     DeveloperName = w.DeveloperProject.Developer.Name
                 })
                 .ToArrayAsync();

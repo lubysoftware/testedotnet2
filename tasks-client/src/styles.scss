@@ -70,7 +70,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
-table {
+table.mat-table {
   width: 100%;
 
   th {
@@ -86,11 +86,22 @@ table {
 
   td {
     outline: none;
-    cursor: pointer;
   }
   
   td, th {
     padding: 15px !important;
+  }
+}
+
+table.table-cursor-pointer {
+  td {
+    cursor: pointer;
+  }
+}
+
+table tr.table-row-cursor-pointer {
+  td {
+    cursor: pointer;
   }
 }
 

@@ -41,9 +41,13 @@ import { ProjectFormComponent } from './projects/project-form/project-form.compo
 import { DeveloperRankingComponent } from './developers/developer-ranking/developer-ranking.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { WorkListComponent } from './works/work-list/work-list.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AutocompleteComponent } from './shared/components/autocomplete/autocomplete.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { WorkFormComponent } from './works/work-form/work-form.component';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from './shared/components/datepicker/format-datepicker';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,8 @@ import { CommonModule } from '@angular/common';
     ProjectFormComponent,
     DeveloperRankingComponent,
     WorkListComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    WorkFormComponent
   ],
   imports: [
     CommonModule,
@@ -82,6 +87,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatDatepickerModule,
     MatAutocompleteModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
@@ -94,9 +100,11 @@ import { CommonModule } from '@angular/common';
     AuthGuard,
     DialogService,
     HttpInterceptorProviders,
-    { provide: MAT_CHIPS_DEFAULT_OPTIONS, useValue: { separatorKeyCodes: [ENTER, COMMA] } },
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
   bootstrap: [AppComponent]
 })

@@ -164,6 +164,7 @@ namespace Tasks.IntegrationTests.Projects
                 Assert.NotEmpty(work.DeveloperName);
                 if (withFilter)
                 {
+                    Assert.Equal(SessionDeveloper.Id, work.DeveloperId);
                     Assert.Equal(SessionDeveloper.Name, work.DeveloperName);
                 }
             });

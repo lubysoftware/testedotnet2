@@ -32,27 +32,27 @@
       <div *ngIf="listState.loading" class="loading-spinner">
           <mat-spinner mode="indeterminate"></mat-spinner>
       </div>
-      <div *ngIf="listState.done" class="table-row-cursor-pointer">
+      <div *ngIf="listState.done">
           <table mat-table [dataSource]="dataSource">
               <ng-container matColumnDef="comment">
                   <th mat-header-cell *matHeaderCellDef>Descrição</th>
-                  <td mat-cell *matCellDef="let work" [routerLink]="['edit', work.id, { projectId: work.ProjectId }]">{{ work.Comment }}</td>
+                  <td mat-cell *matCellDef="let work" (click)="edit(work)">{{ work.comment }}</td>
               </ng-container>
               <ng-container matColumnDef="startTime">
                   <th mat-header-cell *matHeaderCellDef>Início</th>
-                  <td mat-cell *matCellDef="let work" [routerLink]="['edit', work.id, { projectId: work.projectId }]">{{ formatDateTime(work.startTime) }}</td>
+                  <td mat-cell *matCellDef="let work" (click)="edit(work)">{{ formatDateTime(work.startTime) }}</td>
               </ng-container>
               <ng-container matColumnDef="endTime">
                   <th mat-header-cell *matHeaderCellDef>Fim</th>
-                  <td mat-cell *matCellDef="let work" [routerLink]="['edit', work.id, { projectId: work.projectId }]">{{ formatDateTime(work.endTime) }}</td>
+                  <td mat-cell *matCellDef="let work" (click)="edit(work)">{{ formatDateTime(work.endTime) }}</td>
               </ng-container>
               <ng-container matColumnDef="project">
                   <th mat-header-cell *matHeaderCellDef>Projeto</th>
-                  <td mat-cell *matCellDef="let work" [routerLink]="['edit', work.id, { projectId: work.projectId }]">{{ work.projectTitle }}</td>
+                  <td mat-cell *matCellDef="let work" (click)="edit(work)">{{ work.projectTitle }}</td>
               </ng-container>
               <ng-container matColumnDef="developer">
                   <th mat-header-cell *matHeaderCellDef>Desenvolvedor</th>
-                  <td mat-cell *matCellDef="let work" [routerLink]="['edit', work.id, { projectId: work.projectId }]">{{ work.developerName }}</td>
+                  <td mat-cell *matCellDef="let work" (click)="edit(work)">{{ work.developerName }}</td>
               </ng-container>
               <ng-container matColumnDef="hours">
                   <th mat-header-cell *matHeaderCellDef>Horas</th>
@@ -61,18 +61,18 @@
               <ng-container matColumnDef="actions" stickyEnd>
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let work">
-                      <button mat-icon-button [matMenuTriggerFor]="workMenu">
+                      <button mat-icon-button *ngIf="work.developerId === currentDeveloperId" [matMenuTriggerFor]="workMenu">
                           <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #workMenu="matMenu">
                           <button mat-menu-item [routerLink]="['edit', work.id]">Editar</button>
-                          <button mat-menu-item (click)="remove(work.id, work.ProjectId)">Remover</button>
+                          <button mat-menu-item (click)="remove(work)">Remover</button>
                       </mat-menu>
                   </td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="columns"></tr>
-              <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+              <tr mat-row *matRowDef="let work; columns: columns;" [ngClass]="{ 'table-row-cursor-pointer': work.developerId === currentDeveloperId }"></tr>
           </table>
           <mat-paginator [length]="listState.totalItems" [pageSize]="search.limit" [pageIndex]="search.page -1"
               [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true" (page)="pageChange($event)">

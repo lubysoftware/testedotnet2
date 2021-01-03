@@ -35,4 +35,8 @@ export class DeveloperRankingComponent implements OnInit {
       this.snackBar.open('Falha ao carregar o ranking dos desenvolvedores!', 'OK', { duration: 3000 });
     });
   }
+
+  formatNumber(value: number) {
+    return value.toLocaleString();
+  }
 }

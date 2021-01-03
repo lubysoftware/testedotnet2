@@ -95,7 +95,7 @@ namespace Tasks.Services.Works
         {
             var now = DateTime.Now;
             if (endTime > now) return new Result(Status.Invalid, $"StartTime cannot be greater than Now");
-            if (startTime > endTime) return new Result(Status.Invalid, $"StartTime cannot be greater than EndTime");
+            if (startTime > endTime) return new Result(Status.Invalid, $"EndTime cannot be greater than EndTime");
             if (startTime.Date == endTime.Date && startTime.Hour == endTime.Hour && startTime.Minute == endTime.Minute) 
                 return new Result(Status.Invalid, $"StartTime cannot be the same as EndTime");
             return new Result();
