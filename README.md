@@ -51,6 +51,7 @@ E-mail: paulo202015@outlook.com.br
 #### Observações:
 ##### API:
  - Foi desenvolvida usando a versão 3.1 do Net Core
+ - O banco de dados utilizado foi o MySql
  - As migrations são executadas automaticamente ao iniciar o projeto, sendo necessário ajustar a connection string para conexão
 
 ##### Client:
