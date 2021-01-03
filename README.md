@@ -46,3 +46,21 @@ Desenvolver um serviço que seja capaz de gerar um lançamento de horas.
 #### Identificação:
 Nome: Paulo Ricardo Busch<br/>
 E-mail: paulo202015@outlook.com.br
+
+
+#### Observações:
+##### API:
+ - Foi desenvolvida usando a versão 3.1 do Net Core
+ - As migrations são executadas automaticamente ao iniciar o projeto, sendo necessário ajustar a connection string para conexão
+
+##### Client:
+###### Requisitos:
+ - Nodejs instalado
+
+###### Inicialização:
+ - Acessar o diretório do client e rodar os comandos `npm install` e `ng s`
+
+###### Acesso:
+ - Acessar o endereço http://localhost:4200/ no navegador
+ - Para acessar o sistema pode ser usado o usuário `pleno` com senha `321654` que é gerado por seeder ao iniciar o projeto
+
