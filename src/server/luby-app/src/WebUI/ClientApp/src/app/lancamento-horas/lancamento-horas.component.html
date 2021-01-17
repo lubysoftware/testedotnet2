@@ -1,0 +1,63 @@
+
+<h1 id="tableLabel">Lançamento de Horas </h1>
+
+<p *ngIf="!lacamentoHorasVM"><em>Loading...</em></p>
+
+<table class='table table-striped table-bordered' aria-labelledby="tableLabel" *ngIf="lacamentoHorasVM">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Desenvolvedor</th>
+      <th>Data Início</th>
+      <th>Data Fim</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let h of lacamentoHorasVM.items">
+      <td>{{ h.id }}</td>
+      <td>{{ h.desenvolvedor.nome }}</td>
+      <td>{{ h.inicio | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+      <td>{{ h.fim | date: 'dd/MM/yyyy hh:mm:ss' }}</td> 
+    </tr>
+    <tr *ngIf="lacamentoHorasVM.items.length == 0">
+      <td colspan="4" style="text-align: center;">
+        Nenhum item cadastrado!
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-primary float-right" (click)="showModalCreate(newListModalTemplate)">
+  Novo Item
+</button>
+
+<ng-template #newListModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Novo Lançamento</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Data Início</label>
+      <input type="datetime-local" class="form-control" [(ngModel)]="novoLancamento.inicio" [ngClass]="{ 'is-invalid': novoLancamento.error }" />
+      <div *ngIf="novoLancamento.error" class="invalid-feedback">
+        {{ novoLancamento.error }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Data Fim</label>
+      <input type="datetime-local" class="form-control" [(ngModel)]="novoLancamento.fim" [ngClass]="{ 'is-invalid': novoLancamento.error }" />
+      <div *ngIf="novoLancamento.error" class="invalid-feedback">
+        {{ novoLancamento.error }}
+      </div>
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ novoLancamento | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-secondary" (click)="modalNovoLacamentoHoras.hide()" style="margin-right: 5px">Cancelar</button>
+      <button class="btn btn-primary" (click)="saveLancamento()">Salvar</button>
+    </div>
+  </div>
+</ng-template>

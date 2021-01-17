@@ -1,0 +1,150 @@
+<h1 id="tableLabel">Desenvolvedores</h1>
+
+<p *ngIf="!desenvolvedorVM"><em>Loading...</em></p>
+
+<table class='table table-striped table-bordered' aria-labelledby="tableLabel" *ngIf="desenvolvedorVM">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>CPF</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of desenvolvedorVM.items">
+      <td>{{ d.id }}</td>
+      <td>{{ d.nome }}</td>
+      <td>{{ d.email }}</td>
+      <td>{{ d.cpf }}</td>
+      <td>
+        <button class="btn btn-info float-right" (click)="showModalUpdate(listOptionsModalTemplate, d)">
+          Editar
+        </button>
+        <button class="btn btn-warning float-right" (click)="confirmDelete(deleteListModalTemplate, d)" style="margin-right: 5px;">
+          Excluir
+        </button>
+      </td>
+    </tr>
+    <tr *ngIf="desenvolvedorVM.items.length == 0">
+      <td colspan="5" style="text-align: center;">
+        Nenhum item cadastrado!
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-primary float-right" (click)="showModalCreate(newListModalTemplate)">
+  Novo Item
+</button>
+
+
+<ng-template #newListModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Novo Desenvolvedor</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.nome" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
+      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
+        {{ novoDesenvolvedor.error }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.email" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
+      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
+        {{ novoDesenvolvedor.error }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>CPF</label>
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.cpf" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
+      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
+        {{ novoDesenvolvedor.error }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Projeto</label> 
+      <select class="form-control" [(ngModel)]="projetoSelecionado" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }"> 
+        <option *ngFor="let x of projetos" [value]="x.id">{{x.nome}}</option>
+      </select>
+      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
+        {{ novoDesenvolvedor.error }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.senha" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
+      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
+        {{ novoDesenvolvedor.error }}
+      </div>
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ novoDesenvolvedor | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-secondary" (click)="modalNovoDesenvolvedor.hide()" style="margin-right: 5px">Cancelar</button>
+      <button class="btn btn-primary" (click)="saveDesenvolvedor()">Salvar</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #listOptionsModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Editar</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.nome" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="desenvolvedorSelecionado.email" />
+    </div>
+    <div class="form-group">
+      <label>CPF</label>
+      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.cpf" />
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.senha" />
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ desenvolvedorSelecionado | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="clearfix">
+      <div class="float-right">
+        <button class="btn btn-secondary" (click)="modalEdicaoDesenvolvedor.hide()" style="margin-right: 5px">Cancelar</button>
+        <button class="btn btn-primary" (click)="updateDesenvolvedor()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteListModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Excluir </h4>
+  </div>
+  <div class="modal-body">
+    <p>Deseja realmente excluir <b>"{{ desenvolvedorSelecionado?.nome }}"</b>?</p>
+    <div *ngIf="debug">
+      <pre>{{ desenvolvedorSelecionado | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button type="button" class="btn btn-secondary" (click)="modalExclusaoDesenvolvedor.hide()" style="margin-right: 5px">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="deleteConfirmed()">Confirmar</button>
+    </div>
+  </div>
+</ng-template>
+
+
