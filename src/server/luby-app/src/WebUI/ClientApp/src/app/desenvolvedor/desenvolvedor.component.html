@@ -47,39 +47,39 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Nome</label>
-      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.nome" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
-      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
-        {{ novoDesenvolvedor.error }}
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.nome" [ngClass]="{ 'is-invalid': novoDesenvolvedor.nomeError }" />
+      <div *ngIf="novoDesenvolvedor.nomeError" class="invalid-feedback">
+        {{ novoDesenvolvedor.nomeError }}
       </div>
     </div>
     <div class="form-group">
       <label>Email</label>
-      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.email" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
-      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
-        {{ novoDesenvolvedor.error }}
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.email" [ngClass]="{ 'is-invalid': novoDesenvolvedor.emailError }" />
+      <div *ngIf="novoDesenvolvedor.emailError" class="invalid-feedback">
+        {{ novoDesenvolvedor.emailError }}
       </div>
     </div>
     <div class="form-group">
       <label>CPF</label>
-      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.cpf" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
-      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
-        {{ novoDesenvolvedor.error }}
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.cpf" [ngClass]="{ 'is-invalid': novoDesenvolvedor.cpfError }" />
+      <div *ngIf="novoDesenvolvedor.cpfError" class="invalid-feedback">
+        {{ novoDesenvolvedor.cpfError }}
       </div>
     </div>
     <div class="form-group">
       <label>Projeto</label> 
-      <select class="form-control" [(ngModel)]="projetoSelecionado" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }"> 
+      <select class="form-control" [(ngModel)]="projetoSelecionado" [ngClass]="{ 'is-invalid': novoDesenvolvedor.projetoError }"> 
         <option *ngFor="let x of projetos" [value]="x.id">{{x.nome}}</option>
       </select>
-      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
-        {{ novoDesenvolvedor.error }}
+      <div *ngIf="novoDesenvolvedor.projetoError" class="invalid-feedback">
+        {{ novoDesenvolvedor.projetoError }}
       </div>
     </div>
     <div class="form-group">
       <label>Senha</label>
-      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.senha" [ngClass]="{ 'is-invalid': novoDesenvolvedor.error }" />
-      <div *ngIf="novoDesenvolvedor.error" class="invalid-feedback">
-        {{ novoDesenvolvedor.error }}
+      <input type="text" class="form-control" [(ngModel)]="novoDesenvolvedor.senha" [ngClass]="{ 'is-invalid': novoDesenvolvedor.senhaError }" />
+      <div *ngIf="novoDesenvolvedor.senhaError" class="invalid-feedback">
+        {{ novoDesenvolvedor.senhaError }}
       </div>
     </div>
     <div *ngIf="debug">

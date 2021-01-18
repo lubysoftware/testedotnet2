@@ -18,7 +18,7 @@ export class DesenvolvedorComponent {
 
   novoDesenvolvedor: any = {};
   projetos: ProjetoDto[];
-  projetoSelecionado: bigint;
+  projetoSelecionado: number;
 
   constructor(private client: DesenvolvedorClient, clientProjeto: ProjetoClient, private modalService: BsModalService) {
     client.getDesenvolvedorWithPagination(1, 10).subscribe(result => {
@@ -40,8 +40,6 @@ export class DesenvolvedorComponent {
   }
 
   saveDesenvolvedor(): void {
-    console.log(this.projetoSelecionado);
-
     let dev = DesenvolvedorDto.fromJS({
       id: 0,
       nome: this.novoDesenvolvedor.nome,
@@ -52,7 +50,12 @@ export class DesenvolvedorComponent {
     });
 
     this.client.create(<CreateDesenvolvedorCommand>{
-      nome: this.novoDesenvolvedor.nome, senha: this.novoDesenvolvedor.senha, email: this.novoDesenvolvedor.email, cpf: this.novoDesenvolvedor.cpf, projetoId: this.projetoSelecionado }).subscribe(
+      nome: this.novoDesenvolvedor.nome,
+      senha: this.novoDesenvolvedor.senha,
+      email: this.novoDesenvolvedor.email,
+      cpf: this.novoDesenvolvedor.cpf,
+      projetoId: this.projetoSelecionado
+    }).subscribe(
       result => {
         dev.id = result;
         this.desenvolvedorVM.items.push(dev);
@@ -62,8 +65,12 @@ export class DesenvolvedorComponent {
       error => {
         let errors = JSON.parse(error.response);
 
-        if (errors && errors.Title) {
-          this.novoDesenvolvedor.error = errors.Title[0];
+        if (errors) {
+          this.novoDesenvolvedor.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null;
+          this.novoDesenvolvedor.cpfError = errors.errors.CPF ? errors.errors.CPF[0] : null;
+          this.novoDesenvolvedor.senhaError = errors.errors.Senha ? errors.errors.Senha[0] : null;
+          this.novoDesenvolvedor.emailError = errors.errors.Email ? errors.errors.Email[0] : null;
+          this.novoDesenvolvedor.projetoError = errors.errors.ProjetoId ? errors.errors.ProjetoId[0] : null;
         }
       }
     );
