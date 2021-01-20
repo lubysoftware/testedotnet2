@@ -1,0 +1,29 @@
+<div class="form-row">
+  <div class="col-md-6">
+    <h2>Acessar Sistema</h2>
+    <hr />
+    <form #form='ngForm' class="mb-4" autocomplete="off" (submit)="onSubmit(form)">
+      <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" #UserName="ngModel" name="UserName" [(ngModel)]="formModel.UserName" required>
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" class="form-control" #Password="ngModel" name="Password" [(ngModel)]="formModel.Password" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <button type="submit" class="btn btn-primary float-right" [disabled]="form.invalid">Acessar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <div class="alert alert-info float-right">
+      <p>
+        <b>Uusário admin: </b>
+      </p>
+      <p>Email: administrator@localhost / Senha: 123456</p>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthorizeService } from '../../api-authorization/authorize.service';
+import { Router } from '@angular/router';
+import { UserProfileClient } from '../web-api-client';
+import { Role, User } from '../_models/user'; 
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,14 +11,32 @@ import { AuthorizeService } from '../../api-authorization/authorize.service';
 export class NavMenuComponent {
   isExpanded = false
   isAuthenticated = false;
+  userDetails: User;
 
+  constructor(private router: Router, private userProfileClient: UserProfileClient) {
 
-  constructor(private authorize: AuthorizeService) {
-    this.authorize.isAuthenticated().subscribe(val => this.isAuthenticated = val);
+    this.userProfileClient.getUserProfile().subscribe(result => {
+      this.userDetails = User.fromJS(result);
+    }, error => {
+        console.log(error);
+    }); 
   }
 
   collapse() {
     this.isExpanded = false;
+  }
+
+  get isAdmin() {
+    return this.userDetails && this.userDetails.role === Role.Admin;
+  }
+
+  get isDev() {
+    return this.userDetails && this.userDetails.role === Role.Dev;
+  }
+
+  onLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   toggle() {

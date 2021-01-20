@@ -31,6 +31,7 @@ export enum AuthenticationResultStatus {
 
 export interface IUser {
   name: string;
+  roles: string[];
 }
 
 @Injectable({
@@ -49,10 +50,13 @@ export class AuthorizeService {
   }
 
   public getUser(): Observable<IUser | null> {
-    return concat(
+  
+    let result=  concat(
       this.userSubject.pipe(take(1), filter(u => !!u)),
       this.getUserFromStorage().pipe(filter(u => !!u), tap(u => this.userSubject.next(u))),
       this.userSubject.asObservable());
+
+    return result;
   }
 
   public getAccessToken(): Observable<string> {
@@ -190,7 +194,14 @@ export class AuthorizeService {
     });
   }
 
-  private getUserFromStorage(): Observable<IUser> {
+  private getUserFromStorage(): Observable<IUser> { 
+    return from(this.ensureUserManagerInitialized())
+      .pipe(
+        mergeMap(() => this.userManager.getUser()),
+        map(u => u && u.profile));
+  }
+
+  public teste(): Observable<IUser> {
     return from(this.ensureUserManagerInitialized())
       .pipe(
         mergeMap(() => this.userManager.getUser()),

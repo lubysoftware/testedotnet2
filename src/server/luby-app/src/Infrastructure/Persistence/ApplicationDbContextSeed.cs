@@ -16,7 +16,7 @@ namespace luby_app.Infrastructure.Persistence
                 await roleManager.CreateAsync(administratorRole);
             } 
 
-            var devRole = new IdentityRole("dev");
+            var devRole = new IdentityRole("Desenvolvedor");
 
             if (roleManager.Roles.All(r => r.Name != devRole.Name))
             {
