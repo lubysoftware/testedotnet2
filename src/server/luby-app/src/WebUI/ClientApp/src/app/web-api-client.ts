@@ -15,7 +15,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IAuthClient {
-    login(model: LoginModel): Observable<FileResponse>;
+    login(model: LoginModelRequest): Observable<string>;
 }
 
 @Injectable({
@@ -31,7 +31,7 @@ export class AuthClient implements IAuthClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    login(model: LoginModel): Observable<FileResponse> {
+    login(model: LoginModelRequest): Observable<string> {
         let url_ = this.baseUrl + "/api/Auth/Login";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -43,7 +43,7 @@ export class AuthClient implements IAuthClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -54,31 +54,33 @@ export class AuthClient implements IAuthClient {
                 try {
                     return this.processLogin(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<string>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<string>><any>_observableThrow(response_);
         }));
     }
 
-    protected processLogin(response: HttpResponseBase): Observable<FileResponse> {
+    protected processLogin(response: HttpResponseBase): Observable<string> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<string>(<any>null);
     }
 }
 
@@ -799,7 +801,7 @@ export class ProjetoClient implements IProjetoClient {
 }
 
 export interface IUserProfileClient {
-    getUserProfile(): Observable<FileResponse>;
+    getUserProfile(): Observable<UserProfileResponse>;
 }
 
 @Injectable({
@@ -815,7 +817,7 @@ export class UserProfileClient implements IUserProfileClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getUserProfile(): Observable<FileResponse> {
+    getUserProfile(): Observable<UserProfileResponse> {
         let url_ = this.baseUrl + "/api/UserProfile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -823,7 +825,7 @@ export class UserProfileClient implements IUserProfileClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -834,39 +836,41 @@ export class UserProfileClient implements IUserProfileClient {
                 try {
                     return this.processGetUserProfile(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<UserProfileResponse>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<UserProfileResponse>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetUserProfile(response: HttpResponseBase): Observable<FileResponse> {
+    protected processGetUserProfile(response: HttpResponseBase): Observable<UserProfileResponse> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserProfileResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<UserProfileResponse>(<any>null);
     }
 }
 
-export class LoginModel implements ILoginModel {
+export class LoginModelRequest implements ILoginModelRequest {
     userName?: string | undefined;
     password?: string | undefined;
 
-    constructor(data?: ILoginModel) {
+    constructor(data?: ILoginModelRequest) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -882,9 +886,9 @@ export class LoginModel implements ILoginModel {
         }
     }
 
-    static fromJS(data: any): LoginModel {
+    static fromJS(data: any): LoginModelRequest {
         data = typeof data === 'object' ? data : {};
-        let result = new LoginModel();
+        let result = new LoginModelRequest();
         result.init(data);
         return result;
     }
@@ -897,7 +901,7 @@ export class LoginModel implements ILoginModel {
     }
 }
 
-export interface ILoginModel {
+export interface ILoginModelRequest {
     userName?: string | undefined;
     password?: string | undefined;
 }
@@ -1534,6 +1538,50 @@ export class UpdateProjetoCommand implements IUpdateProjetoCommand {
 export interface IUpdateProjetoCommand {
     id?: number;
     nome?: string | undefined;
+}
+
+export class UserProfileResponse implements IUserProfileResponse {
+    email?: string | undefined;
+    userName?: string | undefined;
+    role?: string | undefined;
+
+    constructor(data?: IUserProfileResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"];
+            this.userName = _data["userName"];
+            this.role = _data["role"];
+        }
+    }
+
+    static fromJS(data: any): UserProfileResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserProfileResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["userName"] = this.userName;
+        data["role"] = this.role;
+        return data; 
+    }
+}
+
+export interface IUserProfileResponse {
+    email?: string | undefined;
+    userName?: string | undefined;
+    role?: string | undefined;
 }
 
 export interface FileResponse {

@@ -10,8 +10,7 @@ export class User {
   role: Role;
   token?: string;
 
-  init(_data?: any) {
-    debugger;
+  init(_data?: any) { 
     if (_data) {
       this.id = _data["id"];
       this.username = _data["userName"];

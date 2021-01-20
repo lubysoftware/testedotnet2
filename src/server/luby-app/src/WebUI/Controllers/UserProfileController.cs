@@ -2,12 +2,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace luby_app.WebUI.Controllers
 {
+    public class UserProfileResponse
+    {
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public string Role { get; set; }
+    }
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -19,20 +26,16 @@ namespace luby_app.WebUI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        //GET : /api/UserProfile
-        public async Task<Object> GetUserProfile()
+        [Authorize] 
+        public async Task<ActionResult<UserProfileResponse>> GetUserProfile()
         {
             IdentityOptions _options = new IdentityOptions();
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             string role = User.Claims.First(c => c.Type == _options.ClaimsIdentity.RoleClaimType).Value;
+
             var user = await _userManager.FindByIdAsync(userId);
-            return new
-            { 
-                user.Email,
-                user.UserName,
-                role
-            };
+
+            return new UserProfileResponse() { Email = user.Email, UserName = user.UserName, Role = role };
         }
     }
 }

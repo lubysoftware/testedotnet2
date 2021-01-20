@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserProfileClient } from '../web-api-client';
-import { Role, User } from '../_models/user'; 
+import { UserProfileClient, UserProfileResponse } from '../web-api-client';
+import { Role } from '../_models/user';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,15 +11,14 @@ import { Role, User } from '../_models/user';
 export class NavMenuComponent {
   isExpanded = false
   isAuthenticated = false;
-  userDetails: User;
+  userDetails: UserProfileResponse;
 
   constructor(private router: Router, private userProfileClient: UserProfileClient) {
-
     this.userProfileClient.getUserProfile().subscribe(result => {
-      this.userDetails = User.fromJS(result);
+      this.userDetails = result;
     }, error => {
-        console.log(error);
-    }); 
+      console.log(error);
+    });
   }
 
   collapse() {
