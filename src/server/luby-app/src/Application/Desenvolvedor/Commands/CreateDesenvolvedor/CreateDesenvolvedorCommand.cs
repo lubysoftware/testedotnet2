@@ -36,23 +36,15 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
             entity.CPF = request.CPF;
             entity.Senha = request.Senha;
             entity.Email = request.Email;
-            entity.ProjetoId = request.ProjetoId; 
+            entity.ProjetoId = request.ProjetoId;
 
-            var result = await _identityService.CreateUserAsync(entity.Email, entity.Senha, "dev");
+            var result = await _identityService.CreateUserAsync(entity.Email, entity.Senha, "Desenvolvedor");
             entity.UsuarioId = result.UserId;
 
             _context.Desenvolvedor.Add(entity);
 
-            try
-            {
+            await _context.SaveChangesAsync(cancellationToken);
 
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (System.Exception e)
-            {
-
-                throw;
-            }
 
             return entity.Id;
         }

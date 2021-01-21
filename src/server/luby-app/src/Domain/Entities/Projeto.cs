@@ -7,8 +7,6 @@ namespace luby_app.Domain.Entities
     {
         public int Id { get; set; }
 
-        public string Nome { get; set; } 
-
-        public IList<Desenvolvedor> Desenvolvedores { get; private set; } = new List<Desenvolvedor>();
+        public string Nome { get; set; }  
     }
 }

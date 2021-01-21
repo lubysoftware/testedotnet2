@@ -17,10 +17,10 @@ namespace luby_app.Domain.Entities
 
         public int ProjetoId { get; set; }
 
-        public Projeto Projeto { get; set; }
+        public virtual Projeto Projeto { get; set; }
 
         public string UsuarioId { get; set; }
 
-        public IList<DesenvolvedorHora> DesenvolvedorHora { get; set; } = new List<DesenvolvedorHora>();
+        public virtual ICollection<DesenvolvedorHora> DesenvolvedorHora { get; set; } = new List<DesenvolvedorHora>();
     }
 }
