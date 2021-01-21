@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core'; 
+import { AuthService } from '../auth/auth.service';
 import { UserProfileClient, UserProfileResponse } from '../web-api-client';
-import { Role } from '../_models/user';
+import { Role } from '../_models/role';
 
 @Component({
   selector: 'app-nav-menu',
@@ -12,30 +12,32 @@ export class NavMenuComponent {
   isExpanded = false
   isAuthenticated = false;
   userDetails: UserProfileResponse;
+  isAdmin: boolean;
+  isDev: boolean; 
 
-  constructor(private router: Router, private userProfileClient: UserProfileClient) {
-    this.userProfileClient.getUserProfile().subscribe(result => {
-      this.userDetails = result;
-    }, error => {
-      console.log(error);
-    });
+  constructor(private userProfileClient: UserProfileClient, private authService: AuthService) { 
+    this.authService.loggedIn.subscribe(value => {
+      this.userProfileClient.getUserProfile().subscribe(result => {
+        this.setUserProfile(result);
+      }, error => {
+        this.setUserProfile(null);
+        console.log(error);
+      });
+    }); 
+  }
+
+  setUserProfile(result: UserProfileResponse) {
+    this.userDetails = result;
+    this.isAdmin = this.userDetails && this.userDetails.role === Role.Admin;
+    this.isDev = this.userDetails && this.userDetails.role === Role.Dev;
   }
 
   collapse() {
     this.isExpanded = false;
   }
 
-  get isAdmin() {
-    return this.userDetails && this.userDetails.role === Role.Admin;
-  }
-
-  get isDev() {
-    return this.userDetails && this.userDetails.role === Role.Dev;
-  }
-
   onLogout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   toggle() {

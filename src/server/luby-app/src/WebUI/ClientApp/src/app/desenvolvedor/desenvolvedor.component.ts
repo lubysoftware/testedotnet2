@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NotificationService } from '../notification.service';
 import { PaginatedListOfDesenvolvedorDto, DesenvolvedorClient, DesenvolvedorDto, CreateDesenvolvedorCommand, UpdateDesenvolvedorCommand, ProjetoDto, ProjetoClient } from '../web-api-client';
 
 @Component({
@@ -20,7 +21,7 @@ export class DesenvolvedorComponent {
   projetos: ProjetoDto[];
   projetoSelecionado: number;
 
-  constructor(private client: DesenvolvedorClient, clientProjeto: ProjetoClient, private modalService: BsModalService) {
+  constructor(private client: DesenvolvedorClient, clientProjeto: ProjetoClient, private modalService: BsModalService, private notification: NotificationService) {
     client.getDesenvolvedorWithPagination(1, 10).subscribe(result => {
       this.desenvolvedorVM = result;
     }, error => console.error(error));
@@ -61,6 +62,7 @@ export class DesenvolvedorComponent {
         this.desenvolvedorVM.items.push(dev);
         this.modalNovoDesenvolvedor.hide();
         this.novoDesenvolvedor = {};
+        this.notification.showSuccess("Desenvolvedor salvo com sucesso!", '');
       },
       error => {
         let errors = JSON.parse(error.response);
@@ -84,6 +86,8 @@ export class DesenvolvedorComponent {
           this.desenvolvedorVM.items = this.desenvolvedorVM.items.filter(t => t.id != this.desenvolvedorSelecionado.id);
           this.desenvolvedorVM.items.push(this.desenvolvedorSelecionado);
           this.desenvolvedorSelecionado = new DesenvolvedorDto();
+
+          this.notification.showSuccess("Desenvolvedor atualizado com sucesso!", '');
         },
         error => console.error(error)
       );
@@ -99,6 +103,7 @@ export class DesenvolvedorComponent {
       () => {
         this.modalExclusaoDesenvolvedor.hide();
         this.desenvolvedorVM.items = this.desenvolvedorVM.items.filter(t => t.id != this.desenvolvedorSelecionado.id);
+        this.notification.showSuccess("Desenvolvedor removido com sucesso!", '');
       },
       error => console.error(error)
     );

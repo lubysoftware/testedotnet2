@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component'; 
+import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProjetoComponent } from './projeto/projeto.component';
@@ -14,14 +14,15 @@ import { LancamentoHorasComponent } from './lancamento-horas/lancamento-horas.co
 import { RankingComponent } from './ranking/ranking.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthInterceptor } from './auth/auth.interceptor'; 
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,  
+    HomeComponent,
     ProjetoComponent,
     DesenvolvedorComponent,
     LancamentoHorasComponent,
@@ -36,7 +37,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

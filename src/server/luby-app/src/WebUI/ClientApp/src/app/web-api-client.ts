@@ -976,6 +976,7 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
     email?: string | undefined;
     cpf?: string | undefined;
     projetoId?: number;
+    totalHoras?: number;
 
     constructor(data?: IDesenvolvedorDto) {
         if (data) {
@@ -993,6 +994,7 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
             this.email = _data["email"];
             this.cpf = _data["cpf"];
             this.projetoId = _data["projetoId"];
+            this.totalHoras = _data["totalHoras"];
         }
     }
 
@@ -1010,6 +1012,7 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
         data["email"] = this.email;
         data["cpf"] = this.cpf;
         data["projetoId"] = this.projetoId;
+        data["totalHoras"] = this.totalHoras;
         return data; 
     }
 }
@@ -1020,6 +1023,7 @@ export interface IDesenvolvedorDto {
     email?: string | undefined;
     cpf?: string | undefined;
     projetoId?: number;
+    totalHoras?: number;
 }
 
 export class CreateDesenvolvedorCommand implements ICreateDesenvolvedorCommand {

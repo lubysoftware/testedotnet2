@@ -7,7 +7,7 @@ import { LoginComponent } from "./login/login.component";
 import { ProjetoComponent } from "./projeto/projeto.component";
 import { RankingComponent } from "./ranking/ranking.component";
 import { NgModule } from '@angular/core';
-import { Role } from "./_models/user";
+import { Role } from "./_models/role";
 import { ForbiddenComponent } from "./forbidden/forbidden.component";
 
 const routes: Routes = [
@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'desenvolvedor', component: DesenvolvedorComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Admin] } },
   { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Admin] } },
   { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'lancamento-horas', component: LancamentoHorasComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Dev] } },
 ];

@@ -112,6 +112,12 @@
       <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.cpf" />
     </div>
     <div class="form-group">
+      <label>Projeto</label>
+      <select class="form-control" [(ngModel)]="projetoSelecionado" [ngClass]="{ 'is-invalid': novoDesenvolvedor.projetoError }">
+        <option *ngFor="let x of projetos" [value]="x.id">{{x.nome}}</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label>Senha</label>
       <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.senha" />
     </div>
