@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NotificationService } from '../notification.service';
 import { CreateDesenvolvedorHoraCommand, DesenvolvedorHoraDto, LacamentoHorasClient, PaginatedListOfDesenvolvedorHoraDto } from '../web-api-client';
 
 @Component({
@@ -12,7 +13,7 @@ export class LancamentoHorasComponent {
   modalNovoLacamentoHoras: BsModalRef; 
   novoLancamento: any = {};
 
-  constructor(private client: LacamentoHorasClient, private modalService: BsModalService) {
+  constructor(private client: LacamentoHorasClient, private modalService: BsModalService, private notification: NotificationService) {
     client.getWithPagination(1, 10, null).subscribe(result => {
       this.lacamentoHorasVM = result;
     }, error => console.error(error));
@@ -32,6 +33,7 @@ export class LancamentoHorasComponent {
 
         this.modalNovoLacamentoHoras.hide();
         this.novoLancamento = {};
+        this.notification.showSuccess("Horas lançadas com sucesso!", '');
       },
       error => {
         let errors = JSON.parse(error.response);

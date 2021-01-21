@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using luby_app.Application.Common.Interfaces;
+﻿using luby_app.Application.Common.Interfaces;
 using luby_app.Application.Desenvolvedor.Queries.GetDesenvolvedorWithPagination;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,24 +28,23 @@ namespace luby_app.Application.Desenvolvedor.Queries.GetRankingDesenvolvedor
             DateTime dataInicio = DateTime.Now.AddDays(-dias);
             DateTime dataFim = DateTime.Now.Date;
 
-            var result = _context.DesenvolvedorHora
-                                    .Where(el => (el.Inicio >= dataInicio && el.Inicio <= dataFim) && (el.Fim >= dataInicio && el.Fim <= dataFim))
-                                    .GroupBy(x => x.Desenvolvedor)
-                                    .Select(g => new RankingDto(g.Sum(x => x.TotalHoras) / dias, new DesenvolvedorDto()
-                                    {
-                                        Id = g.Key.Id,
-                                        Nome = g.Key.Nome,
-                                        CPF = g.Key.CPF,
-                                        Email = g.Key.Email,
-                                        ProjetoId = g.Key.ProjetoId
-                                    }))
-                                    .OrderBy(o => o.MediaHoras)
-                                    .Take(5)
-                                    .ToListAsync();
+            var query = _context.DesenvolvedorHora
+                            .Where(el => (el.Inicio >= dataInicio && el.Inicio <= dataFim) && (el.Fim >= dataInicio && el.Fim <= dataFim))
+                            .ToList();
 
-            var teste = result.Result;
-
-            return await result;
+            return query.GroupBy(x => x.Desenvolvedor)
+                            .Select(g => new RankingDto(g.Sum(x => x.TotalHoras()) / dias, new DesenvolvedorDto()
+                            {
+                                Id = g.Key.Id,
+                                Nome = g.Key.Nome,
+                                CPF = g.Key.CPF,
+                                Email = g.Key.Email,
+                                ProjetoId = g.Key.ProjetoId,
+                                TotalHoras = g.Sum(x => x.TotalHoras())
+                            }))
+                            .OrderBy(o => o.MediaHoras)
+                            .Take(5)
+                            .ToList();
         }
     }
 }

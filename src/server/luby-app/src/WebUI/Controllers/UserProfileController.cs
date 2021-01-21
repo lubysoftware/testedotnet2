@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace luby_app.WebUI.Controllers
@@ -28,13 +29,13 @@ namespace luby_app.WebUI.Controllers
         [HttpGet]
         [Authorize] 
         public async Task<ActionResult<UserProfileResponse>> GetUserProfile()
-        {
-            IdentityOptions _options = new IdentityOptions();
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            string role = User.Claims.First(c => c.Type == _options.ClaimsIdentity.RoleClaimType).Value;
+        { 
+            string userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            string role = User.Claims.First(c => c.Type == ClaimTypes.Role).Value; 
+            var user = await _userManager.FindByIdAsync(userId); 
 
-            var user = await _userManager.FindByIdAsync(userId);
-
+            if (user == null)
+                return null; 
             return new UserProfileResponse() { Email = user.Email, UserName = user.UserName, Role = role };
         }
     }

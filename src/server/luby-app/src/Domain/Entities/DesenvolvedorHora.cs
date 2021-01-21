@@ -11,10 +11,10 @@ namespace luby_app.Domain.Entities
 
         public DateTime Fim { get; set; }
 
-        public double TotalHoras { get { return (this.Fim - this.Inicio).TotalHours; } }
+        public double TotalHoras() => (this.Fim - this.Inicio).TotalHours;
 
         public int DesenvolvedorId { get; set; }
 
-        public Desenvolvedor Desenvolvedor { get; set; }
+        public virtual Desenvolvedor Desenvolvedor { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NotificationService } from '../notification.service';
 import { CreateProjetoCommand, PaginatedListOfProjetoDto, ProjetoClient, ProjetoDto, UpdateProjetoCommand } from '../web-api-client';
 
 @Component({
@@ -18,7 +19,7 @@ export class ProjetoComponent {
 
   novoProjeto: any = {};
 
-  constructor(private client: ProjetoClient, private modalService: BsModalService) {
+  constructor(private client: ProjetoClient, private modalService: BsModalService, private notification: NotificationService) {
     client.getTodoItemsWithPagination(1, 10).subscribe(result => {
       this.projetoVM = result;
     }, error => console.error(error));
@@ -45,6 +46,8 @@ export class ProjetoComponent {
         this.projetoVM.items.push(proj);
         this.modalNovoProjeto.hide();
         this.novoProjeto = {};
+
+        this.notification.showSuccess("Projeto salvo com sucesso!", '');
       },
       error => {
         let errors = JSON.parse(error.response);
@@ -64,6 +67,7 @@ export class ProjetoComponent {
           this.projetoVM.items = this.projetoVM.items.filter(t => t.id != this.projetoSelecionado.id);
           this.projetoVM.items.push(this.projetoSelecionado);
           this.projetoSelecionado = new ProjetoDto();
+          this.notification.showSuccess("Projeto atualizado com sucesso!", '');
         },
         error => console.error(error)
       );
@@ -79,6 +83,8 @@ export class ProjetoComponent {
       () => {
         this.modalExclusaoProjeto.hide();
         this.projetoVM.items = this.projetoVM.items.filter(t => t.id != this.projetoSelecionado.id);
+
+        this.notification.showSuccess("Projeto removido com sucesso!", '');
       },
       error => console.error(error)
     );

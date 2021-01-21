@@ -569,6 +569,10 @@
           "projetoId": {
             "type": "integer",
             "format": "int32"
+          },
+          "totalHoras": {
+            "type": "number",
+            "format": "double"
           }
         }
       },

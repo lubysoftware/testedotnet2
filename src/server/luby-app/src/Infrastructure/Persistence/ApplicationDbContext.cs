@@ -33,9 +33,9 @@ namespace luby_app.Infrastructure.Persistence
 
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
-        public DbSet<Domain.Entities.Projeto> Projetos { get; set; }
-        public DbSet<Domain.Entities.Desenvolvedor> Desenvolvedor { get; set; }
-        public DbSet<Domain.Entities.DesenvolvedorHora> DesenvolvedorHora { get; set; }
+        public DbSet<Projeto> Projetos { get; set; }
+        public DbSet<Desenvolvedor> Desenvolvedor { get; set; }
+        public DbSet<DesenvolvedorHora> DesenvolvedorHora { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -67,6 +67,10 @@ namespace luby_app.Infrastructure.Persistence
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         private async Task DispatchEvents()

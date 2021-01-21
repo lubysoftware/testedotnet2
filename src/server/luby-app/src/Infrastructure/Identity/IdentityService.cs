@@ -42,7 +42,7 @@ namespace luby_app.Infrastructure.Identity
 
             var result = await _userManager.CreateAsync(user, password);
 
-            if (string.IsNullOrEmpty(role))
+            if (!string.IsNullOrEmpty(role))
                 await _userManager.AddToRolesAsync(user, new[] { role });
 
             return (result.ToApplicationResult(), user.Id);

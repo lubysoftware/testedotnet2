@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthClient, LoginModelRequest } from '../web-api-client';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,34 +9,17 @@ import { AuthClient, LoginModelRequest } from '../web-api-client';
 })
 export class LoginComponent implements OnInit {
 
-  formModel = { UserName: '', Password: '' }
+  formModel = { UserName: 'administrator@localhost', Password: '123456' };
 
-  constructor(private authClient: AuthClient, private router: Router) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null)
-      this.router.navigateByUrl('/');
+    if (localStorage.getItem('token') != null) {
+      this.authService.logout(); 
+    }
   }
 
   onSubmit(form: NgForm) {
-    this.authClient.login(<LoginModelRequest>{
-      userName: form.value.UserName,
-      password: form.value.Password,
-    }).subscribe(
-      result => {
-        localStorage.setItem('token', result);
-
-        if (result)
-          this.router.navigateByUrl('/');
-        else
-          alert('Login inválido! Por favor, verifique se email e senha informado estão corretos.');
-      },
-      error => {
-        if (error.status == 400)
-          alert('Login inválido! Por favor, verifique se email e senha informado estão corretos.');
-        else
-          console.log(error);
-      }
-    );
+    this.authService.login(form.value.UserName, form.value.Password); 
   }
 }

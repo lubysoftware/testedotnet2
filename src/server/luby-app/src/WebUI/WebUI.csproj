@@ -40,7 +40,8 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
-    <None Remove="ClientApp\src\app\_models\user.ts" />
+    <None Remove="ClientApp\src\app\auth\auth.service.ts" />
+    <None Remove="ClientApp\src\app\_models\role.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,7 +51,8 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\_models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\auth\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\role.ts" />
   </ItemGroup>
 
   <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
