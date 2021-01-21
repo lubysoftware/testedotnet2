@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'desenvolvedor', component: DesenvolvedorComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Admin] } },
   { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Admin] } },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Dev, Role.Admin] } },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'lancamento-horas', component: LancamentoHorasComponent, canActivate: [AuthGuard], data: { permittedRoles: [Role.Dev] } },
 ];

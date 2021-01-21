@@ -573,6 +573,28 @@
           "totalHoras": {
             "type": "number",
             "format": "double"
+          },
+          "projeto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjetoDto"
+              }
+            ]
+          }
+        }
+      },
+      "ProjetoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -761,20 +783,6 @@
           },
           "hasNextPage": {
             "type": "boolean"
-          }
-        }
-      },
-      "ProjetoDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nome": {
-            "type": "string",
-            "nullable": true
           }
         }
       },

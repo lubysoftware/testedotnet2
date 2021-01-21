@@ -1,5 +1,5 @@
 <h1 id="tableLabel">Desenvolvedores</h1>
-
+<hr />
 <p *ngIf="!desenvolvedorVM"><em>Loading...</em></p>
 
 <table class='table table-striped table-bordered' aria-labelledby="tableLabel" *ngIf="desenvolvedorVM">
@@ -9,7 +9,7 @@
       <th>Nome</th>
       <th>Email</th>
       <th>CPF</th>
-      <th></th>
+      <th width="20%"></th>
     </tr>
   </thead>
   <tbody>
@@ -29,7 +29,7 @@
     </tr>
     <tr *ngIf="desenvolvedorVM.items.length == 0">
       <td colspan="5" style="text-align: center;">
-        Nenhum item cadastrado!
+        Nenhum item encontrado!
       </td>
     </tr>
   </tbody>
@@ -38,7 +38,6 @@
 <button class="btn btn-primary float-right" (click)="showModalCreate(newListModalTemplate)">
   Novo Item
 </button>
-
 
 <ng-template #newListModalTemplate>
   <div class="modal-header clearfix">
@@ -101,25 +100,33 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Nome</label>
-      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.nome" />
+      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.nome" [ngClass]="{ 'is-invalid': novoDesenvolvedor.nomeError }" />
+      <div *ngIf="novoDesenvolvedor.nomeError" class="invalid-feedback">
+        {{ novoDesenvolvedor.nomeError }}
+      </div>
     </div>
     <div class="form-group">
       <label>Email</label>
-      <input type="email" class="form-control" [(ngModel)]="desenvolvedorSelecionado.email" />
+      <input type="email" class="form-control" [(ngModel)]="desenvolvedorSelecionado.email" [ngClass]="{ 'is-invalid': novoDesenvolvedor.emailError }" />
+      <div *ngIf="novoDesenvolvedor.emailError" class="invalid-feedback">
+        {{ novoDesenvolvedor.emailError }}
+      </div>
     </div>
     <div class="form-group">
       <label>CPF</label>
-      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.cpf" />
+      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.cpf" [ngClass]="{ 'is-invalid': novoDesenvolvedor.cpfError }" />
+      <div *ngIf="novoDesenvolvedor.cpfError" class="invalid-feedback">
+        {{ novoDesenvolvedor.cpfError }}
+      </div>
     </div>
     <div class="form-group">
       <label>Projeto</label>
-      <select class="form-control" [(ngModel)]="projetoSelecionado" [ngClass]="{ 'is-invalid': novoDesenvolvedor.projetoError }">
+      <select class="form-control" [(ngModel)]="desenvolvedorSelecionado.projetoId" [ngClass]="{ 'is-invalid': novoDesenvolvedor.projetoError }">
         <option *ngFor="let x of projetos" [value]="x.id">{{x.nome}}</option>
       </select>
-    </div>
-    <div class="form-group">
-      <label>Senha</label>
-      <input type="text" class="form-control" [(ngModel)]="desenvolvedorSelecionado.senha" />
+      <div *ngIf="novoDesenvolvedor.projetoError" class="invalid-feedback">
+        {{ novoDesenvolvedor.projetoError }}
+      </div>
     </div>
     <div *ngIf="debug">
       <pre>{{ desenvolvedorSelecionado | json }}</pre>

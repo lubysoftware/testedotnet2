@@ -89,7 +89,17 @@ export class DesenvolvedorComponent {
 
           this.notification.showSuccess("Desenvolvedor atualizado com sucesso!", '');
         },
-        error => console.error(error)
+        error => {
+          let errors = JSON.parse(error.response);
+
+          if (errors) {
+            this.novoDesenvolvedor.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null;
+            this.novoDesenvolvedor.cpfError = errors.errors.CPF ? errors.errors.CPF[0] : null;
+            this.novoDesenvolvedor.senhaError = errors.errors.Senha ? errors.errors.Senha[0] : null;
+            this.novoDesenvolvedor.emailError = errors.errors.Email ? errors.errors.Email[0] : null;
+            this.novoDesenvolvedor.projetoError = errors.errors.ProjetoId ? errors.errors.ProjetoId[0] : null;
+          }
+        }
       );
   }
 

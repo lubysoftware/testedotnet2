@@ -19,19 +19,18 @@ namespace luby_app.Application.Desenvolvedor.Commands.UpdateDesenvolvedor
                 .NotEmpty().WithMessage("Nome é obrigatório.")
                 .MaximumLength(200).WithMessage("Nome não pode ser maior que 200 caracteres.")
                 .MustAsync(BeUniqueNome).WithMessage("Nome inválido! Já existe um desenvolvedor cadastrado com esse nome.");
-
-
+            
             RuleFor(v => v.CPF)
                 .NotEmpty().WithMessage("CPF é obrigatório.") 
                 .MustAsync(BeUniqueCpf).WithMessage("CPF inválido! Já existe um desenvolvedor cadastrado com esse CPF.");
 
-
             RuleFor(v => v.Email)
-                .NotEmpty().WithMessage("Email é obrigatório.") 
-                .MustAsync(BeUniqueEmail).WithMessage("Email inválido! Já existe um desenvolvedor cadastrado com esse Email.");
+                         .NotEmpty().WithMessage("Email é obrigatório.")
+                         .EmailAddress().WithMessage("Email inválido.")
+                         .MustAsync(BeUniqueEmail).WithMessage("Email inválido! Já existe um desenvolvedor cadastrado com esse Email.");
 
-            RuleFor(v => v.Senha)
-                .NotEmpty().WithMessage("Senha do desenvolvedor é obrigatório.");
+            RuleFor(v => v.ProjetoId)
+                .GreaterThan(0).WithMessage("Projeto é obrigatório.");
         }
 
         public async Task<bool> BeUniqueNome(UpdateDesenvolvedorCommand model, string nome, CancellationToken cancellationToken)

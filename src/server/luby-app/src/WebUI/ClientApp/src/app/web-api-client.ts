@@ -977,6 +977,7 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
     cpf?: string | undefined;
     projetoId?: number;
     totalHoras?: number;
+    projeto?: ProjetoDto | undefined;
 
     constructor(data?: IDesenvolvedorDto) {
         if (data) {
@@ -995,6 +996,7 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
             this.cpf = _data["cpf"];
             this.projetoId = _data["projetoId"];
             this.totalHoras = _data["totalHoras"];
+            this.projeto = _data["projeto"] ? ProjetoDto.fromJS(_data["projeto"]) : <any>undefined;
         }
     }
 
@@ -1013,6 +1015,7 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
         data["cpf"] = this.cpf;
         data["projetoId"] = this.projetoId;
         data["totalHoras"] = this.totalHoras;
+        data["projeto"] = this.projeto ? this.projeto.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -1024,6 +1027,47 @@ export interface IDesenvolvedorDto {
     cpf?: string | undefined;
     projetoId?: number;
     totalHoras?: number;
+    projeto?: ProjetoDto | undefined;
+}
+
+export class ProjetoDto implements IProjetoDto {
+    id?: number;
+    nome?: string | undefined;
+
+    constructor(data?: IProjetoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.nome = _data["nome"];
+        }
+    }
+
+    static fromJS(data: any): ProjetoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjetoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["nome"] = this.nome;
+        return data; 
+    }
+}
+
+export interface IProjetoDto {
+    id?: number;
+    nome?: string | undefined;
 }
 
 export class CreateDesenvolvedorCommand implements ICreateDesenvolvedorCommand {
@@ -1426,46 +1470,6 @@ export interface IPaginatedListOfProjetoDto {
     totalCount?: number;
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
-}
-
-export class ProjetoDto implements IProjetoDto {
-    id?: number;
-    nome?: string | undefined;
-
-    constructor(data?: IProjetoDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.nome = _data["nome"];
-        }
-    }
-
-    static fromJS(data: any): ProjetoDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProjetoDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["nome"] = this.nome;
-        return data; 
-    }
-}
-
-export interface IProjetoDto {
-    id?: number;
-    nome?: string | undefined;
 }
 
 export class CreateProjetoCommand implements ICreateProjetoCommand {

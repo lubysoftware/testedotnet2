@@ -23,13 +23,14 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
                 .NotEmpty().WithMessage("CPF é obrigatório.")
                 .MustAsync(BeUniqueCpf).WithMessage("CPF inválido! Já existe um desenvolvedor cadastrado com esse CPF.");
 
-
             RuleFor(v => v.Email)
                 .NotEmpty().WithMessage("Email é obrigatório.")
+                .EmailAddress().WithMessage("Email inválido.")
                 .MustAsync(BeUniqueEmail).WithMessage("Email inválido! Já existe um desenvolvedor cadastrado com esse Email.");
 
             RuleFor(v => v.Senha)
-                .NotEmpty().WithMessage("Senha do desenvolvedor é obrigatório.");
+                .NotEmpty().WithMessage("Senha do desenvolvedor é obrigatório.")
+                .MinimumLength(6).WithMessage("Senha precisa conter no mínimo 6 caracteres.");
 
             RuleFor(v => v.ProjetoId)
                 .GreaterThan(0).WithMessage("Projeto é obrigatório.");

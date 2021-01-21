@@ -52,8 +52,8 @@ export class ProjetoComponent {
       error => {
         let errors = JSON.parse(error.response);
 
-        if (errors && errors.Title) {
-          this.novoProjeto.error = errors.Title[0];
+        if (errors) {
+          this.novoProjeto.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null; 
         }
       }
     );
@@ -69,7 +69,13 @@ export class ProjetoComponent {
           this.projetoSelecionado = new ProjetoDto();
           this.notification.showSuccess("Projeto atualizado com sucesso!", '');
         },
-        error => console.error(error)
+        error => {
+          let errors = JSON.parse(error.response);
+
+          if (errors) {
+            this.novoProjeto.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null;
+          }
+        }
       );
   }
 

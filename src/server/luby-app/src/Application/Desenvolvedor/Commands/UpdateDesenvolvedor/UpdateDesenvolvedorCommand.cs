@@ -42,7 +42,6 @@ namespace luby_app.Application.Desenvolvedor.Commands.UpdateDesenvolvedor
             entity.Nome = request.Nome;
             entity.CPF = request.CPF;
             entity.Email = request.Email;
-            entity.Senha = request.Senha;
             entity.ProjetoId = request.ProjetoId;
 
             await _context.SaveChangesAsync(cancellationToken);

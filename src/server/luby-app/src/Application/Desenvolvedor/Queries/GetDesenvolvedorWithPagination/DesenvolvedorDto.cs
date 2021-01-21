@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using luby_app.Application.Common.Mappings;
+using luby_app.Application.Projeto.Queries.GetProjetosWithPagination;
 using System.Text.Json.Serialization;
 
 namespace luby_app.Application.Desenvolvedor.Queries.GetDesenvolvedorWithPagination
@@ -20,6 +21,8 @@ namespace luby_app.Application.Desenvolvedor.Queries.GetDesenvolvedorWithPaginat
         public int ProjetoId { get; set; }
 
         public double TotalHoras { get; set; }
+
+        public ProjetoDto Projeto { get; set; }
 
         public void Mapping(Profile profile)
         {

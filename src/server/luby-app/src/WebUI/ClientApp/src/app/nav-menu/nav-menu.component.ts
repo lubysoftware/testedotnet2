@@ -36,7 +36,7 @@ export class NavMenuComponent {
     this.isExpanded = false;
   }
 
-  onLogout() {
+  onLogout() { 
     this.authService.logout();
   }
 

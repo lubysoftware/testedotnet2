@@ -34,17 +34,15 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
             var entity = new Domain.Entities.Desenvolvedor();
             entity.Nome = request.Nome;
             entity.CPF = request.CPF;
-            entity.Senha = request.Senha;
             entity.Email = request.Email;
             entity.ProjetoId = request.ProjetoId;
 
-            var result = await _identityService.CreateUserAsync(entity.Email, entity.Senha, "Desenvolvedor");
+            var result = await _identityService.CreateUserAsync(entity.Email, request.Senha, "Desenvolvedor");
             entity.UsuarioId = result.UserId;
 
             _context.Desenvolvedor.Add(entity);
 
             await _context.SaveChangesAsync(cancellationToken);
-
 
             return entity.Id;
         }

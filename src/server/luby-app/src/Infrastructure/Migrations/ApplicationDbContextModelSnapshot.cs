@@ -3,23 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using luby_app.Infrastructure.Persistence;
 
-namespace luby_app.Infrastructure.Persistence.Migrations
+namespace luby_app.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210117183223_AddTbUsuarioEProjeto")]
-    partial class AddTbUsuarioEProjeto
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {
@@ -292,7 +290,7 @@ namespace luby_app.Infrastructure.Persistence.Migrations
                     b.Property<int>("ProjetoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Senha")
+                    b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -560,7 +558,7 @@ namespace luby_app.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("luby_app.Domain.Entities.Desenvolvedor", b =>
                 {
                     b.HasOne("luby_app.Domain.Entities.Projeto", "Projeto")
-                        .WithMany("Desenvolvedores")
+                        .WithMany()
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -616,11 +614,6 @@ namespace luby_app.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("luby_app.Domain.Entities.Desenvolvedor", b =>
                 {
                     b.Navigation("DesenvolvedorHora");
-                });
-
-            modelBuilder.Entity("luby_app.Domain.Entities.Projeto", b =>
-                {
-                    b.Navigation("Desenvolvedores");
                 });
 
             modelBuilder.Entity("luby_app.Domain.Entities.TodoList", b =>
