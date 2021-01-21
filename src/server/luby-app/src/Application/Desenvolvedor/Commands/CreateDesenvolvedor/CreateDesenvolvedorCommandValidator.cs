@@ -21,7 +21,8 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
 
             RuleFor(v => v.CPF)
                 .NotEmpty().WithMessage("CPF é obrigatório.")
-                .MustAsync(BeUniqueCpf).WithMessage("CPF inválido! Já existe um desenvolvedor cadastrado com esse CPF.");
+                .MustAsync(BeUniqueCpf).WithMessage("CPF inválido! Já existe um desenvolvedor cadastrado com esse CPF.")
+                .MustAsync(BeValidIntegrationCpf).WithMessage("CPF inválido!");
 
             RuleFor(v => v.Email)
                 .NotEmpty().WithMessage("Email é obrigatório.")
@@ -46,6 +47,12 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
         public async Task<bool> BeUniqueCpf(CreateDesenvolvedorCommand model, string cpf, CancellationToken cancellationToken)
         {
             return await _context.Desenvolvedor 
+                .AllAsync(l => l.CPF != cpf);
+        }
+
+        public async Task<bool> BeValidIntegrationCpf(CreateDesenvolvedorCommand model, string cpf, CancellationToken cancellationToken)
+        {
+            return await _context.Desenvolvedor
                 .AllAsync(l => l.CPF != cpf);
         }
 
