@@ -10,7 +10,7 @@ using luby_app.Infrastructure.Persistence;
 namespace luby_app.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210121190113_Inicio")]
+    [Migration("20210122201823_Inicio")]
     partial class Inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -291,9 +291,6 @@ namespace luby_app.Infrastructure.Migrations
 
                     b.Property<int>("ProjetoId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Senha")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(max)");

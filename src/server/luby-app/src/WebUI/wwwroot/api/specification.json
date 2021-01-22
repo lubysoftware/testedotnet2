@@ -193,15 +193,11 @@
         "operationId": "DesenvolvedorRanking_GetRankingDesenvolvedor",
         "parameters": [
           {
-            "name": "query",
+            "name": "Dias",
             "in": "query",
             "schema": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/GetRankingDesenvolvedorQuery"
-                }
-              ]
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 1
           }
@@ -570,10 +566,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "totalHoras": {
-            "type": "number",
-            "format": "double"
-          },
           "projeto": {
             "nullable": true,
             "oneOf": [
@@ -671,10 +663,6 @@
             ]
           }
         }
-      },
-      "GetRankingDesenvolvedorQuery": {
-        "type": "object",
-        "additionalProperties": false
       },
       "PaginatedListOfDesenvolvedorHoraDto": {
         "type": "object",

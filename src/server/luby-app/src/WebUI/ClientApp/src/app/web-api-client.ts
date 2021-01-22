@@ -316,7 +316,7 @@ export class DesenvolvedorClient implements IDesenvolvedorClient {
 }
 
 export interface IDesenvolvedorRankingClient {
-    getRankingDesenvolvedor(query: GetRankingDesenvolvedorQuery | null | undefined): Observable<RankingDto[]>;
+    getRankingDesenvolvedor(dias: number | undefined): Observable<RankingDto[]>;
 }
 
 @Injectable({
@@ -332,10 +332,12 @@ export class DesenvolvedorRankingClient implements IDesenvolvedorRankingClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getRankingDesenvolvedor(query: GetRankingDesenvolvedorQuery | null | undefined): Observable<RankingDto[]> {
+    getRankingDesenvolvedor(dias: number | undefined): Observable<RankingDto[]> {
         let url_ = this.baseUrl + "/api/DesenvolvedorRanking?";
-        if (query !== undefined && query !== null)
-            url_ += "query=" + encodeURIComponent("" + query) + "&";
+        if (dias === null)
+            throw new Error("The parameter 'dias' cannot be null.");
+        else if (dias !== undefined)
+            url_ += "Dias=" + encodeURIComponent("" + dias) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -976,7 +978,6 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
     email?: string | undefined;
     cpf?: string | undefined;
     projetoId?: number;
-    totalHoras?: number;
     projeto?: ProjetoDto | undefined;
 
     constructor(data?: IDesenvolvedorDto) {
@@ -995,7 +996,6 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
             this.email = _data["email"];
             this.cpf = _data["cpf"];
             this.projetoId = _data["projetoId"];
-            this.totalHoras = _data["totalHoras"];
             this.projeto = _data["projeto"] ? ProjetoDto.fromJS(_data["projeto"]) : <any>undefined;
         }
     }
@@ -1014,7 +1014,6 @@ export class DesenvolvedorDto implements IDesenvolvedorDto {
         data["email"] = this.email;
         data["cpf"] = this.cpf;
         data["projetoId"] = this.projetoId;
-        data["totalHoras"] = this.totalHoras;
         data["projeto"] = this.projeto ? this.projeto.toJSON() : <any>undefined;
         return data; 
     }
@@ -1026,7 +1025,6 @@ export interface IDesenvolvedorDto {
     email?: string | undefined;
     cpf?: string | undefined;
     projetoId?: number;
-    totalHoras?: number;
     projeto?: ProjetoDto | undefined;
 }
 
@@ -1216,36 +1214,6 @@ export class RankingDto implements IRankingDto {
 export interface IRankingDto {
     mediaHoras?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
-}
-
-export class GetRankingDesenvolvedorQuery implements IGetRankingDesenvolvedorQuery {
-
-    constructor(data?: IGetRankingDesenvolvedorQuery) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-    }
-
-    static fromJS(data: any): GetRankingDesenvolvedorQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetRankingDesenvolvedorQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        return data; 
-    }
-}
-
-export interface IGetRankingDesenvolvedorQuery {
 }
 
 export class PaginatedListOfDesenvolvedorHoraDto implements IPaginatedListOfDesenvolvedorHoraDto {

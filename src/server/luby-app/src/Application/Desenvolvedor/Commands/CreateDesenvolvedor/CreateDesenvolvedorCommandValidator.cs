@@ -18,12 +18,7 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
                 .NotEmpty().WithMessage("Nome é obrigatório.")
                 .MaximumLength(200).WithMessage("Nome não pode ser maior que 200 caracteres.")
                 .MustAsync(BeUniqueNome).WithMessage("Nome inválido! Já existe um desenvolvedor cadastrado com esse nome.");
-
-            RuleFor(v => v.CPF)
-                .NotEmpty().WithMessage("CPF é obrigatório.")
-                .MustAsync(BeUniqueCpf).WithMessage("CPF inválido! Já existe um desenvolvedor cadastrado com esse CPF.")
-                .MustAsync(BeValidIntegrationCpf).WithMessage("CPF inválido!");
-
+             
             RuleFor(v => v.Email)
                 .NotEmpty().WithMessage("Email é obrigatório.")
                 .EmailAddress().WithMessage("Email inválido.")
@@ -37,28 +32,16 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
                 .GreaterThan(0).WithMessage("Projeto é obrigatório.");
 
         }
-         
+
         public async Task<bool> BeUniqueNome(CreateDesenvolvedorCommand model, string nome, CancellationToken cancellationToken)
         {
-            return await _context.Desenvolvedor 
+            return await _context.Desenvolvedor
                 .AllAsync(l => l.Nome != nome);
         }
-
-        public async Task<bool> BeUniqueCpf(CreateDesenvolvedorCommand model, string cpf, CancellationToken cancellationToken)
-        {
-            return await _context.Desenvolvedor 
-                .AllAsync(l => l.CPF != cpf);
-        }
-
-        public async Task<bool> BeValidIntegrationCpf(CreateDesenvolvedorCommand model, string cpf, CancellationToken cancellationToken)
-        {
-            return await _context.Desenvolvedor
-                .AllAsync(l => l.CPF != cpf);
-        }
-
+         
         public async Task<bool> BeUniqueEmail(CreateDesenvolvedorCommand model, string email, CancellationToken cancellationToken)
         {
-            return await _context.Desenvolvedor 
+            return await _context.Desenvolvedor
                 .AllAsync(l => l.Email != email);
         }
     }

@@ -31,9 +31,9 @@ namespace luby_app.Application.DesenvolvedorHoras.Queries
         public async Task<PaginatedList<DesenvolvedorHoraDto>> Handle(GetDesenvolvedorHoraWithPaginationQuery request, CancellationToken cancellationToken)
         {
             return await _context.DesenvolvedorHora.Where(el => el.Desenvolvedor.UsuarioId == request.UsuarioId)
-                .OrderBy(x => x.Inicio)
-                .ProjectTo<DesenvolvedorHoraDto>(_mapper.ConfigurationProvider)
-                .PaginatedListAsync(request.PageNumber, request.PageSize);
+                                                    .OrderBy(x => x.Inicio)
+                                                    .ProjectTo<DesenvolvedorHoraDto>(_mapper.ConfigurationProvider)
+                                                    .PaginatedListAsync(request.PageNumber, request.PageSize);
         }
     }
 }

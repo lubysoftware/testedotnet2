@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using luby_app.Application.Common.Interfaces;
+using luby_app.Domain.Events;
 using MediatR;
 using System;
 using System.Linq;
@@ -34,6 +35,8 @@ namespace luby_app.Application.DesenvolvedorHoras.Commands.Create
 
             var desenvolvedor = _context.Desenvolvedor.Where(el => el.UsuarioId == request.UsuarioId).First();
             desenvolvedor.DesenvolvedorHora.Add(entity);
+
+            entity.DomainEvents.Add(new WorkHourCreatedEvent(entity));
 
             await _context.SaveChangesAsync(cancellationToken);
 

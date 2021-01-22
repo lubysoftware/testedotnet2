@@ -18,9 +18,7 @@ namespace luby_app.Application.Desenvolvedor.Queries.GetDesenvolvedorWithPaginat
 
         public string CPF { get; set; }
 
-        public int ProjetoId { get; set; }
-
-        public double TotalHoras { get; set; }
+        public int ProjetoId { get; set; } 
 
         public ProjetoDto Projeto { get; set; }
 

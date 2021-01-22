@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http;
 using luby_app.WebUI.Controllers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,6 +20,10 @@ using System;
 using System.Linq;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using luby_app.Infrastructure.Services;
+using Polly;
+using Polly.Extensions.Http;
+using Microsoft.Extensions.Options;
 
 namespace luby_app.WebUI
 {
@@ -40,8 +45,19 @@ namespace luby_app.WebUI
             services.AddInfrastructure(Configuration);
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            
+            var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
+                                         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(retryAttempt));
+
+            services.AddHttpClient<ICpfValidationService, CpfValidationService>
+                            (o => o.BaseAddress = new Uri(Configuration["cpfValidationRequestUrl"]))
+                            .AddPolicyHandler(retryPolicy);
+
+            services.AddHttpClient<IHoursNotificationService, HoursNotificationService>
+                            (o => o.BaseAddress = new Uri(Configuration["hoursNotificationRequestUrl"]))
+                            .AddPolicyHandler(HttpPolicyExtensions.HandleTransientHttpError() 
+                                        .RetryForeverAsync());
 
             services.AddHttpContextAccessor();
 

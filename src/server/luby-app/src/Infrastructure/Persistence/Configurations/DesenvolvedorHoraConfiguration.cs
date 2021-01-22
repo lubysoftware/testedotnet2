@@ -19,7 +19,9 @@ namespace luby_app.Infrastructure.Persistence.Configurations
 
             builder.HasOne(t => t.Desenvolvedor)
                 .WithMany(t => t.DesenvolvedorHora)
-                .HasForeignKey(t => t.DesenvolvedorId);
+                .HasForeignKey(t => t.DesenvolvedorId); 
+
+            builder.Ignore(e => e.DomainEvents);
         }
     }
 }

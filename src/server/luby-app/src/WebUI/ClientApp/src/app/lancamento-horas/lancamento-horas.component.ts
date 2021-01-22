@@ -38,8 +38,9 @@ export class LancamentoHorasComponent {
       error => {
         let errors = JSON.parse(error.response);
 
-        if (errors && errors.Title) {
-          this.novoLancamento.error = errors.Title[0];
+        if (errors) {
+          this.novoLancamento.inicioError = errors.errors.Inicio ? errors.errors.Inicio[0] : null;
+          this.novoLancamento.fimError = errors.errors.Fim ? errors.errors.Fim[0] : null;
         }
       }
     );
