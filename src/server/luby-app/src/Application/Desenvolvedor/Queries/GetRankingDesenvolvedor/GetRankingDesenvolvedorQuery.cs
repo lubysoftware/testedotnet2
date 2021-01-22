@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 namespace luby_app.Application.Desenvolvedor.Queries.GetRankingDesenvolvedor
 {
     public class GetRankingDesenvolvedorQuery : IRequest<List<RankingDto>>
-    {
-        public int Dias { get; set; } = 7;
+    { 
     }
 
     public class GetDesenvolvedorRankingQueryHandler : IRequestHandler<GetRankingDesenvolvedorQuery, List<RankingDto>>
@@ -28,7 +27,7 @@ namespace luby_app.Application.Desenvolvedor.Queries.GetRankingDesenvolvedor
 
         public Task<List<RankingDto>> Handle(GetRankingDesenvolvedorQuery request, CancellationToken cancellationToken)
         {
-            DateTime dataInicio = DateTime.Today.AddDays(-request.Dias);
+            DateTime dataInicio = DateTime.Today.AddDays(-7);
             DateTime dataFim = DateTime.Today;
 
             List<RankingDto> result = new List<RankingDto>();
@@ -39,7 +38,7 @@ namespace luby_app.Application.Desenvolvedor.Queries.GetRankingDesenvolvedor
 
             foreach (var item in query)
             { 
-                TimeSpan media = new TimeSpan(Convert.ToInt64(item.Select(x => x.TotalHoras()).Average(t => t.Ticks) / request.Dias));
+                TimeSpan media = new TimeSpan(Convert.ToInt64(item.Select(x => x.TotalHoras()).Average(t => t.Ticks) / 7));
                  
                 result.Add(new RankingDto(media.TotalHours, _mapper.Map<DesenvolvedorDto>(item.Key)));
             }

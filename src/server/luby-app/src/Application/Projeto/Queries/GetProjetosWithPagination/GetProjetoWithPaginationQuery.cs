@@ -12,8 +12,8 @@ namespace luby_app.Application.Projeto.Queries.GetProjetosWithPagination
 {
     public class GetProjetoWithPaginationQuery : IRequest<PaginatedList<ProjetoDto>>
     { 
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class GetProjetoWithPaginationQueryHandler : IRequestHandler<GetProjetoWithPaginationQuery, PaginatedList<ProjetoDto>>

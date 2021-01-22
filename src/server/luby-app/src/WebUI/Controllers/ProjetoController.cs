@@ -13,7 +13,7 @@ namespace luby_app.WebUI.Controllers
     public class ProjetoController : ApiControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<PaginatedList<ProjetoDto>>> GetTodoItemsWithPagination([FromQuery] GetProjetoWithPaginationQuery query)
+        public async Task<ActionResult<PaginatedList<ProjetoDto>>> GetProjetosWithPagination([FromQuery] GetProjetoWithPaginationQuery query)
         {
             return await Mediator.Send(query);
         }

@@ -10,7 +10,16 @@ namespace luby_app.WebUI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<RankingDto>>> GetRankingDesenvolvedor([FromQuery] GetRankingDesenvolvedorQuery query)
         {
-            return await Mediator.Send(query);
+            try
+            {
+                return await Mediator.Send(query);
+
+            }
+            catch (System.Exception ex) 
+            {
+
+                throw;
+            }
         }
     }
 }

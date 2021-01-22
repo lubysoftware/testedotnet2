@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let p of projetoVM.items">
+    <tr *ngFor="let p of projetoVM.items | paginate: { itemsPerPage: itensPorPagina, currentPage: projetoVM.pageIndex, totalItems: projetoVM.totalCount }">
       <td>{{ p.id }}</td>
       <td>{{ p.nome }}</td>
       <td>
@@ -30,6 +30,10 @@
     </tr>
   </tbody>
 </table>
+
+<div class="text-right">
+  <pagination-controls (pageChange)="onPageChange($event)" previousLabel="Anterior" nextLabel="Próximo" ></pagination-controls>
+</div>
 
 <button class="btn btn-primary float-right" (click)="showModalCreate(newListModalTemplate)">
   Novo Item

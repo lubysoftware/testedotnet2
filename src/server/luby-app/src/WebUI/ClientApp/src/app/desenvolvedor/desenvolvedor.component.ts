@@ -10,24 +10,28 @@ import { PaginatedListOfDesenvolvedorDto, DesenvolvedorClient, DesenvolvedorDto,
 })
 export class DesenvolvedorComponent {
   desenvolvedorVM: PaginatedListOfDesenvolvedorDto;
-
   desenvolvedorSelecionado: DesenvolvedorDto;
-
   modalNovoDesenvolvedor: BsModalRef;
   modalEdicaoDesenvolvedor: BsModalRef;
   modalExclusaoDesenvolvedor: BsModalRef;
-
-  novoDesenvolvedor: any = {};
   projetos: ProjetoDto[];
+  novoDesenvolvedor: any = {};
   projetoSelecionado: number;
+  itensPorPagina: number = 5;
 
   constructor(private client: DesenvolvedorClient, clientProjeto: ProjetoClient, private modalService: BsModalService, private notification: NotificationService) {
-    client.getDesenvolvedorWithPagination(1, 10).subscribe(result => {
+    client.getDesenvolvedorWithPagination(1, this.itensPorPagina).subscribe(result => {
       this.desenvolvedorVM = result;
     }, error => console.error(error));
 
     clientProjeto.getAll().subscribe(result => {
       this.projetos = result;
+    }, error => console.error(error));
+  } 
+
+  onPageChange(pageNumber) {
+    this.client.getDesenvolvedorWithPagination(pageNumber, this.itensPorPagina).subscribe(result => {
+      this.desenvolvedorVM = result;
     }, error => console.error(error));
   }
 

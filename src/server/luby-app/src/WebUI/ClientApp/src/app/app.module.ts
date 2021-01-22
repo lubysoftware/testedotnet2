@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
     ModalModule.forRoot(),
     ToastrModule.forRoot()
   ],

@@ -1,5 +1,4 @@
 ﻿using luby_app.Application.Common.Interfaces;
-using luby_app.Infrastructure.Files;
 using luby_app.Infrastructure.Identity;
 using luby_app.Infrastructure.Persistence;
 using luby_app.Infrastructure.Services;
@@ -47,8 +46,7 @@ namespace luby_app.Infrastructure
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IIdentityService, IdentityService>();
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+            services.AddTransient<IIdentityService, IdentityService>(); 
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

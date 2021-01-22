@@ -10,7 +10,7 @@ export class RankingComponent {
   rankingVM: RankingDto[];
 
   constructor(private client: DesenvolvedorRankingClient) {
-    client.getRankingDesenvolvedor(null).subscribe(result => {
+    this.client.getRankingDesenvolvedor(null).subscribe(result => {
       this.rankingVM = result;
     }, error => console.error(error));
   }

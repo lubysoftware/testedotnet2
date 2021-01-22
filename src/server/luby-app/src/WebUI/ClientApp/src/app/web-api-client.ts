@@ -316,7 +316,7 @@ export class DesenvolvedorClient implements IDesenvolvedorClient {
 }
 
 export interface IDesenvolvedorRankingClient {
-    getRankingDesenvolvedor(dias: number | undefined): Observable<RankingDto[]>;
+    getRankingDesenvolvedor(query: GetRankingDesenvolvedorQuery | null | undefined): Observable<RankingDto[]>;
 }
 
 @Injectable({
@@ -332,12 +332,10 @@ export class DesenvolvedorRankingClient implements IDesenvolvedorRankingClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getRankingDesenvolvedor(dias: number | undefined): Observable<RankingDto[]> {
+    getRankingDesenvolvedor(query: GetRankingDesenvolvedorQuery | null | undefined): Observable<RankingDto[]> {
         let url_ = this.baseUrl + "/api/DesenvolvedorRanking?";
-        if (dias === null)
-            throw new Error("The parameter 'dias' cannot be null.");
-        else if (dias !== undefined)
-            url_ += "Dias=" + encodeURIComponent("" + dias) + "&";
+        if (query !== undefined && query !== null)
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -519,7 +517,7 @@ export class LacamentoHorasClient implements ILacamentoHorasClient {
 }
 
 export interface IProjetoClient {
-    getTodoItemsWithPagination(pageNumber: number | undefined, pageSize: number | undefined): Observable<PaginatedListOfProjetoDto>;
+    getProjetosWithPagination(pageNumber: number | undefined, pageSize: number | undefined): Observable<PaginatedListOfProjetoDto>;
     create(command: CreateProjetoCommand): Observable<number>;
     getAll(): Observable<ProjetoDto[]>;
     update(id: number, command: UpdateProjetoCommand): Observable<FileResponse>;
@@ -539,7 +537,7 @@ export class ProjetoClient implements IProjetoClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getTodoItemsWithPagination(pageNumber: number | undefined, pageSize: number | undefined): Observable<PaginatedListOfProjetoDto> {
+    getProjetosWithPagination(pageNumber: number | undefined, pageSize: number | undefined): Observable<PaginatedListOfProjetoDto> {
         let url_ = this.baseUrl + "/api/Projeto?";
         if (pageNumber === null)
             throw new Error("The parameter 'pageNumber' cannot be null.");
@@ -560,11 +558,11 @@ export class ProjetoClient implements IProjetoClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTodoItemsWithPagination(response_);
+            return this.processGetProjetosWithPagination(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetTodoItemsWithPagination(<any>response_);
+                    return this.processGetProjetosWithPagination(<any>response_);
                 } catch (e) {
                     return <Observable<PaginatedListOfProjetoDto>><any>_observableThrow(e);
                 }
@@ -573,7 +571,7 @@ export class ProjetoClient implements IProjetoClient {
         }));
     }
 
-    protected processGetTodoItemsWithPagination(response: HttpResponseBase): Observable<PaginatedListOfProjetoDto> {
+    protected processGetProjetosWithPagination(response: HttpResponseBase): Observable<PaginatedListOfProjetoDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1214,6 +1212,36 @@ export class RankingDto implements IRankingDto {
 export interface IRankingDto {
     mediaHoras?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
+}
+
+export class GetRankingDesenvolvedorQuery implements IGetRankingDesenvolvedorQuery {
+
+    constructor(data?: IGetRankingDesenvolvedorQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+    }
+
+    static fromJS(data: any): GetRankingDesenvolvedorQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetRankingDesenvolvedorQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        return data; 
+    }
+}
+
+export interface IGetRankingDesenvolvedorQuery {
 }
 
 export class PaginatedListOfDesenvolvedorHoraDto implements IPaginatedListOfDesenvolvedorHoraDto {

@@ -364,81 +364,6 @@ namespace luby_app.Infrastructure.Migrations
                     b.ToTable("Projetos");
                 });
 
-            modelBuilder.Entity("luby_app.Domain.Entities.TodoItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Done")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ListId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Reminder")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListId");
-
-                    b.ToTable("TodoItems");
-                });
-
-            modelBuilder.Entity("luby_app.Domain.Entities.TodoList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TodoLists");
-                });
-
             modelBuilder.Entity("luby_app.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -577,48 +502,9 @@ namespace luby_app.Infrastructure.Migrations
                     b.Navigation("Desenvolvedor");
                 });
 
-            modelBuilder.Entity("luby_app.Domain.Entities.TodoItem", b =>
-                {
-                    b.HasOne("luby_app.Domain.Entities.TodoList", "List")
-                        .WithMany("Items")
-                        .HasForeignKey("ListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("List");
-                });
-
-            modelBuilder.Entity("luby_app.Domain.Entities.TodoList", b =>
-                {
-                    b.OwnsOne("luby_app.Domain.ValueObjects.Colour", "Colour", b1 =>
-                        {
-                            b1.Property<int>("TodoListId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .UseIdentityColumn();
-
-                            b1.Property<string>("Code")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("TodoListId");
-
-                            b1.ToTable("TodoLists");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TodoListId");
-                        });
-
-                    b.Navigation("Colour");
-                });
-
             modelBuilder.Entity("luby_app.Domain.Entities.Desenvolvedor", b =>
                 {
                     b.Navigation("DesenvolvedorHora");
-                });
-
-            modelBuilder.Entity("luby_app.Domain.Entities.TodoList", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

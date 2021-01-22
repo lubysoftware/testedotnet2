@@ -9,6 +9,11 @@ namespace luby_app.Application.Desenvolvedor.Queries.GetRankingDesenvolvedor
             MediaHoras = media;
             Desenvolvedor = desenvolvedor;
         }
+
+        public RankingDto()
+        {
+
+        }
          
         public double MediaHoras { get; set; }
 

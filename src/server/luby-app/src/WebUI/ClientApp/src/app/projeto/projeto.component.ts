@@ -1,7 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NotificationService } from '../notification.service';
-import { CreateProjetoCommand, PaginatedListOfProjetoDto, ProjetoClient, ProjetoDto, UpdateProjetoCommand } from '../web-api-client';
+import { CreateProjetoCommand, PaginatedListOfProjetoDto, ProjetoClient, ProjetoDto, UpdateProjetoCommand } from '../web-api-client'; 
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-projeto',
@@ -9,20 +10,26 @@ import { CreateProjetoCommand, PaginatedListOfProjetoDto, ProjetoClient, Projeto
   styleUrls: ['./projeto.component.css']
 })
 export class ProjetoComponent {
-
   projetoVM: PaginatedListOfProjetoDto;
   projetoSelecionado: ProjetoDto;
 
   modalNovoProjeto: BsModalRef;
   modalEdicaoProjeto: BsModalRef;
-  modalExclusaoProjeto: BsModalRef;
+  modalExclusaoProjeto: BsModalRef; 
 
   novoProjeto: any = {};
+  itensPorPagina: number = 5;
 
   constructor(private client: ProjetoClient, private modalService: BsModalService, private notification: NotificationService) {
-    client.getTodoItemsWithPagination(1, 10).subscribe(result => {
+    client.getProjetosWithPagination(1, this.itensPorPagina).subscribe(result => {
       this.projetoVM = result;
     }, error => console.error(error));
+  }
+
+  onPageChange(pageNumber) { 
+    this.client.getProjetosWithPagination(pageNumber, this.itensPorPagina).subscribe(result => {
+      this.projetoVM = result;
+    }, error => console.error(error)); 
   }
 
   showModalCreate(template: TemplateRef<any>): void {

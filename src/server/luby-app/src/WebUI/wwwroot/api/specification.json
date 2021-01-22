@@ -193,11 +193,15 @@
         "operationId": "DesenvolvedorRanking_GetRankingDesenvolvedor",
         "parameters": [
           {
-            "name": "Dias",
+            "name": "query",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/GetRankingDesenvolvedorQuery"
+                }
+              ]
             },
             "x-position": 1
           }
@@ -304,7 +308,7 @@
         "tags": [
           "Projeto"
         ],
-        "operationId": "Projeto_GetTodoItemsWithPagination",
+        "operationId": "Projeto_GetProjetosWithPagination",
         "parameters": [
           {
             "name": "PageNumber",
@@ -663,6 +667,10 @@
             ]
           }
         }
+      },
+      "GetRankingDesenvolvedorQuery": {
+        "type": "object",
+        "additionalProperties": false
       },
       "PaginatedListOfDesenvolvedorHoraDto": {
         "type": "object",

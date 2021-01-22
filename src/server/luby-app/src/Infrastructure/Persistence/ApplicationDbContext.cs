@@ -30,9 +30,7 @@ namespace luby_app.Infrastructure.Persistence
             _domainEventService = domainEventService;
             _dateTime = dateTime;
         }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
-        public DbSet<TodoList> TodoLists { get; set; }
+         
         public DbSet<Projeto> Projetos { get; set; }
         public DbSet<Desenvolvedor> Desenvolvedor { get; set; }
         public DbSet<DesenvolvedorHora> DesenvolvedorHora { get; set; }
