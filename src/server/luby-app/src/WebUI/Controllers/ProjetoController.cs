@@ -7,9 +7,12 @@ using luby_app.Application.Projeto.Queries.GetProjetosWithPagination;
 using luby_app.Application.Common.Models;
 using System.Collections.Generic;
 using luby_app.Application.Projeto.Queries.GetAll;
+using Microsoft.AspNetCore.Authorization;
 
 namespace luby_app.WebUI.Controllers
 {
+
+    [Authorize]
     public class ProjetoController : ApiControllerBase
     {
         [HttpGet]

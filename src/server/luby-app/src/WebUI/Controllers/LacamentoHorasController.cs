@@ -2,11 +2,14 @@
 using luby_app.Application.Common.Models;
 using luby_app.Application.DesenvolvedorHoras.Commands.Create;
 using luby_app.Application.DesenvolvedorHoras.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace luby_app.WebUI.Controllers
 {
+
+    [Authorize]
     public class LacamentoHorasController : ApiControllerBase
     {
         private ICurrentUserService _currentUserService;

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using luby_app.Application.Common.Mappings;
+using luby_app.Application.Desenvolvedor.Queries.GetDesenvolvedorWithPagination;
+using luby_app.Application.Projeto.Queries.GetProjetosWithPagination;
 using System;
 
 namespace luby_app.Application.DesenvolvedorHoras.Queries
@@ -14,7 +16,11 @@ namespace luby_app.Application.DesenvolvedorHoras.Queries
 
         public int DesenvolvedorId { get; set; }
 
-        public Desenvolvedor.Queries.GetDesenvolvedorWithPagination.DesenvolvedorDto Desenvolvedor { get; set; }
+        public DesenvolvedorDto Desenvolvedor { get; set; }
+
+        public int ProjetoId { get; set; }
+
+        public ProjetoDto ProjetoDto { get; set; }
 
         public void Mapping(Profile profile)
         {

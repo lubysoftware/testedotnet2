@@ -15,7 +15,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IAuthClient {
-    login(model: LoginModelRequest): Observable<string>;
+    login(command: LoginCommand): Observable<string>;
 }
 
 @Injectable({
@@ -31,11 +31,11 @@ export class AuthClient implements IAuthClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    login(model: LoginModelRequest): Observable<string> {
+    login(command: LoginCommand): Observable<string> {
         let url_ = this.baseUrl + "/api/Auth/Login";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(model);
+        const content_ = JSON.stringify(command);
 
         let options_ : any = {
             body: content_,
@@ -316,7 +316,7 @@ export class DesenvolvedorClient implements IDesenvolvedorClient {
 }
 
 export interface IDesenvolvedorRankingClient {
-    getRankingDesenvolvedor(query: GetRankingDesenvolvedorQuery | null | undefined): Observable<RankingDto[]>;
+    getRankingDesenvolvedor(dias: number | undefined): Observable<RankingDto[]>;
 }
 
 @Injectable({
@@ -332,10 +332,12 @@ export class DesenvolvedorRankingClient implements IDesenvolvedorRankingClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getRankingDesenvolvedor(query: GetRankingDesenvolvedorQuery | null | undefined): Observable<RankingDto[]> {
+    getRankingDesenvolvedor(dias: number | undefined): Observable<RankingDto[]> {
         let url_ = this.baseUrl + "/api/DesenvolvedorRanking?";
-        if (query !== undefined && query !== null)
-            url_ += "query=" + encodeURIComponent("" + query) + "&";
+        if (dias === null)
+            throw new Error("The parameter 'dias' cannot be null.");
+        else if (dias !== undefined)
+            url_ += "Dias=" + encodeURIComponent("" + dias) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -801,7 +803,7 @@ export class ProjetoClient implements IProjetoClient {
 }
 
 export interface IUserProfileClient {
-    getUserProfile(): Observable<UserProfileResponse>;
+    getUserProfile(): Observable<UserProfileDto>;
 }
 
 @Injectable({
@@ -817,7 +819,7 @@ export class UserProfileClient implements IUserProfileClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getUserProfile(): Observable<UserProfileResponse> {
+    getUserProfile(): Observable<UserProfileDto> {
         let url_ = this.baseUrl + "/api/UserProfile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -836,14 +838,14 @@ export class UserProfileClient implements IUserProfileClient {
                 try {
                     return this.processGetUserProfile(<any>response_);
                 } catch (e) {
-                    return <Observable<UserProfileResponse>><any>_observableThrow(e);
+                    return <Observable<UserProfileDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UserProfileResponse>><any>_observableThrow(response_);
+                return <Observable<UserProfileDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetUserProfile(response: HttpResponseBase): Observable<UserProfileResponse> {
+    protected processGetUserProfile(response: HttpResponseBase): Observable<UserProfileDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -854,7 +856,7 @@ export class UserProfileClient implements IUserProfileClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserProfileResponse.fromJS(resultData200);
+            result200 = UserProfileDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -862,15 +864,15 @@ export class UserProfileClient implements IUserProfileClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UserProfileResponse>(<any>null);
+        return _observableOf<UserProfileDto>(<any>null);
     }
 }
 
-export class LoginModelRequest implements ILoginModelRequest {
+export class LoginCommand implements ILoginCommand {
     userName?: string | undefined;
     password?: string | undefined;
 
-    constructor(data?: ILoginModelRequest) {
+    constructor(data?: ILoginCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -886,9 +888,9 @@ export class LoginModelRequest implements ILoginModelRequest {
         }
     }
 
-    static fromJS(data: any): LoginModelRequest {
+    static fromJS(data: any): LoginCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new LoginModelRequest();
+        let result = new LoginCommand();
         result.init(data);
         return result;
     }
@@ -901,7 +903,7 @@ export class LoginModelRequest implements ILoginModelRequest {
     }
 }
 
-export interface ILoginModelRequest {
+export interface ILoginCommand {
     userName?: string | undefined;
     password?: string | undefined;
 }
@@ -1177,6 +1179,7 @@ export interface IUpdateDesenvolvedorCommand {
 export class RankingDto implements IRankingDto {
     mediaHoras?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
+    projeto?: ProjetoDto | undefined;
 
     constructor(data?: IRankingDto) {
         if (data) {
@@ -1191,6 +1194,7 @@ export class RankingDto implements IRankingDto {
         if (_data) {
             this.mediaHoras = _data["mediaHoras"];
             this.desenvolvedor = _data["desenvolvedor"] ? DesenvolvedorDto.fromJS(_data["desenvolvedor"]) : <any>undefined;
+            this.projeto = _data["projeto"] ? ProjetoDto.fromJS(_data["projeto"]) : <any>undefined;
         }
     }
 
@@ -1205,6 +1209,7 @@ export class RankingDto implements IRankingDto {
         data = typeof data === 'object' ? data : {};
         data["mediaHoras"] = this.mediaHoras;
         data["desenvolvedor"] = this.desenvolvedor ? this.desenvolvedor.toJSON() : <any>undefined;
+        data["projeto"] = this.projeto ? this.projeto.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -1212,36 +1217,7 @@ export class RankingDto implements IRankingDto {
 export interface IRankingDto {
     mediaHoras?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
-}
-
-export class GetRankingDesenvolvedorQuery implements IGetRankingDesenvolvedorQuery {
-
-    constructor(data?: IGetRankingDesenvolvedorQuery) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-    }
-
-    static fromJS(data: any): GetRankingDesenvolvedorQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetRankingDesenvolvedorQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        return data; 
-    }
-}
-
-export interface IGetRankingDesenvolvedorQuery {
+    projeto?: ProjetoDto | undefined;
 }
 
 export class PaginatedListOfDesenvolvedorHoraDto implements IPaginatedListOfDesenvolvedorHoraDto {
@@ -1314,6 +1290,8 @@ export class DesenvolvedorHoraDto implements IDesenvolvedorHoraDto {
     fim?: Date;
     desenvolvedorId?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
+    projetoId?: number;
+    projetoDto?: ProjetoDto | undefined;
 
     constructor(data?: IDesenvolvedorHoraDto) {
         if (data) {
@@ -1331,6 +1309,8 @@ export class DesenvolvedorHoraDto implements IDesenvolvedorHoraDto {
             this.fim = _data["fim"] ? new Date(_data["fim"].toString()) : <any>undefined;
             this.desenvolvedorId = _data["desenvolvedorId"];
             this.desenvolvedor = _data["desenvolvedor"] ? DesenvolvedorDto.fromJS(_data["desenvolvedor"]) : <any>undefined;
+            this.projetoId = _data["projetoId"];
+            this.projetoDto = _data["projetoDto"] ? ProjetoDto.fromJS(_data["projetoDto"]) : <any>undefined;
         }
     }
 
@@ -1348,6 +1328,8 @@ export class DesenvolvedorHoraDto implements IDesenvolvedorHoraDto {
         data["fim"] = this.fim ? this.fim.toISOString() : <any>undefined;
         data["desenvolvedorId"] = this.desenvolvedorId;
         data["desenvolvedor"] = this.desenvolvedor ? this.desenvolvedor.toJSON() : <any>undefined;
+        data["projetoId"] = this.projetoId;
+        data["projetoDto"] = this.projetoDto ? this.projetoDto.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -1358,6 +1340,8 @@ export interface IDesenvolvedorHoraDto {
     fim?: Date;
     desenvolvedorId?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
+    projetoId?: number;
+    projetoDto?: ProjetoDto | undefined;
 }
 
 export class CreateDesenvolvedorHoraCommand implements ICreateDesenvolvedorHoraCommand {
@@ -1544,12 +1528,12 @@ export interface IUpdateProjetoCommand {
     nome?: string | undefined;
 }
 
-export class UserProfileResponse implements IUserProfileResponse {
+export class UserProfileDto implements IUserProfileDto {
     email?: string | undefined;
     userName?: string | undefined;
     role?: string | undefined;
 
-    constructor(data?: IUserProfileResponse) {
+    constructor(data?: IUserProfileDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1566,9 +1550,9 @@ export class UserProfileResponse implements IUserProfileResponse {
         }
     }
 
-    static fromJS(data: any): UserProfileResponse {
+    static fromJS(data: any): UserProfileDto {
         data = typeof data === 'object' ? data : {};
-        let result = new UserProfileResponse();
+        let result = new UserProfileDto();
         result.init(data);
         return result;
     }
@@ -1582,7 +1566,7 @@ export class UserProfileResponse implements IUserProfileResponse {
     }
 }
 
-export interface IUserProfileResponse {
+export interface IUserProfileDto {
     email?: string | undefined;
     userName?: string | undefined;
     role?: string | undefined;

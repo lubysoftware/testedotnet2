@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using luby_app.Application.Common.Interfaces;
+using luby_app.Domain.Entities;
 using luby_app.Domain.Events;
 using MediatR;
 using System;
@@ -28,18 +29,22 @@ namespace luby_app.Application.DesenvolvedorHoras.Commands.Create
         }
 
         public async Task<int> Handle(CreateDesenvolvedorHoraCommand request, CancellationToken cancellationToken)
-        {
-            var entity = new Domain.Entities.DesenvolvedorHora();
-            entity.Inicio = request.Inicio;
-            entity.Fim = request.Fim;
-
+        { 
             var desenvolvedor = _context.Desenvolvedor.Where(el => el.UsuarioId == request.UsuarioId).First();
-            desenvolvedor.DesenvolvedorHora.Add(entity);
 
-            entity.DomainEvents.Add(new WorkHourCreatedEvent(entity));
+            var entity = new DesenvolvedorHora()
+            {
+                Inicio = request.Inicio,
+                Fim = request.Fim,
+                ProjetoId = desenvolvedor.Projeto.Id,
+                DesenvolvedorId = desenvolvedor.Id
+            };
 
+            entity.DomainEvents.Add(new WorkHourCreatedEvent(entity)); 
+
+            _context.DesenvolvedorHora.Add(entity);
             await _context.SaveChangesAsync(cancellationToken);
-
+             
             return entity.Id;
         }
     }

@@ -328,9 +328,14 @@ namespace luby_app.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DesenvolvedorId");
+
+                    b.HasIndex("ProjetoId");
 
                     b.ToTable("DesenvolvedorHora");
                 });
@@ -499,7 +504,15 @@ namespace luby_app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("luby_app.Domain.Entities.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Desenvolvedor");
+
+                    b.Navigation("Projeto");
                 });
 
             modelBuilder.Entity("luby_app.Domain.Entities.Desenvolvedor", b =>

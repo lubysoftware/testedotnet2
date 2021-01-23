@@ -9,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  formModel = { UserName: 'administrator@localhost', Password: '123456' };
+  formModel = { UserName: '', Password: '' };
 
   constructor(private authService: AuthService) { }
 

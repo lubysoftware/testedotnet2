@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NotificationService } from '../notification.service';
 import { PaginatedListOfDesenvolvedorDto, DesenvolvedorClient, DesenvolvedorDto, CreateDesenvolvedorCommand, UpdateDesenvolvedorCommand, ProjetoDto, ProjetoClient } from '../web-api-client';
@@ -20,16 +20,17 @@ export class DesenvolvedorComponent {
   itensPorPagina: number = 5;
 
   constructor(private client: DesenvolvedorClient, clientProjeto: ProjetoClient, private modalService: BsModalService, private notification: NotificationService) {
-    client.getDesenvolvedorWithPagination(1, this.itensPorPagina).subscribe(result => {
-      this.desenvolvedorVM = result;
-    }, error => console.error(error));
-
+    this.getDesenvolvedorWithPagination(1); 
     clientProjeto.getAll().subscribe(result => {
       this.projetos = result;
     }, error => console.error(error));
-  } 
+  }
 
   onPageChange(pageNumber) {
+    this.getDesenvolvedorWithPagination(pageNumber);
+  }
+
+  getDesenvolvedorWithPagination(pageNumber): void {
     this.client.getDesenvolvedorWithPagination(pageNumber, this.itensPorPagina).subscribe(result => {
       this.desenvolvedorVM = result;
     }, error => console.error(error));
@@ -44,16 +45,7 @@ export class DesenvolvedorComponent {
     this.modalEdicaoDesenvolvedor = this.modalService.show(template);
   }
 
-  saveDesenvolvedor(): void {
-    let dev = DesenvolvedorDto.fromJS({
-      id: 0,
-      nome: this.novoDesenvolvedor.nome,
-      cpf: this.novoDesenvolvedor.cpf,
-      senha: this.novoDesenvolvedor.senha,
-      email: this.novoDesenvolvedor.email,
-      projetoId: this.projetoSelecionado
-    });
-
+  saveDesenvolvedor(): void { 
     this.client.create(<CreateDesenvolvedorCommand>{
       nome: this.novoDesenvolvedor.nome,
       senha: this.novoDesenvolvedor.senha,
@@ -62,16 +54,17 @@ export class DesenvolvedorComponent {
       projetoId: this.projetoSelecionado
     }).subscribe(
       result => {
-        dev.id = result;
-        this.desenvolvedorVM.items.push(dev);
         this.modalNovoDesenvolvedor.hide();
         this.novoDesenvolvedor = {};
+        this.projetoSelecionado = 0;
         this.notification.showSuccess("Desenvolvedor salvo com sucesso!", '');
+        this.getDesenvolvedorWithPagination(1);
       },
       error => {
-        let errors = JSON.parse(error.response);
+        this.notification.showWarning("Por favor, verifique se as informações estão corretas e tente novamente. ", 'Informações Inválidas');
 
-        if (errors) {
+        let errors = JSON.parse(error.response);
+        if (errors && errors.errors) {
           this.novoDesenvolvedor.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null;
           this.novoDesenvolvedor.cpfError = errors.errors.CPF ? errors.errors.CPF[0] : null;
           this.novoDesenvolvedor.senhaError = errors.errors.Senha ? errors.errors.Senha[0] : null;
@@ -94,9 +87,10 @@ export class DesenvolvedorComponent {
           this.notification.showSuccess("Desenvolvedor atualizado com sucesso!", '');
         },
         error => {
-          let errors = JSON.parse(error.response);
+          this.notification.showWarning("Por favor, verifique se as informações estão corretas e tente novamente. ", 'Informações Inválidas');
 
-          if (errors) {
+          let errors = JSON.parse(error.response);
+          if (errors && errors.errors) {
             this.novoDesenvolvedor.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null;
             this.novoDesenvolvedor.cpfError = errors.errors.CPF ? errors.errors.CPF[0] : null;
             this.novoDesenvolvedor.senhaError = errors.errors.Senha ? errors.errors.Senha[0] : null;
@@ -116,10 +110,13 @@ export class DesenvolvedorComponent {
     this.client.delete(this.desenvolvedorSelecionado.id).subscribe(
       () => {
         this.modalExclusaoDesenvolvedor.hide();
-        this.desenvolvedorVM.items = this.desenvolvedorVM.items.filter(t => t.id != this.desenvolvedorSelecionado.id);
+        this.getDesenvolvedorWithPagination(1);
         this.notification.showSuccess("Desenvolvedor removido com sucesso!", '');
       },
-      error => console.error(error)
+      error => {
+        this.notification.showWarning("Por favor, verifique se as informações estão corretas e tente novamente. ", 'Informações Inválidas');
+        console.error(error)
+      }
     );
   }
 }

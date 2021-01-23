@@ -6,16 +6,18 @@
   <thead>
     <tr>
       <th>Desenvolvedor</th>
-      <th>Média Horas (Últimos 7 dias)</th>
+      <th>Projeto</th>
+      <th>Média horas por dia</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let r of rankingVM">
       <td>{{ r.desenvolvedor.nome }}</td>
+      <td>{{ r.projeto.nome }}</td>
       <td>{{ r.mediaHoras | number:'.2-2' }}</td>
     </tr>
     <tr *ngIf="rankingVM.length == 0">
-      <td colspan="2" style="text-align: center;">
+      <td colspan="3" style="text-align: center;">
         Nenhum item encontrado!
       </td>
     </tr>

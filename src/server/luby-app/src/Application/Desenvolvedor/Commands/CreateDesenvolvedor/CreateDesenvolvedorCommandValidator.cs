@@ -9,10 +9,12 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
     public class CreateDesenvolvedorCommandValidator : AbstractValidator<CreateDesenvolvedorCommand>
     {
         private readonly IApplicationDbContext _context;
+        private readonly ICpfValidationService _cpfValidationService;
 
-        public CreateDesenvolvedorCommandValidator(IApplicationDbContext context)
+        public CreateDesenvolvedorCommandValidator(IApplicationDbContext context, ICpfValidationService cpfValidationService)
         {
             _context = context;
+            _cpfValidationService = cpfValidationService;
 
             RuleFor(v => v.Nome)
                 .NotEmpty().WithMessage("Nome é obrigatório.")
@@ -31,6 +33,11 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
             RuleFor(v => v.ProjetoId)
                 .GreaterThan(0).WithMessage("Projeto é obrigatório.");
 
+            RuleFor(v => v.CPF)
+                .NotEmpty().WithMessage("CPF é obrigatório.")
+                .MustAsync(BeUniqueCpf).WithMessage("CPF inválido! Já existe um desenvolvedor cadastrado com esse CPF.")
+                .MustAsync(BeValidIntegrationCpf).WithMessage("CPF inválido!");
+
         }
 
         public async Task<bool> BeUniqueNome(CreateDesenvolvedorCommand model, string nome, CancellationToken cancellationToken)
@@ -43,6 +50,17 @@ namespace luby_app.Application.Desenvolvedor.Commands.CreateDesenvolvedor
         {
             return await _context.Desenvolvedor
                 .AllAsync(l => l.Email != email);
+        }
+
+        public async Task<bool> BeValidIntegrationCpf(CreateDesenvolvedorCommand model, string cpf, CancellationToken cancellationToken)
+        {
+            return await _cpfValidationService.IsValid(cpf);
+        }
+
+        public async Task<bool> BeUniqueCpf(CreateDesenvolvedorCommand model, string cpf, CancellationToken cancellationToken)
+        {
+            return await _context.Desenvolvedor
+                .AllAsync(l => l.CPF != cpf);
         }
     }
 }

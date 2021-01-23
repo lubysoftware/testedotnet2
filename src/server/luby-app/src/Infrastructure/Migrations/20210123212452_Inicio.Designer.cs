@@ -10,7 +10,7 @@ using luby_app.Infrastructure.Persistence;
 namespace luby_app.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210122203152_Inicio")]
+    [Migration("20210123212452_Inicio")]
     partial class Inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -330,9 +330,14 @@ namespace luby_app.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DesenvolvedorId");
+
+                    b.HasIndex("ProjetoId");
 
                     b.ToTable("DesenvolvedorHora");
                 });
@@ -501,7 +506,15 @@ namespace luby_app.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("luby_app.Domain.Entities.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Desenvolvedor");
+
+                    b.Navigation("Projeto");
                 });
 
             modelBuilder.Entity("luby_app.Domain.Entities.Desenvolvedor", b =>

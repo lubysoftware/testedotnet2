@@ -5,9 +5,11 @@ using luby_app.Application.Desenvolvedor.Commands.DeleteDesenvolvedor;
 using luby_app.Application.Desenvolvedor.Commands.UpdateDesenvolvedor;
 using luby_app.Application.Desenvolvedor.Queries.GetDesenvolvedorWithPagination;
 using luby_app.Application.Common.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace luby_app.WebUI.Controllers
 {
+    [Authorize]
     public class DesenvolvedorController : ApiControllerBase
     {
         [HttpGet]

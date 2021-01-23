@@ -26,13 +26,11 @@ namespace luby_app.Application.Projeto.Queries.GetAll
         }
 
         public Task<IEnumerable<ProjetoDto>> Handle(GetAllQuery request, CancellationToken cancellationToken)
-        {
-            var vm = _context.Projetos
+        { 
+            return Task.FromResult(_context.Projetos
                                 .OrderBy(x => x.Nome)
                                 .ProjectTo<ProjetoDto>(_mapper.ConfigurationProvider)
-                                .AsEnumerable();
-
-            return Task.FromResult(vm);
+                                .AsEnumerable());
         }
     }
 }

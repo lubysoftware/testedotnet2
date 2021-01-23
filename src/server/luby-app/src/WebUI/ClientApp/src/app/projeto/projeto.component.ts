@@ -1,8 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { Component, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NotificationService } from '../notification.service';
 import { CreateProjetoCommand, PaginatedListOfProjetoDto, ProjetoClient, ProjetoDto, UpdateProjetoCommand } from '../web-api-client'; 
-import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @Component({
   selector: 'app-projeto',
@@ -20,16 +20,18 @@ export class ProjetoComponent {
   novoProjeto: any = {};
   itensPorPagina: number = 5;
 
-  constructor(private client: ProjetoClient, private modalService: BsModalService, private notification: NotificationService) {
-    client.getProjetosWithPagination(1, this.itensPorPagina).subscribe(result => {
-      this.projetoVM = result;
-    }, error => console.error(error));
+  constructor(private client: ProjetoClient, private modalService: BsModalService, private notification: NotificationService ) {
+    this.getProjetosWithPagination(1);
   }
 
-  onPageChange(pageNumber) { 
+  getProjetosWithPagination(pageNumber): void {
     this.client.getProjetosWithPagination(pageNumber, this.itensPorPagina).subscribe(result => {
       this.projetoVM = result;
     }, error => console.error(error)); 
+  }
+
+  onPageChange(pageNumber) {
+    this.getProjetosWithPagination(pageNumber);
   }
 
   showModalCreate(template: TemplateRef<any>): void {
@@ -41,24 +43,17 @@ export class ProjetoComponent {
     this.modalEdicaoProjeto = this.modalService.show(template);
   }
 
-  saveProjeto(): void {
-    let proj = ProjetoDto.fromJS({
-      id: 0,
-      nome: this.novoProjeto.nome,
-    });
-
+  saveProjeto(): void { 
     this.client.create(<CreateProjetoCommand>{ nome: this.novoProjeto.nome }).subscribe(
       result => {
-        proj.id = result;
-        this.projetoVM.items.push(proj);
+        this.getProjetosWithPagination(1);
         this.modalNovoProjeto.hide();
-        this.novoProjeto = {};
-
+        this.novoProjeto = {}; 
         this.notification.showSuccess("Projeto salvo com sucesso!", '');
       },
       error => {
-        let errors = JSON.parse(error.response);
-
+        this.notification.showWarning("Por favor, verifique se as informações estão corretas e tente novamente. ", 'Informações Inválidas');
+        let errors = JSON.parse(error.response); 
         if (errors) {
           this.novoProjeto.nomeError = errors.errors.Nome ? errors.errors.Nome[0] : null; 
         }
@@ -77,6 +72,7 @@ export class ProjetoComponent {
           this.notification.showSuccess("Projeto atualizado com sucesso!", '');
         },
         error => {
+          this.notification.showWarning("Por favor, verifique se as informações estão corretas e tente novamente. ", 'Informações Inválidas');
           let errors = JSON.parse(error.response);
 
           if (errors) {
@@ -95,11 +91,13 @@ export class ProjetoComponent {
     this.client.delete(this.projetoSelecionado.id).subscribe(
       () => {
         this.modalExclusaoProjeto.hide();
-        this.projetoVM.items = this.projetoVM.items.filter(t => t.id != this.projetoSelecionado.id);
-
+        this.getProjetosWithPagination(1);
         this.notification.showSuccess("Projeto removido com sucesso!", '');
       },
-      error => console.error(error)
+      error => {
+        this.notification.showWarning("Por favor, verifique se as informações estão corretas e tente novamente. ", 'Informações Inválidas');
+        console.error(error);
+      }
     );
   }
 }

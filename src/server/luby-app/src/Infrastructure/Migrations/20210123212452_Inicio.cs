@@ -243,6 +243,7 @@ namespace luby_app.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Fim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjetoId = table.Column<int>(type: "int", nullable: false),
                     DesenvolvedorId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -258,6 +259,12 @@ namespace luby_app.Infrastructure.Migrations
                         principalTable: "Desenvolvedor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DesenvolvedorHora_Projetos_ProjetoId",
+                        column: x => x.ProjetoId,
+                        principalTable: "Projetos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -308,6 +315,11 @@ namespace luby_app.Infrastructure.Migrations
                 name: "IX_DesenvolvedorHora_DesenvolvedorId",
                 table: "DesenvolvedorHora",
                 column: "DesenvolvedorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DesenvolvedorHora_ProjetoId",
+                table: "DesenvolvedorHora",
+                column: "ProjetoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",

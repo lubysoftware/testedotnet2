@@ -14,6 +14,10 @@ namespace luby_app.Domain.Entities
 
         public TimeSpan TotalHoras() => (this.Fim - this.Inicio);
 
+        public int ProjetoId { get; set; }
+
+        public virtual Projeto Projeto { get; set; }
+
         public int DesenvolvedorId { get; set; }
 
         public virtual Desenvolvedor Desenvolvedor { get; set; }

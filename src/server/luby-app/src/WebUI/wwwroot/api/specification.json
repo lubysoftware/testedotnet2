@@ -13,11 +13,11 @@
         ],
         "operationId": "Auth_Login",
         "requestBody": {
-          "x-name": "model",
+          "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginModelRequest"
+                "$ref": "#/components/schemas/LoginCommand"
               }
             }
           },
@@ -75,7 +75,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -106,7 +111,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/Desenvolvedor/{id}": {
@@ -151,7 +161,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -182,7 +197,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/DesenvolvedorRanking": {
@@ -193,15 +213,11 @@
         "operationId": "DesenvolvedorRanking_GetRankingDesenvolvedor",
         "parameters": [
           {
-            "name": "query",
+            "name": "Dias",
             "in": "query",
             "schema": {
-              "nullable": true,
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/GetRankingDesenvolvedorQuery"
-                }
-              ]
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 1
           }
@@ -220,7 +236,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/LacamentoHoras": {
@@ -269,7 +290,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -300,7 +326,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/Projeto": {
@@ -340,7 +371,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -371,7 +407,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/Projeto/api/Projeto/GetAll": {
@@ -394,7 +435,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/Projeto/{id}": {
@@ -439,7 +485,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -470,7 +521,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/UserProfile": {
@@ -485,7 +541,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserProfileResponse"
+                  "$ref": "#/components/schemas/UserProfileDto"
                 }
               }
             }
@@ -501,7 +557,7 @@
   },
   "components": {
     "schemas": {
-      "LoginModelRequest": {
+      "LoginCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -665,12 +721,16 @@
                 "$ref": "#/components/schemas/DesenvolvedorDto"
               }
             ]
+          },
+          "projeto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjetoDto"
+              }
+            ]
           }
         }
-      },
-      "GetRankingDesenvolvedorQuery": {
-        "type": "object",
-        "additionalProperties": false
       },
       "PaginatedListOfDesenvolvedorHoraDto": {
         "type": "object",
@@ -728,6 +788,18 @@
             "oneOf": [
               {
                 "$ref": "#/components/schemas/DesenvolvedorDto"
+              }
+            ]
+          },
+          "projetoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projetoDto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjetoDto"
               }
             ]
           }
@@ -806,7 +878,7 @@
           }
         }
       },
-      "UserProfileResponse": {
+      "UserProfileDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

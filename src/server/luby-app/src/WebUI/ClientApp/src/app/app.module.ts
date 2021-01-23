@@ -18,6 +18,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoaderInterceptor } from './loader.interceptor';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LancamentoHorasComponent,
     RankingComponent,
     LoginComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,7 +49,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }],
+  }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

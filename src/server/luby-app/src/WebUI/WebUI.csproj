@@ -42,6 +42,8 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\auth\auth.service.ts" />
+    <None Remove="ClientApp\src\app\loader.interceptor.ts" />
+    <None Remove="ClientApp\src\app\loader.service.ts" />
     <None Remove="ClientApp\src\app\_models\role.ts" />
   </ItemGroup>
 
@@ -53,6 +55,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\loader.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\loader.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_models\role.ts" />
   </ItemGroup>
 

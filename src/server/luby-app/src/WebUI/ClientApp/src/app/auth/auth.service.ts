@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from '../notification.service';
-import { AuthClient, LoginModelRequest } from '../web-api-client';
+import { AuthClient, LoginCommand } from '../web-api-client';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private authClient: AuthClient, private router: Router, private notification: NotificationService) { }
 
   login(email: string, pass: string) {
-    this.authClient.login(<LoginModelRequest>{
+    this.authClient.login(<LoginCommand>{
       userName: email,
       password: pass,
     }).subscribe(

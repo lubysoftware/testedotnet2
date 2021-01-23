@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Http;
-using luby_app.WebUI.Controllers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +21,6 @@ using NSwag.Generation.Processors.Security;
 using luby_app.Infrastructure.Services;
 using Polly;
 using Polly.Extensions.Http;
-using Microsoft.Extensions.Options;
 
 namespace luby_app.WebUI
 {
@@ -39,7 +36,7 @@ namespace luby_app.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.Configure<Infrastructure.Identity.ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
             services.AddApplication();
             services.AddInfrastructure(Configuration);

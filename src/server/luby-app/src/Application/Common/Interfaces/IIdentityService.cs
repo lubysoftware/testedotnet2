@@ -14,5 +14,9 @@ namespace luby_app.Application.Common.Interfaces
         Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string role = null);
 
         Task<Result> DeleteUserAsync(string userId);
+
+        Task<(bool succeeded, string token)> GetToken(string userName, string password);
+
+        Task<(string UserName, string Email, string Role)> GetUserProfileAsync(string userId);
     }
 }
