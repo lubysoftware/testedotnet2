@@ -55,15 +55,16 @@ E-mail: thayson_f@hotmail.com
   
 #### Banco de Dados:
   - Bando de dados utilizado: SQL Server;
-  - Está utilizando a ferramenta de migração automatica. 
+  - Está utilizando a ferramenta de migração automática. 
   - Existe uma flag no WebUI/appsettings.json "UseInMemoryDatabase", para utilizar o banco em memória. Por padrão está como true. Caso precise criar o banco é só configurar a connectionString e mudar essa mesma flag para false;
 
 #### Executar Projeto:
   - Entre na pasta `src/WebUI/ClientApp` e execute o comando `npm start` para subir o front end (Angular);
-  - Entre na pasta `src/WebUI` e execute o comando `dotnet run` para subir o back end (ASP.NET Core Web API)
+  - Entre na pasta `src/WebUI` e execute o comando `dotnet run` para subir o back end (ASP.NET Core Web API);
+  - Console exibirá o endereço do projeto. Navegue até https://localhost:port/ (por padrão a porta é 5001);
 
 #### Tecnologias
- 
+
   - CQRS com MediatR;
   - Validações com FluentValidation;
   - Mapeamento com AutoMapper;
