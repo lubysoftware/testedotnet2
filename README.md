@@ -46,3 +46,36 @@ Desenvolver um serviço que seja capaz de gerar um lançamento de horas.
 #### Identificação:
 Nome: THAYSON FERNANDES DO NASCIMENTO <br/>
 E-mail: thayson_f@hotmail.com
+
+
+#### Orientações:
+
+#### Pré-requisito:
+  - [Node.js LTS](https://nodejs.org/en/) e [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0);
+  
+#### Banco de Dados:
+  - Bando de dados utilizado: SQL Server;
+  - Está utilizando a ferramenta de migração automatica. 
+  - Existe uma flag no WebUI/appsettings.json "UseInMemoryDatabase", para utilizar o banco em memória. Por padrão está como true. Caso precise criar o banco é só configurar a connectionString e mudar essa mesma flag para false;
+
+#### Executar Projeto:
+  - Entre na pasta `src/WebUI/ClientApp` e execute o comando `npm start` para subir o front end (Angular);
+  - Entre na pasta `src/WebUI` e execute o comando `dotnet run` para subir o back end (ASP.NET Core Web API)
+
+#### Tecnologias
+ 
+  - CQRS com MediatR;
+  - Validações com FluentValidation;
+  - Mapeamento com AutoMapper;
+  - Acesso a dados Entity Framework Core;
+  - Web API ASP.NET Core;
+  - Front-end Angular;
+  - Open API NSwag;
+  - Autenticação e segurança ASP.NET Core Identity + IdentityServer;
+
+
+
+
+
+
+
