@@ -1,0 +1,38 @@
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">LUBY Software</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isAdmin">
+            <a class="nav-link text-dark" [routerLink]="['/desenvolvedor']">Desenvolvedor</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isAdmin">
+            <a class="nav-link text-dark" [routerLink]="['/projeto']">Projeto</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isDev">
+            <a class="nav-link text-dark" [routerLink]="['/lancamento-horas']">Lançamento Horas</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isAdmin">
+            <a class="nav-link text-dark" [routerLink]="['/ranking']">Ranking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/api" target="_blank">API</a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin || isDev" >
+            <a class="nav-link text-dark" style="cursor: pointer;" (click)="onLogout()">Sair</a> 
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,109 @@
+<h1 id="tableLabel">Projetos</h1>
+<hr />
+<p *ngIf="!projetoVM"><em>Loading...</em></p>
+
+<table class='table table-striped table-bordered' aria-labelledby="tableLabel" *ngIf="projetoVM">
+  <thead>
+    <tr>
+      <th width="10%">Id</th>
+      <th>Nome</th>
+      <th width="20%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of projetoVM.items | paginate: { itemsPerPage: itensPorPagina, currentPage: projetoVM.pageIndex, totalItems: projetoVM.totalCount }">
+      <td>{{ p.id }}</td>
+      <td>{{ p.nome }}</td>
+      <td>
+        <button class="btn btn-info float-right" (click)="showModalUpdate(listOptionsModalTemplate, p)">
+          Editar
+        </button>
+        <button class="btn btn-warning float-right" (click)="confirmDelete(deleteListModalTemplate, p)" style="margin-right: 5px;">
+          Excluir
+        </button>
+      </td>
+    </tr>
+    <tr *ngIf="projetoVM.items.length == 0">
+      <td colspan="3" style="text-align: center;">
+        Nenhum item encontrado!
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-right">
+  <pagination-controls (pageChange)="onPageChange($event)" previousLabel="Anterior" nextLabel="Próximo" ></pagination-controls>
+</div>
+
+<button class="btn btn-primary float-right" (click)="showModalCreate(newListModalTemplate)">
+  Novo Item
+</button>
+
+
+<ng-template #newListModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Novo Projeto</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" class="form-control" [(ngModel)]="novoProjeto.nome" [ngClass]="{ 'is-invalid': novoProjeto.nomeError }" />
+      <div *ngIf="novoProjeto.nomeError" class="invalid-feedback">
+        {{ novoProjeto.nomeError }}
+      </div>
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ novoProjeto | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-secondary" (click)="modalNovoProjeto.hide()" style="margin-right: 5px">Cancelar</button>
+      <button class="btn btn-primary" (click)="saveProjeto()">Salvar</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #listOptionsModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Editar</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" class="form-control" [(ngModel)]="projetoSelecionado.nome" [ngClass]="{ 'is-invalid': novoProjeto.nomeError }" />
+      <div *ngIf="novoProjeto.nomeError" class="invalid-feedback">
+        {{ novoProjeto.nomeError }}
+      </div>
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ projetoSelecionado | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="clearfix">
+      <div class="float-right">
+        <button class="btn btn-secondary" (click)="modalEdicaoProjeto.hide()" style="margin-right: 5px">Cancelar</button>
+        <button class="btn btn-primary" (click)="updateProjeto()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteListModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Excluir </h4>
+  </div>
+  <div class="modal-body">
+    <p>Deseja realmente excluir <b>"{{ projetoSelecionado?.nome }}"</b>?</p>
+    <div *ngIf="debug">
+      <pre>{{ projetoSelecionado | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button type="button" class="btn btn-secondary" (click)="modalExclusaoProjeto.hide()" style="margin-right: 5px">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="deleteConfirmed()">Confirmar</button>
+    </div>
+  </div>
+</ng-template>

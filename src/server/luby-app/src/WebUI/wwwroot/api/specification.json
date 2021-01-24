@@ -1,0 +1,914 @@
+{
+  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "luby_app API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/Auth/Login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Auth_Login",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Desenvolvedor": {
+      "get": {
+        "tags": [
+          "Desenvolvedor"
+        ],
+        "operationId": "Desenvolvedor_GetDesenvolvedorWithPagination",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfDesenvolvedorDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Desenvolvedor"
+        ],
+        "operationId": "Desenvolvedor_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDesenvolvedorCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Desenvolvedor/{id}": {
+      "put": {
+        "tags": [
+          "Desenvolvedor"
+        ],
+        "operationId": "Desenvolvedor_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDesenvolvedorCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Desenvolvedor"
+        ],
+        "operationId": "Desenvolvedor_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/DesenvolvedorRanking": {
+      "get": {
+        "tags": [
+          "DesenvolvedorRanking"
+        ],
+        "operationId": "DesenvolvedorRanking_GetRankingDesenvolvedor",
+        "parameters": [
+          {
+            "name": "Dias",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RankingDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/LacamentoHoras": {
+      "get": {
+        "tags": [
+          "LacamentoHoras"
+        ],
+        "operationId": "LacamentoHoras_GetWithPagination",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "UsuarioId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfDesenvolvedorHoraDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "LacamentoHoras"
+        ],
+        "operationId": "LacamentoHoras_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDesenvolvedorHoraCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Projeto": {
+      "get": {
+        "tags": [
+          "Projeto"
+        ],
+        "operationId": "Projeto_GetProjetosWithPagination",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfProjetoDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Projeto"
+        ],
+        "operationId": "Projeto_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProjetoCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Projeto/api/Projeto/GetAll": {
+      "get": {
+        "tags": [
+          "Projeto"
+        ],
+        "operationId": "Projeto_GetAll",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjetoDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Projeto/{id}": {
+      "put": {
+        "tags": [
+          "Projeto"
+        ],
+        "operationId": "Projeto_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjetoCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Projeto"
+        ],
+        "operationId": "Projeto_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/UserProfile": {
+      "get": {
+        "tags": [
+          "UserProfile"
+        ],
+        "operationId": "UserProfile_GetUserProfile",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaginatedListOfDesenvolvedorDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DesenvolvedorDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DesenvolvedorDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "projetoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projeto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjetoDto"
+              }
+            ]
+          }
+        }
+      },
+      "ProjetoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateDesenvolvedorCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "projetoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateDesenvolvedorCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "projetoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RankingDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "mediaHoras": {
+            "type": "number",
+            "format": "double"
+          },
+          "desenvolvedor": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DesenvolvedorDto"
+              }
+            ]
+          },
+          "projeto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjetoDto"
+              }
+            ]
+          }
+        }
+      },
+      "PaginatedListOfDesenvolvedorHoraDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DesenvolvedorHoraDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DesenvolvedorHoraDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fim": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "desenvolvedorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "desenvolvedor": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DesenvolvedorDto"
+              }
+            ]
+          },
+          "projetoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projeto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjetoDto"
+              }
+            ]
+          }
+        }
+      },
+      "CreateDesenvolvedorHoraCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "inicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fim": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaginatedListOfProjetoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ProjetoDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateProjetoCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateProjetoCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UserProfileDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "Type into the textbox: Bearer {your JWT token}.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ]
+}
