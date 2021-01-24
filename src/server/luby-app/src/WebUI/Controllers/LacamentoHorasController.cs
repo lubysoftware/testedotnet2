@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace luby_app.WebUI.Controllers
 {
-
     [Authorize]
     public class LacamentoHorasController : ApiControllerBase
     {

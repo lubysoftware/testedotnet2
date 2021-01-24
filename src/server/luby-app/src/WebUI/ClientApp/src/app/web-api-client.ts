@@ -1291,7 +1291,7 @@ export class DesenvolvedorHoraDto implements IDesenvolvedorHoraDto {
     desenvolvedorId?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
     projetoId?: number;
-    projetoDto?: ProjetoDto | undefined;
+    projeto?: ProjetoDto | undefined;
 
     constructor(data?: IDesenvolvedorHoraDto) {
         if (data) {
@@ -1310,7 +1310,7 @@ export class DesenvolvedorHoraDto implements IDesenvolvedorHoraDto {
             this.desenvolvedorId = _data["desenvolvedorId"];
             this.desenvolvedor = _data["desenvolvedor"] ? DesenvolvedorDto.fromJS(_data["desenvolvedor"]) : <any>undefined;
             this.projetoId = _data["projetoId"];
-            this.projetoDto = _data["projetoDto"] ? ProjetoDto.fromJS(_data["projetoDto"]) : <any>undefined;
+            this.projeto = _data["projeto"] ? ProjetoDto.fromJS(_data["projeto"]) : <any>undefined;
         }
     }
 
@@ -1329,7 +1329,7 @@ export class DesenvolvedorHoraDto implements IDesenvolvedorHoraDto {
         data["desenvolvedorId"] = this.desenvolvedorId;
         data["desenvolvedor"] = this.desenvolvedor ? this.desenvolvedor.toJSON() : <any>undefined;
         data["projetoId"] = this.projetoId;
-        data["projetoDto"] = this.projetoDto ? this.projetoDto.toJSON() : <any>undefined;
+        data["projeto"] = this.projeto ? this.projeto.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -1341,7 +1341,7 @@ export interface IDesenvolvedorHoraDto {
     desenvolvedorId?: number;
     desenvolvedor?: DesenvolvedorDto | undefined;
     projetoId?: number;
-    projetoDto?: ProjetoDto | undefined;
+    projeto?: ProjetoDto | undefined;
 }
 
 export class CreateDesenvolvedorHoraCommand implements ICreateDesenvolvedorHoraCommand {

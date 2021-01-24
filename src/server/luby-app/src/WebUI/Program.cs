@@ -32,9 +32,8 @@ namespace luby_app.WebUI
 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    var siManager = services.GetRequiredService<SignInManager<ApplicationUser>>();
 
-                    await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager, siManager);
+                    await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
                     await ApplicationDbContextSeed.SeedSampleDataAsync(context);
                 }
                 catch (Exception ex)

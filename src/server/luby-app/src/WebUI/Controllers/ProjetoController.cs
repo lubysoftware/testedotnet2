@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace luby_app.WebUI.Controllers
 {
-
     [Authorize]
     public class ProjetoController : ApiControllerBase
     {

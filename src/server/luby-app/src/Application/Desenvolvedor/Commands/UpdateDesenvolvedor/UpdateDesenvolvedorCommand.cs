@@ -24,10 +24,12 @@ namespace luby_app.Application.Desenvolvedor.Commands.UpdateDesenvolvedor
     public class UpdateDesenvolvedorCommandHandler : IRequestHandler<UpdateDesenvolvedorCommand>
     {
         private readonly IApplicationDbContext _context;
+        private readonly IIdentityService _identityService;
 
-        public UpdateDesenvolvedorCommandHandler(IApplicationDbContext context)
+        public UpdateDesenvolvedorCommandHandler(IApplicationDbContext context, IIdentityService identityService)
         {
             _context = context;
+            _identityService = identityService;
         }
 
         public async Task<Unit> Handle(UpdateDesenvolvedorCommand request, CancellationToken cancellationToken)
@@ -37,6 +39,11 @@ namespace luby_app.Application.Desenvolvedor.Commands.UpdateDesenvolvedor
             if (entity == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Desenvolvedor), request.Id);
+            }
+
+            if (entity.Email != request.Email)
+            {
+                await _identityService.UpdateUserEmail(entity.UsuarioId, request.Email);
             }
 
             entity.Nome = request.Nome;

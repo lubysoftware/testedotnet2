@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Id</th>
+      <th>Projeto</th>
       <th>Data Início</th>
       <th>Data Fim</th>
     </tr>
@@ -13,6 +14,7 @@
   <tbody>
     <tr *ngFor="let h of lacamentoHorasVM.items | paginate: { itemsPerPage: 10, currentPage: lacamentoHorasVM.pageIndex, totalItems: lacamentoHorasVM.totalCount }">
       <td>{{ h.id }}</td>
+      <td>{{ h.projeto.nome }}</td>
       <td>{{ h.inicio | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
       <td>{{ h.fim | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
     </tr>

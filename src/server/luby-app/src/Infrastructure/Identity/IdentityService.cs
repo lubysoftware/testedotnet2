@@ -136,5 +136,13 @@ namespace luby_app.Infrastructure.Identity
 
             return (false, null);
         }
-    } 
+
+        public async Task<bool> UpdateUserEmail(string userId, string newEmail)
+        {
+            var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+            user.Email = newEmail;
+            user.UserName = newEmail;
+            return _userManager.UpdateAsync(user).Result.Succeeded; 
+        }
+    }
 }

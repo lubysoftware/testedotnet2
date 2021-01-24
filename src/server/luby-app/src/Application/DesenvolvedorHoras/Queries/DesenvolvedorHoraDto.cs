@@ -20,7 +20,7 @@ namespace luby_app.Application.DesenvolvedorHoras.Queries
 
         public int ProjetoId { get; set; }
 
-        public ProjetoDto ProjetoDto { get; set; }
+        public ProjetoDto Projeto { get; set; }
 
         public void Mapping(Profile profile)
         {

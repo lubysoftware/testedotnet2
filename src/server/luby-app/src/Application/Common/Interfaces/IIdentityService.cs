@@ -18,5 +18,7 @@ namespace luby_app.Application.Common.Interfaces
         Task<(bool succeeded, string token)> GetToken(string userName, string password);
 
         Task<(string UserName, string Email, string Role)> GetUserProfileAsync(string userId);
+
+        Task<bool> UpdateUserEmail(string userId, string newEmail);
     }
 }

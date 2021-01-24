@@ -795,7 +795,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "projetoDto": {
+          "projeto": {
             "nullable": true,
             "oneOf": [
               {

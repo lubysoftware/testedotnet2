@@ -80,10 +80,8 @@ export class DesenvolvedorComponent {
       .subscribe(
         () => {
           this.modalEdicaoDesenvolvedor.hide();
-          this.desenvolvedorVM.items = this.desenvolvedorVM.items.filter(t => t.id != this.desenvolvedorSelecionado.id);
-          this.desenvolvedorVM.items.push(this.desenvolvedorSelecionado);
+          this.getDesenvolvedorWithPagination(1);
           this.desenvolvedorSelecionado = new DesenvolvedorDto();
-
           this.notification.showSuccess("Desenvolvedor atualizado com sucesso!", '');
         },
         error => {

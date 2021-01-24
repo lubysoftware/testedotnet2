@@ -14,7 +14,9 @@ namespace luby_app.WebUI.Controllers
         [Authorize]
         public async Task<ActionResult<UserProfileDto>> GetUserProfile()
         {
-            return await Mediator.Send(new GetUserProfileQuery() { UserId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value });
+            string userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            return await Mediator.Send(new GetUserProfileQuery() { UserId = userId  });
         }
     }
 }

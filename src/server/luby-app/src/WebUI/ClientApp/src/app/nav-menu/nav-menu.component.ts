@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'; 
 import { AuthService } from '../auth/auth.service';
-import { UserProfileClient, UserProfileResponse } from '../web-api-client';
+import { UserProfileClient, UserProfileDto } from '../web-api-client';
 import { Role } from '../_models/role';
 
 @Component({
@@ -11,7 +11,7 @@ import { Role } from '../_models/role';
 export class NavMenuComponent {
   isExpanded = false
   isAuthenticated = false;
-  userDetails: UserProfileResponse;
+  userDetails: UserProfileDto;
   isAdmin: boolean;
   isDev: boolean; 
 
@@ -26,7 +26,7 @@ export class NavMenuComponent {
     }); 
   }
 
-  setUserProfile(result: UserProfileResponse) {
+  setUserProfile(result: UserProfileDto) {
     this.userDetails = result;
     this.isAdmin = this.userDetails && this.userDetails.role === Role.Admin;
     this.isDev = this.userDetails && this.userDetails.role === Role.Dev;
