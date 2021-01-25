@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Desafio.WebApp.ViewModels.JogoViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Jogos";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<p>
+    <a class="btn btn-info" asp-action="Create">Novo Jogo</a>
+</p>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Emprestado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @if (item.Emprestado)
+                    {
+                        <span class="badge badge-danger">Sim</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-info">Não</span>
+                    }
+
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                    <a class="btn btn-warning" supress-by-claim-name="Fornecedor" supress-by-claim-value="Editar" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                    <a class="btn btn-danger" supress-by-claim-name="Fornecedor" supress-by-claim-value="Excluir" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

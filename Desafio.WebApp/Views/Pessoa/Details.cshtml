@@ -1,0 +1,79 @@
+﻿@model Desafio.WebApp.ViewModels.PessoaViewModel
+
+@{
+    ViewData["Title"] = "Informações";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-dark" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+    <a class="btn btn-info" asp-action="Index">Voltar</a>
+</div>
+
+<br />
+<div class="clearfix"></div>
+
+<h4>Lista de Jogos Emprestados</h4>
+<hr />
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayName("Jogo")
+            </th>
+            <th>
+                @Html.DisplayName("Data Empréstimo")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Emprestimo.Count() > 0)
+        {
+            @foreach (var item in Model.Emprestimo)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Jogo.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataEmprestimo)
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="alert-info">Nenhum Jogo Emprestado</td>
+            </tr>
+
+        }
+    </tbody>
+</table>

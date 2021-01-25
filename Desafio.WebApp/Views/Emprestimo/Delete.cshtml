@@ -1,0 +1,37 @@
+﻿@model Desafio.WebApp.ViewModels.EmprestimoViewModel
+
+@{
+    ViewData["Title"] = "Excluão de Empréstimo";
+}
+
+    <div>
+        <h4>Tem Certeza que deseja Excluir esse Registro ?</h4>
+        <hr />
+        <form asp-action="Delete">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Jogo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Jogo.Nome)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Pessoa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Pessoa.Nome)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.DataEmprestimo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.DataEmprestimo)
+                </dd>
+            </dl>
+
+
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Excluir" class="btn btn-danger" />
+            <a class="btn btn-info" asp-action="Index">Voltar</a>
+        </form>
+    </div>
