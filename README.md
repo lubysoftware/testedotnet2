@@ -44,5 +44,9 @@ Desenvolver um serviço que seja capaz de gerar um lançamento de horas.
 - Criar um client WEB para consumir essa API 
 
 #### Identificação:
-Nome: <br/>
-E-mail: 
+Nome: Marcus Vinicius Ferreira Meirelles<br/>
+E-mail: mavifm@gmail.com
+
+Ao criar o banco pelo entity framework, ja será criado um usuario administrador, **login: Admin senha: 1234** para que possa ser feito o primeiro acesso e a geracao do JWT a ser utilizado.
+
+
