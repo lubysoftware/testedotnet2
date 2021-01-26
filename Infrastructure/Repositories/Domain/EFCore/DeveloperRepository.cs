@@ -19,9 +19,9 @@ namespace Infrastructure.Repositories.Domain.EFCore
 
         }
 
-        public async Task<Developer> GetByEmailAsync(string email)
+        public async Task<Developer> GetByEmailAsync(string cpf)
         {
-            IQueryable<Developer> query = await Task.FromResult(GenerateQuery(filter: developer => developer.Email == email));
+            IQueryable<Developer> query = await Task.FromResult(GenerateQuery(filter: developer => developer.Cpf == cpf));
             return query.SingleOrDefault();
         }
     }

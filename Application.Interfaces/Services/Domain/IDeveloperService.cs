@@ -13,5 +13,6 @@ namespace Application.Interfaces.Services.Domain
         Task<IEnumerable<DeveloperResponseDTO>> GetTop5SpentTimeIdAsync();
         Task<Developer> Auth(string email, string password);
         Task<bool> CanAddSpentTimeAsync(Guid projectId, Guid developerId);
+        Task<bool> IsValidCPF(string cpf);
     }
 }

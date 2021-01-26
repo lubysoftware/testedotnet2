@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Application.Interfaces.Services.Util;
+using Newtonsoft.Json;
 
 namespace Application.Services.Domain
 {
@@ -19,15 +21,16 @@ namespace Application.Services.Domain
     {
         private readonly IDeveloperDapperRepository _developerDapperRepository;
         private readonly IDeveloperRepository _repository;
+        private readonly IHttpClientService _httpClientService;
+        private readonly IProjectRepository _projectRepository;
 
-        public DeveloperService(IDeveloperRepository repository, ILogger<DeveloperService> logger, IMapper mapper, IDeveloperDapperRepository developerDapperRepository) : base(repository, logger, mapper)
+        public DeveloperService(IDeveloperRepository repository, ILogger<DeveloperService> logger, IMapper mapper, IDeveloperDapperRepository developerDapperRepository, IProjectRepository projectRepository, IHttpClientService httpClientService) : base(repository, logger, mapper)
         {
             _developerDapperRepository = developerDapperRepository;
             _repository = repository;
+            _httpClientService = httpClientService;
+            _projectRepository = projectRepository;
         }
-
-        
-
 
         public virtual async Task<IEnumerable<DeveloperResponseDTO>> GetTop5SpentTimeIdAsync()
         {
@@ -58,15 +61,25 @@ namespace Application.Services.Domain
         {
             _logger.LogInformation("[CanAddSpentTimeAsync]");
 
-            var developer = await _repository.GetByIdAsync(developerId);
-            if (developer is null)
+            var projects = await _projectRepository.GetByDeveloperIdAsync(developerId);
+
+            return projects.Where(x=> x.Id == projectId).Count() > 0;
+        }
+
+        public virtual async Task<bool> IsValidCPF(string cpf)
+        {
+            _logger.LogInformation("[CanAddSpentTimeAsync]");
+
+            var isValidCPF = await _httpClientService.GetAsync("https://run.mocky.io/v3/067108b3-77a4-400b-af07-2db3141e95c9");
+
+            var obj = JsonConvert.DeserializeObject<IsValidCPFResponseDTO>(isValidCPF);
+
+            if (obj.Message != "Autorizado")
             {
                 return false;
             }
 
-            var project = developer.Projects.Where(x => x.Id == projectId).FirstOrDefault();
-
-            return project != null;
+            return true;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Luby.TimeManager.Controllers
         {
             _logger.LogInformation("Validando usuário");
 
-            var authUser = await _developerService.Auth(user.Email, user.Password);
+            var authUser = await _developerService.Auth(user.Cpf, user.Password);
 
             if (authUser == null)
             {

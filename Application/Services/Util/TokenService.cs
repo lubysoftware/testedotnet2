@@ -39,7 +39,7 @@ namespace Application.Services.Util
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, developer.Name),
-                    new Claim("Email", developer.Email),
+                    new Claim("Cpf", developer.Cpf),
                     new Claim("DeveloperId", developer.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(5),

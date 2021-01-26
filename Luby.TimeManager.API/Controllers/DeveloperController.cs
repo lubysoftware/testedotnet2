@@ -55,6 +55,10 @@ namespace Luby.TimeManager.Controllers
         public async Task<ActionResult<DeveloperResponseDTO>> Post([FromBody] DeveloperRequestDTO model)
         {
             _logger.LogInformation("[Inserindo Developer] Id: {0}", JsonConvert.SerializeObject(model));
+            if (!await _developerService.IsValidCPF(model.Cpf))
+                return BadRequest("Cpf Não autorizado");
+
+
             var obj = await _developerService.AddAsync(model);
             return Created(InsertedPath(obj.Id), obj);
         }

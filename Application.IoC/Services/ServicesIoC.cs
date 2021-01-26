@@ -18,6 +18,7 @@ namespace Application.IoC
             services.AddScoped<IProjectService, ProjectService>();
 
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IHttpClientService, HttpClientService>();
         }
     }
 }
