@@ -37,9 +37,16 @@ namespace Infrastructure.Repositories.Domain.Dapper
             ) T ON t.DeveloperId = d.Id
             ORDER BY Total DESC";
 
+        protected string InsertProjectQuery => "INSERT INTO DeveloperProject (DevelopersId, ProjectsId) VALUES (@developerId, @projectId)";
+
         public virtual async Task<IEnumerable<Developer>> GetTop5SpentTimeIdAsync()
         {
             return await dbConn.QueryAsync<Developer>(SelectTop5Query, transaction: dbTransaction);
+        }
+
+        public virtual async Task<int> AddDeveloperProjectAsync(Guid projectId, Guid developerId)
+        {
+            return await dbConn.ExecuteAsync(InsertProjectQuery, new { developerId, projectId }, transaction: dbTransaction);
         }
     }
 }

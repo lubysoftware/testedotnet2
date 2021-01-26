@@ -44,7 +44,7 @@ namespace Luby.TimeManager.API
             services.AddControllers(options => options.MaxIAsyncEnumerableBufferLimit = 10000);
 
 
-           /* services.AddAuthentication(x =>
+            services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -61,7 +61,7 @@ namespace Luby.TimeManager.API
                     ValidateAudience = false
                 };
             });
-            services.AddAuthorization();*/
+            services.AddAuthorization();
 
             services.AddSwaggerGen(c =>
             {

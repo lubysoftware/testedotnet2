@@ -23,8 +23,8 @@ namespace Domain.Entities
         [Required]
         public DateTime UpdatedAt { get; set; }
 
-        public ICollection<SpentTime> TimeIntervals { get; set; }
+        public ICollection<SpentTime> SpentTimes { get; set; } = new List<SpentTime>();
 
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<Project> Projects { get; set; } = new List<Project>();
     }
 }

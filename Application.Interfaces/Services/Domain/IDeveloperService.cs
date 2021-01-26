@@ -2,6 +2,7 @@
 using Domain.Entities;
 using DTO.Request;
 using DTO.Response;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,5 +12,6 @@ namespace Application.Interfaces.Services.Domain
     {
         Task<IEnumerable<DeveloperResponseDTO>> GetTop5SpentTimeIdAsync();
         Task<Developer> Auth(string email, string password);
+        Task<bool> CanAddSpentTimeAsync(Guid projectId, Guid developerId);
     }
 }

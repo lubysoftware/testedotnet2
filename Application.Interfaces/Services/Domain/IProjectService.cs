@@ -11,5 +11,6 @@ namespace Application.Interfaces.Services.Domain
     public interface IProjectService : IServiceBase<Project, ProjectRequestDTO, ProjectResponseDTO>
     {
         Task<SpentTimeResponseDTO> AddSpentTimeAsync(Guid projectId, Guid developerId, SpentTimeRequestDTO obj);
+        Task AddDeveloperAsync(Guid projectId, Guid developerId);
     }
 }

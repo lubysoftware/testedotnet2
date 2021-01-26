@@ -40,39 +40,19 @@ namespace Luby.TimeManager.Controllers
             return path;
         }
 
-        protected long CurrentClienteId
+        protected Guid CurrentDeveloperId
         {
             get
             {
                 try
                 {
-                    var x = User.Identity;
-                    var y = User.Claims.Where(x => x.Type == "ClienteId").FirstOrDefault()?.Value;
-
-                    return Convert.ToInt64(y);
+                    var y = User.Claims.Where(x => x.Type == "DeveloperId").FirstOrDefault()?.Value;
+                    return Guid.Parse(y);
                 }
                 catch (Exception e)
                 {
                     _logger.LogWarning(e, "O usuário logado não possui um cliente definido");
-                    throw new Exception("O usuário logado não possui um cliente definido");
-                }
-            }
-        }
-
-        protected long CurrentColaboradorId
-        {
-            get {
-                try
-                {
-                    var x = User.Identity;
-                    var y = User.Claims.Where(x => x.Type == "ColaboradorId").FirstOrDefault()?.Value;
-
-                    return Convert.ToInt64(y);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogWarning(e, "O usuário logado não é um colaborador");
-                    throw new Exception("O usuário logado não é um colaborador");
+                    return Guid.Empty;
                 }
             }
         }

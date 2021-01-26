@@ -21,10 +21,12 @@ namespace Luby.TimeManager.Controllers
     public class ProjectController : BaseController
     {
         private readonly IProjectService _projectService;
+        private readonly IDeveloperService _developerService;
 
-        public ProjectController(ILogger<ProjectController> logger, IConfiguration config, IProjectService projectService) : base(logger, config)
+        public ProjectController(ILogger<ProjectController> logger, IConfiguration config, IProjectService projectService, IDeveloperService developerService) : base(logger, config)
         {
             _projectService = projectService;
+            _developerService = developerService;
         }
 
         [HttpGet]
@@ -83,17 +85,31 @@ namespace Luby.TimeManager.Controllers
         }
 
         [HttpPost]
-        [Route("{id}/AddSpentTime")]
+        [Route("{id}/add-spent-time")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<SpentTimeResponseDTO>> Post(Guid id,[FromBody] SpentTimeRequestDTO model)
+        public async Task<ActionResult<SpentTimeResponseDTO>> Post(Guid id, [FromBody] SpentTimeRequestDTO model)
         {
             _logger.LogInformation("[Adicionando tempo gasto] ProjectId: {0} Json: {1}", id, JsonConvert.SerializeObject(model));
 
-            var developerId = Guid.Parse("1F599D47-2D89-4ECD-0A3F-08D8C1AA4B30");
-            var obj = await _projectService.AddSpentTimeAsync(id, developerId, model);
+            if (!await _developerService.CanAddSpentTimeAsync(id, CurrentDeveloperId))
+                return BadRequest(new { Message = "O desenvolvedor não pode incluir tempo gasto no projeto informado" });
+
+            var obj = await _projectService.AddSpentTimeAsync(id, CurrentDeveloperId, model);
             return Created(InsertedPath(obj.Id), obj);
+        }
+
+        [HttpPost]
+        [Route("{id}/add-developer")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> AddDeveloper(Guid id, [FromBody] AddDeveloperToProjectRequestDTO model)
+        {
+            _logger.LogInformation("[Adicionando Developer] ProjectId: {0} Json: {1}", id, JsonConvert.SerializeObject(model));
+            await _projectService.AddDeveloperAsync(id, model.DeveloperId);
+            return NoContent();
         }
     }
 }
