@@ -78,7 +78,6 @@ namespace Luby.TimeManager.Controllers
         public async Task<ActionResult> Delete(Guid id)
         {
             _logger.LogInformation("[Deletando Developer] id: {0}", id);
-            //var developer = await _developerService.GetByIdAsync(id);
             await _developerService.RemoveAsync(id);
             return NoContent();
         }

@@ -46,13 +46,6 @@ namespace DTO.Pagination
             this.Result.AddRange(items);
         }
 
-        /* public static PaginatedList<TEntity> Create(IEnumerable<T> source, int pageIndex, int pageSize)
-        {
-            var count = source.Count<T>();
-            var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
-        } */
-
         public static PaginatedList<TEntity, TResponseDTO> Create(IEnumerable<TEntity> source, int pageIndex, int pageSize, IMapper mapper)
         {
             var count = source.Count();

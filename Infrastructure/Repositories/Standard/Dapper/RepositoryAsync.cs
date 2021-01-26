@@ -45,6 +45,9 @@ namespace Infrastructure.Repositories.Standard.Dapper
 
         public virtual async Task<TEntity> AddAsync(TEntity obj)
         {
+            var now = DateTime.Now;
+            obj.CreatedAt = now;
+            obj.UpdatedAt = now;
             TEntity entity = await dbConn.QuerySingleAsync<TEntity>(InsertQueryReturnInserted, obj, transaction: dbTransaction);
             return entity;
         }

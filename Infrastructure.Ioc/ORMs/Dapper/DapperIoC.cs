@@ -18,6 +18,8 @@ namespace Infrastructure.IoC
             services.Configure<DataSettings>(dbConnectionSettings);
             services.AddScoped<IDatabaseFactory, DatabaseFactory>();
 
+            services.AddScoped<ISpentTimeRepository, SpentTimeRepository>();
+
             return services;
         }
     }

@@ -14,11 +14,8 @@ namespace Application.Services.Domain
     public class DeveloperService : ServiceBase<Developer, DeveloperRequestDTO, DeveloperResponseDTO>, 
                                    IDeveloperService
     {
-        private readonly IDeveloperRepository _repository;
-
-        public DeveloperService(IDeveloperRepository repository, ILogger<DeveloperService> _logger, IMapper mapper) : base(repository, _logger, mapper)
+        public DeveloperService(IDeveloperRepository repository, ILogger<DeveloperService> logger, IMapper mapper) : base(repository, logger, mapper)
         {
-            _repository = repository;
         }
     }
 }

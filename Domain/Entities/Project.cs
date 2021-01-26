@@ -14,6 +14,6 @@ namespace Domain.Entities
         [Required]
         public DateTime UpdatedAt { get; set; }
 
-        public ICollection<TimeInterval> TimeIntervals { get; set; }
+        public ICollection<SpentTime> TimeIntervals { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Application.IoC.Mappers
             {
                 x.AddProfile(new DeveloperMapper());
                 x.AddProfile(new ProjectMapper());
+                x.AddProfile(new SpentTimeMapper());
             }, type);
         }
     }

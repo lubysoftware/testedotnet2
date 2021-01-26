@@ -37,6 +37,7 @@ namespace Luby.TimeManager.API
         {
             services.ApplicationServicesIoC();
             services.InfrastructureORM<EntityFrameworkIoC>();
+            services.InfrastructureORM<DapperIoC>();
             services.ApplicationMappersIoC(typeof(Startup));
 
 

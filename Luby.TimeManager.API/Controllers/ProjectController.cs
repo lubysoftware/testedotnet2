@@ -78,9 +78,22 @@ namespace Luby.TimeManager.Controllers
         public async Task<ActionResult> Delete(Guid id)
         {
             _logger.LogInformation("[Deletando Project] id: {0}", id);
-            //var project = await _projectService.GetByIdAsync(id);
             await _projectService.RemoveAsync(id);
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("{id}/AddSpentTime")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<SpentTimeResponseDTO>> Post(Guid id,[FromBody] SpentTimeRequestDTO model)
+        {
+            _logger.LogInformation("[Adicionando tempo gasto] ProjectId: {0} Json: {1}", id, JsonConvert.SerializeObject(model));
+
+            var developerId = Guid.Parse("1F599D47-2D89-4ECD-0A3F-08D8C1AA4B30");
+            var obj = await _projectService.AddSpentTimeAsync(id, developerId, model);
+            return Created(InsertedPath(obj.Id), obj);
         }
     }
 }
