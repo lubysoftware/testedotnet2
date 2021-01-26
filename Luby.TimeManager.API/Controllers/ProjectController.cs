@@ -13,11 +13,13 @@ using DTO.Response;
 using DTO.Pagination;
 using Newtonsoft.Json;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Luby.TimeManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [AllowAnonymous]
     public class ProjectController : BaseController
     {
         private readonly IProjectService _projectService;
@@ -84,6 +86,7 @@ namespace Luby.TimeManager.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpPost]
         [Route("{id}/add-spent-time")]
         [Produces("application/json")]

@@ -13,11 +13,13 @@ using DTO.Response;
 using DTO.Pagination;
 using Newtonsoft.Json;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Luby.TimeManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [AllowAnonymous]
     public class DeveloperController : BaseController
     {
         private readonly IDeveloperService _developerService;
