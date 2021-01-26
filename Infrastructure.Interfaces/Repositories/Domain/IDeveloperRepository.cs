@@ -7,5 +7,6 @@ namespace Infrastructure.Interfaces.Repositories.Domain
 {
     public interface IDeveloperRepository : IDomainRepository<Developer>
     {
+        Task<Developer> GetByEmailAsync(string email);
     }
 }

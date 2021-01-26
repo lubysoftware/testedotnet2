@@ -12,16 +12,16 @@ namespace Luby.TimeManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    //[Authorize]
+    [Authorize]
     public class BaseController : ControllerBase
     {
-        protected IConfiguration _configuracoes;
+        protected IConfiguration _config;
         protected readonly ILogger<Object> _logger;
 
         public BaseController(ILogger<Object> logger, IConfiguration config)
         {
             _logger = logger;
-            _configuracoes = config;
+            _config = config;
         }
 
         protected string CurrentPath()
