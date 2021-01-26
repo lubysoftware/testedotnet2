@@ -7,6 +7,7 @@ using Infrastructure.Interfaces.Repositories.Domain;
  using Microsoft.Extensions.Logging;
 using Infrastructure.Repositories.Standard.EFCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System;
 
 namespace Infrastructure.Repositories.Domain.EFCore
 {

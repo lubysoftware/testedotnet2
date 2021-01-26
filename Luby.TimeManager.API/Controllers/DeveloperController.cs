@@ -81,5 +81,16 @@ namespace Luby.TimeManager.Controllers
             await _developerService.RemoveAsync(id);
             return NoContent();
         }
+
+        [HttpGet]
+        [Route("top5-spent-time")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IEnumerable<DeveloperResponseDTO>> Top5()
+        {
+            _logger.LogInformation("[Top5]");
+            return await _developerService.GetTop5SpentTimeIdAsync();
+        }
     }
 }

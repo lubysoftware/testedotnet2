@@ -19,6 +19,8 @@ namespace Infrastructure.IoC
             services.AddScoped<IDatabaseFactory, DatabaseFactory>();
 
             services.AddScoped<ISpentTimeRepository, SpentTimeRepository>();
+            services.AddScoped<IDeveloperDapperRepository, DeveloperRepository>();
+            
 
             return services;
         }

@@ -61,8 +61,6 @@ namespace Infrastructure.Repositories.Domain.Dapper
         protected override string SelectAllQuery => $"SELECT * FROM [{nameof(SpentTime)}]";
         protected override string SelectByIdQuery => $"SELECT * FROM [{nameof(SpentTime)}] WHERE {nameof(SpentTime.Id)} = @{nameof(SpentTime.Id)}";
 
-
-
         public override Task<int> UpdateAsync(SpentTime obj)
         {
             throw new NotImplementedException();

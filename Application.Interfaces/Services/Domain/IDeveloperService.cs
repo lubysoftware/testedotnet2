@@ -9,5 +9,6 @@ namespace Application.Interfaces.Services.Domain
 {
     public interface IDeveloperService : IServiceBase<Developer, DeveloperRequestDTO, DeveloperResponseDTO>
     {
+        Task<IEnumerable<DeveloperResponseDTO>> GetTop5SpentTimeIdAsync();
     }
 }
