@@ -20,7 +20,7 @@ namespace DesafioLuby.Controllers
         public string ConnectionString
         {
 
-            get { return "Server=189.84.214.2;Database=FamesProcesso;User Id=usuariosga;Password=senha"; }
+            get { return "Server=xxx;Database=xxx;User Id=xxxx;Password=xxx"; }
         }
 
     }
