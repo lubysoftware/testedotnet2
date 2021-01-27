@@ -9,11 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Canducci.Pagination" Version="2.1.2" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>
