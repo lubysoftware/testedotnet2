@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gXlUHrRUjswUva9GEm5+6wOQpSK5Q/r0q6iYjy6Wlp5hswFLLGCdEU90Td5AsZ5GlM1TO0OPITnndMWixyDKKA==",
+  "dgSpecHash": "XAd0/HlOemO7CCXicZU7T51YyotQsXIbOWsqp1UfJt4bf1mCgTr/X2IYesEarcJLzoFtulem1r62I6cuBmMTXA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Thiago\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Thiago\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Thiago\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\Thiago\\.nuget\\packages\\restsharp\\106.11.7\\restsharp.106.11.7.nupkg.sha512",
     "C:\\Users\\Thiago\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\Thiago\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Thiago\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

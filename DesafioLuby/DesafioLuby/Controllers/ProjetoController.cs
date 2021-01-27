@@ -13,7 +13,7 @@ namespace DesafioLuby.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DesenvolvedorController : ServiceBase
+    public class ProjetoController : ServiceBase
     {
         ServiceDesenvolvedor service = new ServiceDesenvolvedor();
 

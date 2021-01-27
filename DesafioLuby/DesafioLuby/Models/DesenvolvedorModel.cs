@@ -7,7 +7,7 @@ namespace DesafioLuby.Models
 
         public int IdDesenvolvedor { get; set; }
         public string NomeDesenvolvedor { get; set; }
-        public int Idade { get; set; }
+        public string Cpf { get; set; }
         public DateTime DataCriacao { get; set; }
 
     }
