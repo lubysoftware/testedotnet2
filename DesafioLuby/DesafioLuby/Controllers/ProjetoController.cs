@@ -23,7 +23,7 @@ namespace DesafioLuby.Controllers
             page ??= 1;
             if (page <= 0) page = 1;
 
-            return await service.SelectAsync(IdDesenvolvedor, page);
+            return await service.SelectAsync("0", page);
         }
 
 

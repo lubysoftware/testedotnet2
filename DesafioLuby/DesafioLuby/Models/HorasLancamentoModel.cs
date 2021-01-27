@@ -9,6 +9,10 @@ namespace DesafioLuby.Models
         public int IdDesenvolvedor { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public int IdProjeto { get; set; }
+
+
 
     }
 }

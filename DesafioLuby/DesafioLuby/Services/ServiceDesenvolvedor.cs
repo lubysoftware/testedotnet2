@@ -3,6 +3,7 @@ using Dapper;
 using DesafioLuby.Controllers;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,19 +12,22 @@ namespace DesafioLuby.Models
 {
     public class ServiceDesenvolvedor : ServiceBase
     {
-        public async Task<PaginatedRest<DesenvolvedorModel>> SelectAsync(int? IdDesenvolvedor, int? page)
+        public async Task<PaginatedRest<DesenvolvedorModel>> SelectAsync(string cpf, int? page)
         {
 
+            return await SelectDev(cpf).OrderBy(c => c.IdDesenvolvedor).ToPaginatedRestAsync(page.Value, 10);
+
+        }
+
+        public List<DesenvolvedorModel> SelectDev(string cpf) {
             using (var con = new SqlConnection(this.ConnectionString))
             {
                 try
                 {
                     con.Open();
-                    var list = con.Query<DesenvolvedorModel>("SELECT * FROM Desenvolvedor" + (IdDesenvolvedor.HasValue && IdDesenvolvedor.Value > 0 ? " WHERE IdDesenvolvedor = " + IdDesenvolvedor.Value : ""));
+                    var list = con.Query<DesenvolvedorModel>("SELECT * FROM Desenvolvedor" + (String.IsNullOrEmpty(cpf) ? " WHERE Cpf = " + cpf : ""));
 
-                    var result = await list.OrderBy(c => c.IdDesenvolvedor).ToPaginatedRestAsync(page.Value, 10);
-
-                    return result;
+                    return list.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -35,10 +39,9 @@ namespace DesafioLuby.Models
                 }
 
                 return null;
-
             }
-
         }
+
 
         public bool IsCpfValid(DesenvolvedorModel desenvolvedor) {
 

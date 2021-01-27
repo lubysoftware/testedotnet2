@@ -17,13 +17,13 @@ namespace DesafioLuby.Controllers
     {
         ServiceDesenvolvedor service = new ServiceDesenvolvedor();
 
-        [HttpGet("page/{page?}")]
-        public async Task<PaginatedRest<DesenvolvedorModel>> GetAsync(int? IdDesenvolvedor, int? page)
+        [HttpGet("{page?}")]
+        public async Task<PaginatedRest<DesenvolvedorModel>> GetAsync(string cpf , int? page)
         {
             page ??= 1;
             if (page <= 0) page = 1;
 
-            return await service.SelectAsync(IdDesenvolvedor, page);
+            return await service.SelectAsync(cpf, page);
         }
 
 

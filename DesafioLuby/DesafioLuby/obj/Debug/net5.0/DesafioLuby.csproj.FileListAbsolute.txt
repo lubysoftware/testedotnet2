@@ -35,3 +35,14 @@ C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\De
 C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\Debug\net5.0\Canducci.Pagination.dll
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\Debug\net5.0\RestSharp.dll
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\Debug\net5.0\DesafioLuby.Views.dll
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\bin\Debug\net5.0\DesafioLuby.Views.pdb
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.RazorAssemblyInfo.cache
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.RazorAssemblyInfo.cs
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.TagHelpers.input.cache
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.TagHelpers.output.cache
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.RazorCoreGenerate.cache
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.RazorTargetAssemblyInfo.cs
+C:\Users\Thiago\source\repos\ThiDevs\testedotnet2\DesafioLuby\DesafioLuby\obj\Debug\net5.0\DesafioLuby.Views.pdb
