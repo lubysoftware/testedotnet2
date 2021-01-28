@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lrAGa/xYkuT9t/Fyie8kGlIGFpvAIq98GrW1YCbxddneArHHS0Wklw/j+8S4fKp89SRdyTVb26izDVBvBYJnRA==",
+  "dgSpecHash": "DHNtZlLoiP1HezqU60QSJCysKUrmkNfdZ1A8o324fXqvGAxeroFAra/LHPQhikHnSSAN06YBMsR1GjrEx2BUyA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
+  "projectFilePath": "C:\\Users\\Thiago\\Source\\Repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Thiago\\.nuget\\packages\\canducci.pagination\\2.1.2\\canducci.pagination.2.1.2.nupkg.sha512",
     "C:\\Users\\Thiago\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",

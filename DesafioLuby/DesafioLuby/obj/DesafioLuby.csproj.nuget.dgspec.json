@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj": {}
+    "C:\\Users\\Thiago\\Source\\Repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj": {
+    "C:\\Users\\Thiago\\Source\\Repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
+        "projectUniqueName": "C:\\Users\\Thiago\\Source\\Repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
         "projectName": "DesafioLuby",
-        "projectPath": "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
+        "projectPath": "C:\\Users\\Thiago\\Source\\Repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\DesafioLuby.csproj",
         "packagesPath": "C:\\Users\\Thiago\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Thiago\\source\\repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\obj\\",
+        "outputPath": "C:\\Users\\Thiago\\Source\\Repos\\ThiDevs\\testedotnet2\\DesafioLuby\\DesafioLuby\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Thiago\\AppData\\Roaming\\NuGet\\NuGet.Config",
