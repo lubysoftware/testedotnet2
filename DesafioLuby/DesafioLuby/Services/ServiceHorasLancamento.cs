@@ -11,7 +11,7 @@ namespace DesafioLuby.Models
 {
     public class ServiceHorasLancamento : ServiceBase
     {
-        public async Task<PaginatedRest<DesenvolvedorModel>> SelectAsync(int? IdDesenvolvedor, int? page)
+        public async Task<PaginatedRest<HorasLancamentoModel>> SelectAsync(int? IdDesenvolvedor, int? page)
         {
 
             using (var con = new SqlConnection(this.ConnectionString))
@@ -19,7 +19,7 @@ namespace DesafioLuby.Models
                 try
                 {
                     con.Open();
-                    var list = con.Query<DesenvolvedorModel>("SELECT * FROM HorasLancamento" + (IdDesenvolvedor.HasValue && IdDesenvolvedor.Value > 0 ? " WHERE IdHorasLancamento = " + IdDesenvolvedor.Value : ""));
+                    var list = con.Query<HorasLancamentoModel>("SELECT * FROM HorasLancamento" + (IdDesenvolvedor.HasValue && IdDesenvolvedor.Value > 0 ? " WHERE IdHorasLancamento = " + IdDesenvolvedor.Value : ""));
 
                     var result = await list.OrderBy(c => c.IdDesenvolvedor).ToPaginatedRestAsync(page.Value, 10);
 

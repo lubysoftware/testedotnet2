@@ -41,14 +41,21 @@ namespace DesafioLuby
             return tokenHandler.WriteToken(token);
         }
 
-        private static bool ValidateToken(string authToken)
+        public static bool ValidateToken(string authToken)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = GetValidationParameters();
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var validationParameters = GetValidationParameters();
 
-            SecurityToken validatedToken;
-            IPrincipal principal = tokenHandler.ValidateToken(authToken, validationParameters, out validatedToken);
-            return true;
+                SecurityToken validatedToken;
+                IPrincipal principal = tokenHandler.ValidateToken(authToken, validationParameters, out validatedToken);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         private static TokenValidationParameters GetValidationParameters()
@@ -60,7 +67,8 @@ namespace DesafioLuby
                 ValidateAudience = true,
                 ValidIssuer = "",
                 ValidAudience = "",
-                IssuerSigningKey = new SymmetricSecurityKey(key) // The same key as the one that generate the token
+
+            IssuerSigningKey = new SymmetricSecurityKey(key) // The same key as the one that generate the token
             };
         }
 

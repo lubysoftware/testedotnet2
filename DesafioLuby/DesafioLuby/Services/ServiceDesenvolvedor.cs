@@ -25,7 +25,7 @@ namespace DesafioLuby.Models
                 try
                 {
                     con.Open();
-                    var list = con.Query<DesenvolvedorModel>("SELECT * FROM Desenvolvedor" + (String.IsNullOrEmpty(cpf) ? " WHERE Cpf = " + cpf : ""));
+                    var list = con.Query<DesenvolvedorModel>("SELECT * FROM Desenvolvedor" + (!String.IsNullOrEmpty(cpf) ? " WHERE Cpf = " + cpf : ""));
 
                     return list.ToList();
                 }

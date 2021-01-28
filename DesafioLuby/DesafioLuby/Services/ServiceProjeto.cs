@@ -2,6 +2,7 @@ using Canducci.Pagination;
 using Dapper;
 using DesafioLuby.Controllers;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,19 +11,23 @@ namespace DesafioLuby.Models
 {
     public class ServiceProjeto : ServiceBase
     {
-        public async Task<PaginatedRest<ProjetoModel>> SelectAsync(int? IdProjeto, int? page)
+        public async Task<PaginatedRest<ProjetoModel>> SelectAsync(int IdProjeto, int? page)
         {
 
+            return await SelectProj(IdProjeto).OrderBy(c => c.IdProjeto).ToPaginatedRestAsync(page.Value, 10);
+
+        }
+
+        public List<ProjetoModel> SelectProj(int IdProjeto)
+        {
             using (var con = new SqlConnection(this.ConnectionString))
             {
                 try
                 {
                     con.Open();
-                    var list = con.Query<ProjetoModel>("SELECT * FROM Projeto" + (IdProjeto.HasValue && IdProjeto.Value > 0 ? " WHERE IdProjeto = " + IdProjeto.Value : ""));
+                    var list = con.Query<ProjetoModel>("SELECT * FROM Projeto" + ((IdProjeto) > 0? " WHERE IdProjeto = " + IdProjeto : ""));
 
-                    var result = await list.OrderBy(c => c.IdProjeto).ToPaginatedRestAsync(page.Value, 10);
-
-                    return result;
+                    return list.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -34,9 +39,7 @@ namespace DesafioLuby.Models
                 }
 
                 return null;
-
             }
-
         }
 
         public async Task<bool> InsertAsync(ProjetoModel Projeto)

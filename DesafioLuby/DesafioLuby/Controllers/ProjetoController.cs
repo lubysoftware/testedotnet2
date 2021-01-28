@@ -15,32 +15,37 @@ namespace DesafioLuby.Controllers
     [Route("[controller]")]
     public class ProjetoController : ServiceBase
     {
-        ServiceDesenvolvedor service = new ServiceDesenvolvedor();
+        ServiceProjeto service = new ServiceProjeto();
 
-        [HttpGet("page/{page?}")]
-        public async Task<PaginatedRest<DesenvolvedorModel>> GetAsync(int? IdDesenvolvedor, int? page)
+        [HttpGet("projetoAsync/{page?}")]
+        public async Task<PaginatedRest<ProjetoModel>> GetAsync(int? IdProjeto, int? page)
         {
             page ??= 1;
             if (page <= 0) page = 1;
+             return await service.SelectAsync(0, page);
+        }
 
-            return await service.SelectAsync("0", page);
+        [HttpGet("projeto/")]
+        public async Task<List<ProjetoModel>> Get(int? IdProjeto)
+        {
+             return service.SelectProj(0);
         }
 
 
         [HttpPut]
-        public async Task<string> PutAsync(DesenvolvedorModel desenvolvedor)
+        public async Task<string> PutAsync(ProjetoModel horas)
         {
 
-            var sucesso = await service.InsertAsync(desenvolvedor);
+            var sucesso = await service.InsertAsync(horas);
 
             return "Registro salvo com sucesso!";
         }
 
 
         [HttpPost]
-        public async Task<string> PostAsync(DesenvolvedorModel desenvolvedor)
+        public async Task<string> PostAsync(ProjetoModel desenvolvedor)
         {
-            if (desenvolvedor.IdDesenvolvedor > 0)
+            if (desenvolvedor.IdProjeto > 0)
             {
 
                 var result = await service.UpdateAsync(desenvolvedor);
@@ -52,20 +57,7 @@ namespace DesafioLuby.Controllers
 
         }
 
-        [HttpDelete]
-        public async Task<string> DeleteAsync(int IdDesenvolvedor)
-        {
-            if (IdDesenvolvedor > 0)
-            {
-                var resultado = await service.DeleteAsync(IdDesenvolvedor);
-                return resultado.ToString();
-            }
-            else
-                return "O Id tem que ser maior que 0";
-
-
-
-        }
+       
     }
 
 }
