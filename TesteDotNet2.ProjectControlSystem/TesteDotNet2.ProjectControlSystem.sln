@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{245947C3-9D2B-479C-B65A-621ECD4DA240}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{BFC7CB8F-770B-4D08-9417-F12915D6F02B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{4515BB70-FF10-49BF-BABF-9DEC5CC67E2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1 - Data", "3.1 - Data", "{4D8D65AA-05E2-4A30-9928-426FC1C3B707}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2 - CrossCutting", "3.2 - CrossCutting", "{A1D09119-4DD5-43FC-9D89-91D13874068F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesteDotNet2.ProjectControlSystem.Domain", "TesteDotNet2.ProjectControlSystem.Domain\TesteDotNet2.ProjectControlSystem.Domain.csproj", "{E318FA77-1753-4D42-9775-EE70E7CBD463}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesteDotNet2.ProjectControlSystem.Services", "TesteDotNet2.ProjectControlSystem.Services\TesteDotNet2.ProjectControlSystem.Services.csproj", "{1206A4C4-50AA-42F6-B23E-B40C8810C011}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesteDotNet2.ProjectControlSystem.Data.SqlServer", "TesteDotNet2.ProjectControlSystem.Data.SqlServer\TesteDotNet2.ProjectControlSystem.Data.SqlServer.csproj", "{0B0B2FA9-752C-4DDC-81BF-03C8A082E2F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesteDotNet2.ProjectControlSystem.CrossCutting", "TesteDotNet2.ProjectControlSystem.CrossCutting\TesteDotNet2.ProjectControlSystem.CrossCutting.csproj", "{1E26CB37-BC5D-4C71-B535-6D0D61E2C25F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Test", "4 - Test", "{C50FFCDB-66BD-43BD-AD04-9837F66F624F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - IntegrationTest", "4.1 - IntegrationTest", "{9F9CEA3D-B91F-4B4C-A072-571A101F7BFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesteDotNet2.ProjectControlSystem.IntegrationTest", "TesteDotNet2.ProjectControlSystem.IntegrationTest\TesteDotNet2.ProjectControlSystem.IntegrationTest.csproj", "{D7E12DCE-1F1D-4A7D-B120-B42E00AF29EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - Unit Test", "4.2 - Unit Test", "{D954879F-D07B-4D11-A756-2715F3FE459E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteDotNet2.ProjectControlSystem.UnitTest", "TesteDotNet2.ProjectControlSystem.UnitTest\TesteDotNet2.ProjectControlSystem.UnitTest.csproj", "{CD6785C5-72C1-4F39-B6F6-8F2B9F42EFE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E318FA77-1753-4D42-9775-EE70E7CBD463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E318FA77-1753-4D42-9775-EE70E7CBD463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E318FA77-1753-4D42-9775-EE70E7CBD463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E318FA77-1753-4D42-9775-EE70E7CBD463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1206A4C4-50AA-42F6-B23E-B40C8810C011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1206A4C4-50AA-42F6-B23E-B40C8810C011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1206A4C4-50AA-42F6-B23E-B40C8810C011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1206A4C4-50AA-42F6-B23E-B40C8810C011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B0B2FA9-752C-4DDC-81BF-03C8A082E2F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0B2FA9-752C-4DDC-81BF-03C8A082E2F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0B2FA9-752C-4DDC-81BF-03C8A082E2F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0B2FA9-752C-4DDC-81BF-03C8A082E2F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E26CB37-BC5D-4C71-B535-6D0D61E2C25F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E26CB37-BC5D-4C71-B535-6D0D61E2C25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E26CB37-BC5D-4C71-B535-6D0D61E2C25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E26CB37-BC5D-4C71-B535-6D0D61E2C25F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E12DCE-1F1D-4A7D-B120-B42E00AF29EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E12DCE-1F1D-4A7D-B120-B42E00AF29EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E12DCE-1F1D-4A7D-B120-B42E00AF29EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E12DCE-1F1D-4A7D-B120-B42E00AF29EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6785C5-72C1-4F39-B6F6-8F2B9F42EFE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6785C5-72C1-4F39-B6F6-8F2B9F42EFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6785C5-72C1-4F39-B6F6-8F2B9F42EFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6785C5-72C1-4F39-B6F6-8F2B9F42EFE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D8D65AA-05E2-4A30-9928-426FC1C3B707} = {4515BB70-FF10-49BF-BABF-9DEC5CC67E2A}
+		{A1D09119-4DD5-43FC-9D89-91D13874068F} = {4515BB70-FF10-49BF-BABF-9DEC5CC67E2A}
+		{E318FA77-1753-4D42-9775-EE70E7CBD463} = {BFC7CB8F-770B-4D08-9417-F12915D6F02B}
+		{1206A4C4-50AA-42F6-B23E-B40C8810C011} = {245947C3-9D2B-479C-B65A-621ECD4DA240}
+		{0B0B2FA9-752C-4DDC-81BF-03C8A082E2F5} = {4D8D65AA-05E2-4A30-9928-426FC1C3B707}
+		{1E26CB37-BC5D-4C71-B535-6D0D61E2C25F} = {A1D09119-4DD5-43FC-9D89-91D13874068F}
+		{9F9CEA3D-B91F-4B4C-A072-571A101F7BFD} = {C50FFCDB-66BD-43BD-AD04-9837F66F624F}
+		{D7E12DCE-1F1D-4A7D-B120-B42E00AF29EF} = {9F9CEA3D-B91F-4B4C-A072-571A101F7BFD}
+		{D954879F-D07B-4D11-A756-2715F3FE459E} = {C50FFCDB-66BD-43BD-AD04-9837F66F624F}
+		{CD6785C5-72C1-4F39-B6F6-8F2B9F42EFE4} = {D954879F-D07B-4D11-A756-2715F3FE459E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61A4C8F3-F5FF-4789-9112-0005492A8D8A}
+	EndGlobalSection
+EndGlobal
