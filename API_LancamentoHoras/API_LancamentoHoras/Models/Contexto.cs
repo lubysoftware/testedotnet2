@@ -16,13 +16,13 @@ namespace API_LancamentoHoras.Models
         public DbSet<LancamentoHoras> LancamentoHoras { get; set; }
         public DbSet<Projeto> Projeto { get; set; }
         public DbSet<Desenvolvedor> Desenvolvedor { get; set; }
-        public DbSet<ProjetoDesenvolvedor> ProjetoDesenvolvedor { get; set; }
+        public DbSet<DesenvolvedorProjeto> ProjetoDesenvolvedor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProjetoDesenvolvedor>(entity =>
+            modelBuilder.Entity<DesenvolvedorProjeto>(entity =>
             {
-                entity.HasKey(e => new { e.ProjetoId, e.DesenvolvedorId });
+                entity.HasKey(e => new { e.ProjetoId, e.DesenvolvedorId }); //Duas chaves compostas (muitos para muitos)
             });
 
             modelBuilder.Entity<Desenvolvedor>()
@@ -50,13 +50,13 @@ namespace API_LancamentoHoras.Models
                     new LancamentoHoras(5,DateTime.Parse("2021-03-02"),DateTime.Parse("2021-08-20"),3,1),
                 });
 
-            modelBuilder.Entity<ProjetoDesenvolvedor>()
-                .HasData(new List<ProjetoDesenvolvedor>(){
-                    new ProjetoDesenvolvedor(4,3),
-                    new ProjetoDesenvolvedor(2,1),
-                    new ProjetoDesenvolvedor(5,2),
-                    new ProjetoDesenvolvedor(1,2),
-                    new ProjetoDesenvolvedor(3,1),
+            modelBuilder.Entity<DesenvolvedorProjeto>()
+                .HasData(new List<DesenvolvedorProjeto>(){
+                    new DesenvolvedorProjeto(4,3),
+                    new DesenvolvedorProjeto(2,1),
+                    new DesenvolvedorProjeto(5,2),
+                    new DesenvolvedorProjeto(1,2),
+                    new DesenvolvedorProjeto(3,1),
                 });
         }
     }

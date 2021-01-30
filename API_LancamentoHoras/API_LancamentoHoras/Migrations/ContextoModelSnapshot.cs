@@ -69,6 +69,48 @@ namespace API_LancamentoHoras.Migrations
                         });
                 });
 
+            modelBuilder.Entity("API_LancamentoHoras.Models.DesenvolvedorProjeto", b =>
+                {
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DesenvolvedorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjetoId", "DesenvolvedorId");
+
+                    b.HasIndex("DesenvolvedorId");
+
+                    b.ToTable("ProjetoDesenvolvedor");
+
+                    b.HasData(
+                        new
+                        {
+                            ProjetoId = 3,
+                            DesenvolvedorId = 4
+                        },
+                        new
+                        {
+                            ProjetoId = 1,
+                            DesenvolvedorId = 2
+                        },
+                        new
+                        {
+                            ProjetoId = 2,
+                            DesenvolvedorId = 5
+                        },
+                        new
+                        {
+                            ProjetoId = 2,
+                            DesenvolvedorId = 1
+                        },
+                        new
+                        {
+                            ProjetoId = 1,
+                            DesenvolvedorId = 3
+                        });
+                });
+
             modelBuilder.Entity("API_LancamentoHoras.Models.LancamentoHoras", b =>
                 {
                     b.Property<int>("Id")
@@ -171,46 +213,23 @@ namespace API_LancamentoHoras.Migrations
                         });
                 });
 
-            modelBuilder.Entity("API_LancamentoHoras.Models.ProjetoDesenvolvedor", b =>
+            modelBuilder.Entity("API_LancamentoHoras.Models.DesenvolvedorProjeto", b =>
                 {
-                    b.Property<int>("ProjetoId")
-                        .HasColumnType("int");
+                    b.HasOne("API_LancamentoHoras.Models.Desenvolvedor", "Desenvolvedor")
+                        .WithMany("ProjetosDesenvolvedores")
+                        .HasForeignKey("DesenvolvedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("DesenvolvedorId")
-                        .HasColumnType("int");
+                    b.HasOne("API_LancamentoHoras.Models.Projeto", "Projeto")
+                        .WithMany("ProjetosDesenvolvedores")
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("ProjetoId", "DesenvolvedorId");
+                    b.Navigation("Desenvolvedor");
 
-                    b.HasIndex("DesenvolvedorId");
-
-                    b.ToTable("ProjetoDesenvolvedor");
-
-                    b.HasData(
-                        new
-                        {
-                            ProjetoId = 3,
-                            DesenvolvedorId = 4
-                        },
-                        new
-                        {
-                            ProjetoId = 1,
-                            DesenvolvedorId = 2
-                        },
-                        new
-                        {
-                            ProjetoId = 2,
-                            DesenvolvedorId = 5
-                        },
-                        new
-                        {
-                            ProjetoId = 2,
-                            DesenvolvedorId = 1
-                        },
-                        new
-                        {
-                            ProjetoId = 1,
-                            DesenvolvedorId = 3
-                        });
+                    b.Navigation("Projeto");
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.LancamentoHoras", b =>
@@ -223,25 +242,6 @@ namespace API_LancamentoHoras.Migrations
 
                     b.HasOne("API_LancamentoHoras.Models.Projeto", "Projeto")
                         .WithMany("LancamentosHoras")
-                        .HasForeignKey("ProjetoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Desenvolvedor");
-
-                    b.Navigation("Projeto");
-                });
-
-            modelBuilder.Entity("API_LancamentoHoras.Models.ProjetoDesenvolvedor", b =>
-                {
-                    b.HasOne("API_LancamentoHoras.Models.Desenvolvedor", "Desenvolvedor")
-                        .WithMany("ProjetosDesenvolvedores")
-                        .HasForeignKey("DesenvolvedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_LancamentoHoras.Models.Projeto", "Projeto")
-                        .WithMany("ProjetosDesenvolvedores")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

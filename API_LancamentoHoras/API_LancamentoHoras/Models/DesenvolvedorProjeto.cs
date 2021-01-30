@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API_LancamentoHoras.Models
 {
-    public class ProjetoDesenvolvedor
+    public class DesenvolvedorProjeto
     {
         public int DesenvolvedorId { get; set; }
         public int ProjetoId { get; set; }
@@ -13,7 +13,9 @@ namespace API_LancamentoHoras.Models
         public virtual Desenvolvedor Desenvolvedor { get; set; }
         public virtual Projeto Projeto { get; set; }
 
-        public ProjetoDesenvolvedor(int DesenvolvedorId, int ProjetoId)
+        public DesenvolvedorProjeto() { }
+
+        public DesenvolvedorProjeto(int DesenvolvedorId, int ProjetoId)
         {
             this.DesenvolvedorId = DesenvolvedorId;
             this.ProjetoId = ProjetoId;
