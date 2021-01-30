@@ -22,16 +22,16 @@ namespace API_LancamentoHoras.Controllers
 
         // GET: api/LancamentoHoras
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LancamentoHoras>>> GetLancamentoHorass()
+        public async Task<ActionResult<IEnumerable<LancamentoHoras>>> GetLancamentoHoras()
         {
-            return await _context.LancamentoHorass.ToListAsync();
+            return await _context.LancamentoHoras.ToListAsync();
         }
 
         // GET: api/LancamentoHoras/5
         [HttpGet("{id}")]
         public async Task<ActionResult<LancamentoHoras>> GetLancamentoHoras(int id)
         {
-            var lancamentoHoras = await _context.LancamentoHorass.FindAsync(id);
+            var lancamentoHoras = await _context.LancamentoHoras.FindAsync(id);
 
             if (lancamentoHoras == null)
             {
@@ -77,7 +77,7 @@ namespace API_LancamentoHoras.Controllers
         [HttpPost]
         public async Task<ActionResult<LancamentoHoras>> PostLancamentoHoras(LancamentoHoras lancamentoHoras)
         {
-            _context.LancamentoHorass.Add(lancamentoHoras);
+            _context.LancamentoHoras.Add(lancamentoHoras);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetLancamentoHoras", new { id = lancamentoHoras.Id }, lancamentoHoras);
@@ -87,13 +87,13 @@ namespace API_LancamentoHoras.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLancamentoHoras(int id)
         {
-            var lancamentoHoras = await _context.LancamentoHorass.FindAsync(id);
+            var lancamentoHoras = await _context.LancamentoHoras.FindAsync(id);
             if (lancamentoHoras == null)
             {
                 return NotFound();
             }
 
-            _context.LancamentoHorass.Remove(lancamentoHoras);
+            _context.LancamentoHoras.Remove(lancamentoHoras);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -101,7 +101,7 @@ namespace API_LancamentoHoras.Controllers
 
         private bool LancamentoHorasExists(int id)
         {
-            return _context.LancamentoHorass.Any(e => e.Id == id);
+            return _context.LancamentoHoras.Any(e => e.Id == id);
         }
     }
 }

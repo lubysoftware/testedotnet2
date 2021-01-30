@@ -13,7 +13,17 @@ namespace API_LancamentoHoras.Models
         {
         }
 
-        public DbSet<LancamentoHoras> LancamentoHorass { get; set; }
-        public DbSet<Projeto> Projetos { get; set; }
+        public DbSet<LancamentoHoras> LancamentoHoras { get; set; }
+        public DbSet<Projeto> Projeto { get; set; }
+        public DbSet<Desenvolvedor> Desenvolvedor { get; set; }
+        public DbSet<ProjetoDesenvolvedor> ProjetoDesenvolvedor { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProjetoDesenvolvedor>(entity =>
+            {
+                entity.HasKey(e => new { e.ProjetoId, e.DesenvolvedorId });
+            });
+        }
     }
 }

@@ -10,6 +10,10 @@ namespace API_LancamentoHoras.Models
         public int Id { get; set; }
         public DateTime DataInicial { get; set; }
         public DateTime DataFinal { get; set; }
-        public string Desenvolvedor { get; set; }
+        public int DesenvolvedorId { get; set; }
+        public int ProjetoId { get; set; }
+
+        public Desenvolvedor Desenvolvedor { get; set; }
+        public Projeto Projeto { get; set; }
     }
 }

@@ -11,47 +11,47 @@ namespace API_LancamentoHoras.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjetosController : ControllerBase
+    public class DesenvolvedorController : ControllerBase
     {
         private readonly Contexto _context;
 
-        public ProjetosController(Contexto context)
+        public DesenvolvedorController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: api/Projetos
+        // GET: api/Desenvolvedor
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Projeto>>> GetProjetos()
+        public async Task<ActionResult<IEnumerable<Desenvolvedor>>> GetDesenvolvedor()
         {
-            return await _context.Projetos.ToListAsync();
+            return await _context.Desenvolvedor.ToListAsync();
         }
 
-        // GET: api/Projetos/5
+        // GET: api/Desenvolvedor/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Projeto>> GetProjeto(int id)
+        public async Task<ActionResult<Desenvolvedor>> GetDesenvolvedor(int id)
         {
-            var projeto = await _context.Projetos.FindAsync(id);
+            var desenvolvedor = await _context.Desenvolvedor.FindAsync(id);
 
-            if (projeto == null)
+            if (desenvolvedor == null)
             {
                 return NotFound();
             }
 
-            return projeto;
+            return desenvolvedor;
         }
 
-        // PUT: api/Projetos/5
+        // PUT: api/Desenvolvedor/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProjeto(int id, Projeto projeto)
+        public async Task<IActionResult> PutDesenvolvedor(int id, Desenvolvedor desenvolvedor)
         {
-            if (id != projeto.Id)
+            if (id != desenvolvedor.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(projeto).State = EntityState.Modified;
+            _context.Entry(desenvolvedor).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace API_LancamentoHoras.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjetoExists(id))
+                if (!DesenvolvedorExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace API_LancamentoHoras.Controllers
             return NoContent();
         }
 
-        // POST: api/Projetos
+        // POST: api/Desenvolvedor
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Projeto>> PostProjeto(Projeto projeto)
+        public async Task<ActionResult<Desenvolvedor>> PostDesenvolvedor(Desenvolvedor desenvolvedor)
         {
-            _context.Projetos.Add(projeto);
+            _context.Desenvolvedor.Add(desenvolvedor);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProjeto", new { id = projeto.Id }, projeto);
+            return CreatedAtAction("GetDesenvolvedor", new { id = desenvolvedor.Id }, desenvolvedor);
         }
 
-        // DELETE: api/Projetos/5
+        // DELETE: api/Desenvolvedor/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProjeto(int id)
+        public async Task<IActionResult> DeleteDesenvolvedor(int id)
         {
-            var projeto = await _context.Projetos.FindAsync(id);
-            if (projeto == null)
+            var desenvolvedor = await _context.Desenvolvedor.FindAsync(id);
+            if (desenvolvedor == null)
             {
                 return NotFound();
             }
 
-            _context.Projetos.Remove(projeto);
+            _context.Desenvolvedor.Remove(desenvolvedor);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProjetoExists(int id)
+        private bool DesenvolvedorExists(int id)
         {
-            return _context.Projetos.Any(e => e.Id == id);
+            return _context.Desenvolvedor.Any(e => e.Id == id);
         }
     }
 }
