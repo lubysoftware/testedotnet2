@@ -13,7 +13,16 @@ namespace API_LancamentoHoras.Models
         public int DesenvolvedorId { get; set; }
         public int ProjetoId { get; set; }
 
-        public Desenvolvedor Desenvolvedor { get; set; }
-        public Projeto Projeto { get; set; }
+        public virtual Desenvolvedor Desenvolvedor { get; set; }
+        public virtual Projeto Projeto { get; set; }
+
+        public LancamentoHoras(int Id, DateTime DataInicial, DateTime DataFinal, int DesenvolvedorId, int ProjetoId)
+        {
+            this.Id = Id;
+            this.DataInicial = DataInicial;
+            this.DataFinal = DataFinal;
+            this.DesenvolvedorId = DesenvolvedorId;
+            this.ProjetoId = ProjetoId;
+        }
     }
 }

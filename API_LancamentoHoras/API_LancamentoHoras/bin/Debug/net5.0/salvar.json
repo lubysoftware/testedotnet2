@@ -1,0 +1,18 @@
+[
+  //Lançamento Hora
+  {
+    "DataInicial": "2019-03-25",
+    "DataFinal": "2020-12-05",
+    "DesenvolvedorId": 1,
+    "ProjetoId": 1
+  },
+  //Desenvolvedor
+  {
+    "nome": "Daniele Almeida da Silva",
+    "cpf": "15485615812"
+  },
+  //Projeto
+  {
+    "descricao": "Segundo"
+  }
+]

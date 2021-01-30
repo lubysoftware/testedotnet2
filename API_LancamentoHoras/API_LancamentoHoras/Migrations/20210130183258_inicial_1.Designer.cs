@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_LancamentoHoras.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210130015745_Inicial_1")]
-    partial class Inicial_1
+    [Migration("20210130183258_inicial_1")]
+    partial class inicial_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,38 @@ namespace API_LancamentoHoras.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Desenvolvedor");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cpf = "15648548545",
+                            Nome = "Lauro"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cpf = "94851451545",
+                            Nome = "Roberto"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Cpf = "45180084610",
+                            Nome = "Ronaldo"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Cpf = "00451104001",
+                            Nome = "Rodrigo"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Cpf = "74050048122",
+                            Nome = "Alexandre"
+                        });
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.LancamentoHoras", b =>
@@ -65,6 +97,48 @@ namespace API_LancamentoHoras.Migrations
                     b.HasIndex("ProjetoId");
 
                     b.ToTable("LancamentoHoras");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DataFinal = new DateTime(2018, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2018, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 4,
+                            ProjetoId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DataFinal = new DateTime(2019, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2019, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 2,
+                            ProjetoId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DataFinal = new DateTime(2020, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2020, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 5,
+                            ProjetoId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DataFinal = new DateTime(2020, 9, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 1,
+                            ProjetoId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DataFinal = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 3,
+                            ProjetoId = 1
+                        });
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.Projeto", b =>
@@ -80,6 +154,23 @@ namespace API_LancamentoHoras.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projeto");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Agendamento e Horas"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Bar e Mercadinhos"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "Empresa"
+                        });
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.ProjetoDesenvolvedor", b =>
@@ -95,6 +186,33 @@ namespace API_LancamentoHoras.Migrations
                     b.HasIndex("DesenvolvedorId");
 
                     b.ToTable("ProjetoDesenvolvedor");
+
+                    b.HasData(
+                        new
+                        {
+                            ProjetoId = 3,
+                            DesenvolvedorId = 4
+                        },
+                        new
+                        {
+                            ProjetoId = 1,
+                            DesenvolvedorId = 2
+                        },
+                        new
+                        {
+                            ProjetoId = 2,
+                            DesenvolvedorId = 5
+                        },
+                        new
+                        {
+                            ProjetoId = 2,
+                            DesenvolvedorId = 1
+                        },
+                        new
+                        {
+                            ProjetoId = 1,
+                            DesenvolvedorId = 3
+                        });
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.LancamentoHoras", b =>
