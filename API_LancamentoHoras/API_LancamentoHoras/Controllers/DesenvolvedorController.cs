@@ -33,18 +33,21 @@ namespace API_LancamentoHoras.Controllers
         {
             var desenvolvedor = await _context.Desenvolvedor.FindAsync(id);
 
-            //IQueryable<Desenvolvedor> query = _context.Desenvolvedor;
-            //query = query.Include(p => p.ProjetosDesenvolvedores);
-
-            //query = query.AsNoTracking().OrderBy(a => a.Id).Where(a => a.Id == id);
-
             if (desenvolvedor == null)
             {
                 return NotFound();
             }
 
-            //return  await query.FirstOrDefaultAsync();
             return desenvolvedor;
+
+            //IQueryable<Desenvolvedor> query = _context.Desenvolvedor;
+            //query = query.Include(p => p.ProjetosDesenvolvedores);
+
+            //query = query.AsNoTracking().OrderBy(a => a.Id).Where(a => a.Id == id);
+
+
+
+            //return  await query.FirstOrDefaultAsync();
         }
 
         // PUT: api/Desenvolvedor/5
