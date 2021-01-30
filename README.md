@@ -44,5 +44,5 @@ Desenvolver um serviço que seja capaz de gerar um lançamento de horas.
 - Criar um client WEB para consumir essa API 
 
 #### Identificação:
-Nome: <br/>
-E-mail: 
+Nome: Danilo Souza Frazão<br/>
+E-mail: danilo_frazao@outlook.com
