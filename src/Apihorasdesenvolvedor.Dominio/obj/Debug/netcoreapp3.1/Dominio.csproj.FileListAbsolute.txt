@@ -1,0 +1,9 @@
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\bin\Debug\netcoreapp3.1\Dominio.deps.json
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\bin\Debug\netcoreapp3.1\Dominio.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\bin\Debug\netcoreapp3.1\Dominio.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\obj\Debug\netcoreapp3.1\Dominio.csprojAssemblyReference.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\obj\Debug\netcoreapp3.1\Dominio.AssemblyInfoInputs.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\obj\Debug\netcoreapp3.1\Dominio.AssemblyInfo.cs
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\obj\Debug\netcoreapp3.1\Dominio.csproj.CoreCompileInputs.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\obj\Debug\netcoreapp3.1\Dominio.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Dominio\obj\Debug\netcoreapp3.1\Dominio.pdb
