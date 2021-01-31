@@ -1,0 +1,14 @@
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Servico.deps.json
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Servico.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Servico.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Dados.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Dominio.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Dominio.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\bin\Debug\netcoreapp3.1\Dados.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.csprojAssemblyReference.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.AssemblyInfoInputs.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.AssemblyInfo.cs
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.csproj.CoreCompileInputs.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.csproj.CopyComplete
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.Servico\obj\Debug\netcoreapp3.1\Servico.pdb

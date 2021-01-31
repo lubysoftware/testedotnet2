@@ -1,0 +1,16 @@
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\CamadaPareada.deps.json
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\CamadaPareada.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\CamadaPareada.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\Dados.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\Dominio.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\Servico.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\Dominio.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\Servico.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\bin\Debug\netcoreapp3.1\Dados.pdb
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.csprojAssemblyReference.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.AssemblyInfoInputs.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.AssemblyInfo.cs
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.csproj.CoreCompileInputs.cache
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.csproj.CopyComplete
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.dll
+C:\Luby\Projeto\src\API_HorasDesenvolvedor\src\Apihorasdesenvolvedor.CamadaPareada\obj\Debug\netcoreapp3.1\CamadaPareada.pdb
