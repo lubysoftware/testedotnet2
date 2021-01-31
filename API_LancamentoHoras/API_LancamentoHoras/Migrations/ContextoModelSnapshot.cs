@@ -216,13 +216,13 @@ namespace API_LancamentoHoras.Migrations
             modelBuilder.Entity("API_LancamentoHoras.Models.DesenvolvedorProjeto", b =>
                 {
                     b.HasOne("API_LancamentoHoras.Models.Desenvolvedor", "Desenvolvedor")
-                        .WithMany("ProjetosDesenvolvedores")
+                        .WithMany("DesenvolvedoresProjetos")
                         .HasForeignKey("DesenvolvedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API_LancamentoHoras.Models.Projeto", "Projeto")
-                        .WithMany("ProjetosDesenvolvedores")
+                        .WithMany("DesenvolvedoresProjetos")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -253,16 +253,16 @@ namespace API_LancamentoHoras.Migrations
 
             modelBuilder.Entity("API_LancamentoHoras.Models.Desenvolvedor", b =>
                 {
-                    b.Navigation("LancamentosHoras");
+                    b.Navigation("DesenvolvedoresProjetos");
 
-                    b.Navigation("ProjetosDesenvolvedores");
+                    b.Navigation("LancamentosHoras");
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.Projeto", b =>
                 {
-                    b.Navigation("LancamentosHoras");
+                    b.Navigation("DesenvolvedoresProjetos");
 
-                    b.Navigation("ProjetosDesenvolvedores");
+                    b.Navigation("LancamentosHoras");
                 });
 #pragma warning restore 612, 618
         }

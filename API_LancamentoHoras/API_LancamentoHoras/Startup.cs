@@ -30,7 +30,8 @@ namespace API_LancamentoHoras
         {
             //services.AddDbContext<Contexto>(opt => opt.UseInMemoryDatabase("Lista"));
             services.AddDbContext<Contexto>(options => options.UseSqlServer(Configuration.GetConnectionString("StringDeConexao")));
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_LancamentoHoras", Version = "v1" });

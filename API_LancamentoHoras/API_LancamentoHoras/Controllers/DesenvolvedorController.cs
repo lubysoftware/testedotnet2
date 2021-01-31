@@ -31,7 +31,12 @@ namespace API_LancamentoHoras.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Desenvolvedor>> GetDesenvolvedor(int id)
         {
-            var desenvolvedor = await _context.Desenvolvedor.FindAsync(id);
+            IQueryable<Desenvolvedor> query = _context.Desenvolvedor;
+            query = query.Include(p => p.DesenvolvedoresProjetos);
+            query = query.Include(p => p.LancamentosHoras);
+            query = query.Where(a => a.Id == id);
+
+            var desenvolvedor = await query.AsNoTracking().OrderBy(q => q.Id).FirstOrDefaultAsync();
 
             if (desenvolvedor == null)
             {
@@ -39,15 +44,6 @@ namespace API_LancamentoHoras.Controllers
             }
 
             return desenvolvedor;
-
-            //IQueryable<Desenvolvedor> query = _context.Desenvolvedor;
-            //query = query.Include(p => p.ProjetosDesenvolvedores);
-
-            //query = query.AsNoTracking().OrderBy(a => a.Id).Where(a => a.Id == id);
-
-
-
-            //return  await query.FirstOrDefaultAsync();
         }
 
         // PUT: api/Desenvolvedor/5

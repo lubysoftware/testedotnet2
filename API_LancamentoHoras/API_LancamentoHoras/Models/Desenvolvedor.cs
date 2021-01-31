@@ -11,8 +11,8 @@ namespace API_LancamentoHoras.Models
         public string Nome { get; set; }
         public string Cpf { get; set; }
 
-        public virtual ICollection<LancamentoHoras> LancamentosHoras { get; set; }
-        public virtual ICollection<DesenvolvedorProjeto> ProjetosDesenvolvedores { get; set; }
+        public virtual IEnumerable<LancamentoHoras> LancamentosHoras { get; set; }
+        public virtual IEnumerable<DesenvolvedorProjeto> DesenvolvedoresProjetos { get; set; }
 
         public Desenvolvedor() { }
 

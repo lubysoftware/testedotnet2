@@ -31,7 +31,12 @@ namespace API_LancamentoHoras.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<LancamentoHoras>> GetLancamentoHoras(int id)
         {
-            var lancamentoHoras = await _context.LancamentoHoras.FindAsync(id);
+            IQueryable<LancamentoHoras> query = _context.LancamentoHoras;
+            query = query.Include(p => p.Desenvolvedor);
+            query = query.Include(p => p.Projeto);
+            query = query.Where(a => a.Id == id);
+
+            var lancamentoHoras = await query.FirstOrDefaultAsync();
 
             if (lancamentoHoras == null)
             {

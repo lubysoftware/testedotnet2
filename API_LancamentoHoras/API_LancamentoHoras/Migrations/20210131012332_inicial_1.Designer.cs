@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_LancamentoHoras.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210130185714_inicial_1")]
+    [Migration("20210131012332_inicial_1")]
     partial class inicial_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,13 +218,13 @@ namespace API_LancamentoHoras.Migrations
             modelBuilder.Entity("API_LancamentoHoras.Models.DesenvolvedorProjeto", b =>
                 {
                     b.HasOne("API_LancamentoHoras.Models.Desenvolvedor", "Desenvolvedor")
-                        .WithMany("ProjetosDesenvolvedores")
+                        .WithMany("DesenvolvedoresProjetos")
                         .HasForeignKey("DesenvolvedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API_LancamentoHoras.Models.Projeto", "Projeto")
-                        .WithMany("ProjetosDesenvolvedores")
+                        .WithMany("DesenvolvedoresProjetos")
                         .HasForeignKey("ProjetoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -255,16 +255,16 @@ namespace API_LancamentoHoras.Migrations
 
             modelBuilder.Entity("API_LancamentoHoras.Models.Desenvolvedor", b =>
                 {
-                    b.Navigation("LancamentosHoras");
+                    b.Navigation("DesenvolvedoresProjetos");
 
-                    b.Navigation("ProjetosDesenvolvedores");
+                    b.Navigation("LancamentosHoras");
                 });
 
             modelBuilder.Entity("API_LancamentoHoras.Models.Projeto", b =>
                 {
-                    b.Navigation("LancamentosHoras");
+                    b.Navigation("DesenvolvedoresProjetos");
 
-                    b.Navigation("ProjetosDesenvolvedores");
+                    b.Navigation("LancamentosHoras");
                 });
 #pragma warning restore 612, 618
         }

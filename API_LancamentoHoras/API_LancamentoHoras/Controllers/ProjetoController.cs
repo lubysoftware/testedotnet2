@@ -31,7 +31,12 @@ namespace API_LancamentoHoras.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Projeto>> GetProjeto(int id)
         {
-            var projeto = await _context.Projeto.FindAsync(id);
+            IQueryable<Projeto> query = _context.Projeto;
+            query = query.Include(p => p.LancamentosHoras);
+            query = query.Include(p => p.DesenvolvedoresProjetos);
+            query = query.Where(a => a.Id == id);
+
+            var projeto = await query.FirstOrDefaultAsync();
 
             if (projeto == null)
             {
