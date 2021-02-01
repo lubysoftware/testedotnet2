@@ -58,7 +58,7 @@ namespace API_LancamentoHoras.Controllers
 
             if(desenvolvedorProjeto == null)
             {
-                return NotFound("O projeto não está vinculado ao desenvolvedor");
+                return Ok("O projeto não está vinculado ao desenvolvedor");
             }
 
             _context.LancamentoHoras.Add(lancamentoHoras);

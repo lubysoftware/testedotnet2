@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_LancamentoHoras.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210131235649_inicial_1")]
-    partial class inicial_1
+    [Migration("20210201002425_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

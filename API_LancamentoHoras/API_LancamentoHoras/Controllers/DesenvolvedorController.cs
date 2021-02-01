@@ -20,56 +20,94 @@ namespace API_LancamentoHoras.Controllers
             _context = context;
         }
 
+        [HttpGet("ValidacaoCPF/{cpf}")]
+        public IActionResult ValidacaoCPF(string cpf)
+        {
+            try
+            {
+                if (ValidarCPF(cpf))
+                    return Ok(new Validacao("Autorizado"));
+                else
+                    return Ok(new Validacao("Negado"));
+            }
+            catch (Exception)
+            {
+                return Ok("Erro na validação do CPF");
+            }
+        }
+
         // GET: api/Ranking
         [HttpGet("Ranking")]
         public async Task<ActionResult<IEnumerable<DesenvolvedorRanking>>> GetRanking()
         {
-            Semana semana = new Semana(DateTime.Now);
-
-            List<DesenvolvedorRanking> desenvolvedorRankings = new List<DesenvolvedorRanking>();
-
-            var query = await _context.LancamentoHoras
-                .Include(p => p.Desenvolvedor)
-                .Where(x => x.DataInicial >= semana.Inicial && x.DataFinal <= semana.Final).ToListAsync();
-
-            foreach (var item in query.GroupBy(x => x.Desenvolvedor))
+            try
             {
-                desenvolvedorRankings.Add(
-                    new DesenvolvedorRanking(
-                        item.Key.Id, 
-                        item.Key.Nome, 
-                        SomaHoras(query.Where(x => x.DesenvolvedorId == item.Key.Id).ToList())
-                    )
-                );
-            };
+                Semana semana = new Semana(DateTime.Now);
 
-            return desenvolvedorRankings.OrderByDescending(x => x.HorasSoma).Take(5).ToList();
+                List<DesenvolvedorRanking> desenvolvedorRankings = new List<DesenvolvedorRanking>();
+
+                var query = await _context.LancamentoHoras
+                    .Include(p => p.Desenvolvedor)
+                    .Where(x => x.DataInicial >= semana.Inicial && x.DataFinal <= semana.Final).ToListAsync();
+
+                foreach (var item in query.GroupBy(x => x.Desenvolvedor))
+                {
+                    desenvolvedorRankings.Add(
+                        new DesenvolvedorRanking(
+                            item.Key.Id,
+                            item.Key.Nome,
+                            SomaHoras(query.Where(x => x.DesenvolvedorId == item.Key.Id).ToList())
+                        )
+                    );
+                };
+
+                return desenvolvedorRankings.OrderByDescending(x => x.HorasSoma).Take(5).ToList();
+            }
+            catch (Exception)
+            {
+                return Ok("Erro ao obter o ranking dos desenvolvedores");
+            }
         }
 
         // GET: api/Desenvolvedor
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Desenvolvedor>>> GetDesenvolvedor()
         {
-            return await _context.Desenvolvedor.ToListAsync();
+            try
+            {
+                return await _context.Desenvolvedor.ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                return Ok("Erro ao obter a lista de desenvolvedores");
+            }
         }
 
         // GET: api/Desenvolvedor/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Desenvolvedor>> GetDesenvolvedor(int id)
         {
-            IQueryable<Desenvolvedor> query = _context.Desenvolvedor;
-            query = query.Include(p => p.DesenvolvedoresProjetos);
-            query = query.Include(p => p.LancamentosHoras);
-            query = query.Where(a => a.Id == id);
-
-            var desenvolvedor = await query.AsNoTracking().OrderBy(q => q.Id).FirstOrDefaultAsync();
-
-            if (desenvolvedor == null)
+            try
             {
-                return NotFound();
-            }
+                IQueryable<Desenvolvedor> query = _context.Desenvolvedor;
+                query = query.Include(p => p.DesenvolvedoresProjetos);
+                query = query.Include(p => p.LancamentosHoras);
+                query = query.Where(a => a.Id == id);
 
-            return desenvolvedor;
+                var desenvolvedor = await query.AsNoTracking().OrderBy(q => q.Id).FirstOrDefaultAsync();
+
+                if (desenvolvedor == null)
+                {
+                    return NotFound();
+                }
+
+                return desenvolvedor;
+            }
+            catch (Exception)
+            {
+                return Ok("Erro ao obter os dados do desenvolvedor");
+            }            
         }
 
         // PUT: api/Desenvolvedor/5
@@ -146,6 +184,42 @@ namespace API_LancamentoHoras.Controllers
             }
 
             return soma;
+        }
+
+        private static bool ValidarCPF(string cpf)
+        {
+            int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            string tempCpf;
+            string digito;
+            int soma;
+            int resto;
+            cpf = cpf.Trim();
+            cpf = cpf.Replace(".", "").Replace("-", "");
+            if (cpf.Length != 11)
+                return false;
+            tempCpf = cpf.Substring(0, 9);
+            soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = resto.ToString();
+            tempCpf = tempCpf + digito;
+            soma = 0;
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = digito + resto.ToString();
+            return cpf.EndsWith(digito);
         }
     }
 
