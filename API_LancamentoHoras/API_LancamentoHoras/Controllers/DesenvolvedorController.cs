@@ -20,6 +20,32 @@ namespace API_LancamentoHoras.Controllers
             _context = context;
         }
 
+        // GET: api/Ranking
+        [HttpGet("Ranking")]
+        public async Task<ActionResult<IEnumerable<DesenvolvedorRanking>>> GetRanking()
+        {
+            Semana semana = new Semana(DateTime.Now);
+
+            List<DesenvolvedorRanking> desenvolvedorRankings = new List<DesenvolvedorRanking>();
+
+            var query = await _context.LancamentoHoras
+                .Include(p => p.Desenvolvedor)
+                .Where(x => x.DataInicial >= semana.Inicial && x.DataFinal <= semana.Final).ToListAsync();
+
+            foreach (var item in query.GroupBy(x => x.Desenvolvedor))
+            {
+                desenvolvedorRankings.Add(
+                    new DesenvolvedorRanking(
+                        item.Key.Id, 
+                        item.Key.Nome, 
+                        SomaHoras(query.Where(x => x.DesenvolvedorId == item.Key.Id).ToList())
+                    )
+                );
+            };
+
+            return desenvolvedorRankings.OrderByDescending(x => x.HorasSoma).Take(5).ToList();
+        }
+
         // GET: api/Desenvolvedor
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Desenvolvedor>>> GetDesenvolvedor()
@@ -53,7 +79,7 @@ namespace API_LancamentoHoras.Controllers
         {
             if (id != desenvolvedor.Id)
             {
-                return BadRequest();
+                return BadRequest("");
             }
 
             _context.Entry(desenvolvedor).State = EntityState.Modified;
@@ -107,6 +133,36 @@ namespace API_LancamentoHoras.Controllers
         private bool DesenvolvedorExists(int id)
         {
             return _context.Desenvolvedor.Any(e => e.Id == id);
+        }
+
+        private static TimeSpan SomaHoras(ICollection<LancamentoHoras> lancamentoHoras)
+        {
+            TimeSpan soma = new TimeSpan();
+
+            foreach (var item in lancamentoHoras)
+            {
+                TimeSpan sub = item.DataFinal - item.DataInicial;
+                soma = soma + sub;
+            }
+
+            return soma;
+        }
+    }
+
+    public class Semana
+    {
+        public DateTime Inicial { get; set; }
+        public DateTime Final { get; set; }
+
+        public Semana(DateTime Data)
+        {
+            int DiaSemana = (int)Data.DayOfWeek;
+
+            DateTime ini = Data.AddDays(-DiaSemana);
+            DateTime fim = Data.AddDays(6 - DiaSemana);
+
+            this.Inicial = new DateTime(ini.Year, ini.Month, ini.Day, 0, 0, 0);
+            this.Final = new DateTime(fim.Year, fim.Month, fim.Day, 23, 59, 59);
         }
     }
 }

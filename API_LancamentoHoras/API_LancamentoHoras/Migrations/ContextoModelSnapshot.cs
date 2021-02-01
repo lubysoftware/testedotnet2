@@ -81,7 +81,7 @@ namespace API_LancamentoHoras.Migrations
 
                     b.HasIndex("DesenvolvedorId");
 
-                    b.ToTable("ProjetoDesenvolvedor");
+                    b.ToTable("DesenvolvedorProjeto");
 
                     b.HasData(
                         new
@@ -108,6 +108,11 @@ namespace API_LancamentoHoras.Migrations
                         {
                             ProjetoId = 1,
                             DesenvolvedorId = 3
+                        },
+                        new
+                        {
+                            ProjetoId = 1,
+                            DesenvolvedorId = 1
                         });
                 });
 
@@ -142,42 +147,74 @@ namespace API_LancamentoHoras.Migrations
                         new
                         {
                             Id = 1,
-                            DataFinal = new DateTime(2018, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2018, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 1, 29, 14, 50, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 29, 13, 25, 50, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 4,
                             ProjetoId = 3
                         },
                         new
                         {
                             Id = 2,
-                            DataFinal = new DateTime(2019, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2019, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DesenvolvedorId = 2,
-                            ProjetoId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DataFinal = new DateTime(2020, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2020, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 1, 29, 15, 20, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 29, 13, 20, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 5,
                             ProjetoId = 2
                         },
                         new
                         {
+                            Id = 3,
+                            DataFinal = new DateTime(2021, 1, 30, 10, 25, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 30, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 2,
+                            ProjetoId = 1
+                        },
+                        new
+                        {
                             Id = 4,
-                            DataFinal = new DateTime(2020, 9, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DesenvolvedorId = 1,
+                            DataFinal = new DateTime(2021, 1, 31, 18, 50, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 31, 14, 30, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 5,
                             ProjetoId = 2
                         },
                         new
                         {
                             Id = 5,
-                            DataFinal = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 1, 31, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 31, 10, 15, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 1,
+                            ProjetoId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DataFinal = new DateTime(2021, 2, 1, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 1, 8, 10, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 3,
                             ProjetoId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DataFinal = new DateTime(2021, 2, 1, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 1, 18, 10, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 1,
+                            ProjetoId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DataFinal = new DateTime(2021, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 2, 18, 10, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 1,
+                            ProjetoId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DataFinal = new DateTime(2021, 2, 2, 17, 30, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 2, 8, 10, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 5,
+                            ProjetoId = 2
                         });
                 });
 

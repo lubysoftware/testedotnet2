@@ -16,7 +16,7 @@ namespace API_LancamentoHoras.Models
         public DbSet<LancamentoHoras> LancamentoHoras { get; set; }
         public DbSet<Projeto> Projeto { get; set; }
         public DbSet<Desenvolvedor> Desenvolvedor { get; set; }
-        public DbSet<DesenvolvedorProjeto> ProjetoDesenvolvedor { get; set; }
+        public DbSet<DesenvolvedorProjeto> DesenvolvedorProjeto { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,15 +41,6 @@ namespace API_LancamentoHoras.Models
                     new Projeto(3,"Empresa"),
                 });
 
-            modelBuilder.Entity<LancamentoHoras>()
-                .HasData(new List<LancamentoHoras>(){
-                    new LancamentoHoras(1,DateTime.Parse("2018-03-01"),DateTime.Parse("2018-04-03"),4,3),
-                    new LancamentoHoras(2,DateTime.Parse("2019-05-21"),DateTime.Parse("2019-07-01"),2,1),
-                    new LancamentoHoras(3,DateTime.Parse("2020-03-17"),DateTime.Parse("2020-07-14"),5,2),
-                    new LancamentoHoras(4,DateTime.Parse("2020-08-04"),DateTime.Parse("2020-09-29"),1,2),
-                    new LancamentoHoras(5,DateTime.Parse("2021-03-02"),DateTime.Parse("2021-08-20"),3,1),
-                });
-
             modelBuilder.Entity<DesenvolvedorProjeto>()
                 .HasData(new List<DesenvolvedorProjeto>(){
                     new DesenvolvedorProjeto(4,3),
@@ -57,6 +48,26 @@ namespace API_LancamentoHoras.Models
                     new DesenvolvedorProjeto(5,2),
                     new DesenvolvedorProjeto(1,2),
                     new DesenvolvedorProjeto(3,1),
+                    new DesenvolvedorProjeto(1,1),
+                });
+
+            DateTime Hoje = DateTime.Now;
+            DateTime AntesOntem = Hoje.AddDays(-2);
+            DateTime Ontem = Hoje.AddDays(-1);
+            DateTime Amanha = Hoje.AddDays(1);
+            DateTime DepoisAmanha = Hoje.AddDays(2);
+
+            modelBuilder.Entity<LancamentoHoras>()
+                .HasData(new List<LancamentoHoras>(){
+                    new LancamentoHoras(1,new DateTime(AntesOntem.Year, AntesOntem.Month, AntesOntem.Day, 13, 25, 50),new DateTime(AntesOntem.Year, AntesOntem.Month, AntesOntem.Day, 14, 50, 0),4,3),
+                    new LancamentoHoras(2,new DateTime(AntesOntem.Year, AntesOntem.Month, AntesOntem.Day, 13, 20, 0),new DateTime(AntesOntem.Year, AntesOntem.Month, AntesOntem.Day, 15, 20, 0),5,2),
+                    new LancamentoHoras(3,new DateTime(Ontem.Year, Ontem.Month, Ontem.Day, 8, 0, 0),new DateTime(Ontem.Year, Ontem.Month, Ontem.Day, 10, 25, 0),2,1),
+                    new LancamentoHoras(4,new DateTime(Hoje.Year, Hoje.Month, Hoje.Day, 14, 30, 0),new DateTime(Hoje.Year, Hoje.Month, Hoje.Day, 18, 50, 0),5,2),
+                    new LancamentoHoras(5,new DateTime(Hoje.Year, Hoje.Month, Hoje.Day, 10, 15, 0),new DateTime(Hoje.Year, Hoje.Month, Hoje.Day, 15, 0, 0),1,2),
+                    new LancamentoHoras(6,new DateTime(Amanha.Year, Amanha.Month, Amanha.Day, 8, 10, 0),new DateTime(Amanha.Year, Amanha.Month, Amanha.Day, 20, 10, 0),3,1),
+                    new LancamentoHoras(7,new DateTime(Amanha.Year, Amanha.Month, Amanha.Day, 18, 10, 0),new DateTime(Amanha.Year, Amanha.Month, Amanha.Day, 20, 10, 0),1,1),
+                    new LancamentoHoras(8,new DateTime(DepoisAmanha.Year, DepoisAmanha.Month, DepoisAmanha.Day, 18, 10, 0),new DateTime(DepoisAmanha.Year, DepoisAmanha.Month, DepoisAmanha.Day, 20, 10, 0),1,1),
+                    new LancamentoHoras(9,new DateTime(DepoisAmanha.Year, DepoisAmanha.Month, DepoisAmanha.Day, 8, 10, 0),new DateTime(DepoisAmanha.Year, DepoisAmanha.Month, DepoisAmanha.Day, 17, 30, 0),5,2)
                 });
         }
     }

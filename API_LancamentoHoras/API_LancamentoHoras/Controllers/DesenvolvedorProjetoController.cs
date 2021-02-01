@@ -24,14 +24,14 @@ namespace API_LancamentoHoras.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DesenvolvedorProjeto>>> GetProjetoDesenvolvedor()
         {
-            return await _context.ProjetoDesenvolvedor.ToListAsync();
+            return await _context.DesenvolvedorProjeto.ToListAsync();
         }
 
         // GET: api/DesenvolvedorProjeto/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DesenvolvedorProjeto>> GetDesenvolvedorProjeto(int id)
         {
-            var desenvolvedorProjeto = await _context.ProjetoDesenvolvedor.FindAsync(id);
+            var desenvolvedorProjeto = await _context.DesenvolvedorProjeto.FindAsync(id);
 
             if (desenvolvedorProjeto == null)
             {
@@ -41,43 +41,12 @@ namespace API_LancamentoHoras.Controllers
             return desenvolvedorProjeto;
         }
 
-        // PUT: api/DesenvolvedorProjeto/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDesenvolvedorProjeto(int id, DesenvolvedorProjeto desenvolvedorProjeto)
-        {
-            if (id != desenvolvedorProjeto.ProjetoId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(desenvolvedorProjeto).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DesenvolvedorProjetoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/DesenvolvedorProjeto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<DesenvolvedorProjeto>> PostDesenvolvedorProjeto(DesenvolvedorProjeto desenvolvedorProjeto)
         {
-            _context.ProjetoDesenvolvedor.Add(desenvolvedorProjeto);
+            _context.DesenvolvedorProjeto.Add(desenvolvedorProjeto);
             try
             {
                 await _context.SaveChangesAsync();
@@ -101,13 +70,13 @@ namespace API_LancamentoHoras.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDesenvolvedorProjeto(int id)
         {
-            var desenvolvedorProjeto = await _context.ProjetoDesenvolvedor.FindAsync(id);
+            var desenvolvedorProjeto = await _context.DesenvolvedorProjeto.FindAsync(id);
             if (desenvolvedorProjeto == null)
             {
                 return NotFound();
             }
 
-            _context.ProjetoDesenvolvedor.Remove(desenvolvedorProjeto);
+            _context.DesenvolvedorProjeto.Remove(desenvolvedorProjeto);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -115,7 +84,7 @@ namespace API_LancamentoHoras.Controllers
 
         private bool DesenvolvedorProjetoExists(int id)
         {
-            return _context.ProjetoDesenvolvedor.Any(e => e.ProjetoId == id);
+            return _context.DesenvolvedorProjeto.Any(e => e.ProjetoId == id);
         }
     }
 }

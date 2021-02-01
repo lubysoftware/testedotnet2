@@ -46,42 +46,21 @@ namespace API_LancamentoHoras.Controllers
             return lancamentoHoras;
         }
 
-        // PUT: api/LancamentoHoras/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLancamentoHoras(int id, LancamentoHoras lancamentoHoras)
-        {
-            if (id != lancamentoHoras.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(lancamentoHoras).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LancamentoHorasExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/LancamentoHoras
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<LancamentoHoras>> PostLancamentoHoras(LancamentoHoras lancamentoHoras)
         {
+            var desenvolvedorProjeto = _context.DesenvolvedorProjeto
+                .FirstOrDefault(dp =>
+                dp.DesenvolvedorId == lancamentoHoras.DesenvolvedorId &&
+                dp.ProjetoId == lancamentoHoras.ProjetoId);
+
+            if(desenvolvedorProjeto == null)
+            {
+                return NotFound("O projeto não está vinculado ao desenvolvedor");
+            }
+
             _context.LancamentoHoras.Add(lancamentoHoras);
             await _context.SaveChangesAsync();
 

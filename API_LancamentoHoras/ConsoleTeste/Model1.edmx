@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbLancamentoHorasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Desenvolvedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" />
+          <Property Name="Cpf" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DesenvolvedorProjeto">
+          <Key>
+            <PropertyRef Name="DesenvolvedorId" />
+            <PropertyRef Name="ProjetoId" />
+          </Key>
+          <Property Name="DesenvolvedorId" Type="int" Nullable="false" />
+          <Property Name="ProjetoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LancamentoHoras">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataInicial" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DataFinal" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DesenvolvedorId" Type="int" Nullable="false" />
+          <Property Name="ProjetoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projeto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_DesenvolvedorProjeto_Desenvolvedor_DesenvolvedorId">
+          <End Role="Desenvolvedor" Type="Self.Desenvolvedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DesenvolvedorProjeto" Type="Self.DesenvolvedorProjeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Desenvolvedor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DesenvolvedorProjeto">
+              <PropertyRef Name="DesenvolvedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DesenvolvedorProjeto_Projeto_ProjetoId">
+          <End Role="Projeto" Type="Self.Projeto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DesenvolvedorProjeto" Type="Self.DesenvolvedorProjeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projeto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DesenvolvedorProjeto">
+              <PropertyRef Name="ProjetoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId">
+          <End Role="Desenvolvedor" Type="Self.Desenvolvedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LancamentoHoras" Type="Self.LancamentoHoras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Desenvolvedor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LancamentoHoras">
+              <PropertyRef Name="DesenvolvedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LancamentoHoras_Projeto_ProjetoId">
+          <End Role="Projeto" Type="Self.Projeto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LancamentoHoras" Type="Self.LancamentoHoras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projeto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LancamentoHoras">
+              <PropertyRef Name="ProjetoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbLancamentoHorasModelStoreContainer">
+          <EntitySet Name="Desenvolvedor" EntityType="Self.Desenvolvedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DesenvolvedorProjeto" EntityType="Self.DesenvolvedorProjeto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LancamentoHoras" EntityType="Self.LancamentoHoras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projeto" EntityType="Self.Projeto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DesenvolvedorProjeto_Desenvolvedor_DesenvolvedorId" Association="Self.FK_DesenvolvedorProjeto_Desenvolvedor_DesenvolvedorId">
+            <End Role="Desenvolvedor" EntitySet="Desenvolvedor" />
+            <End Role="DesenvolvedorProjeto" EntitySet="DesenvolvedorProjeto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DesenvolvedorProjeto_Projeto_ProjetoId" Association="Self.FK_DesenvolvedorProjeto_Projeto_ProjetoId">
+            <End Role="Projeto" EntitySet="Projeto" />
+            <End Role="DesenvolvedorProjeto" EntitySet="DesenvolvedorProjeto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId" Association="Self.FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId">
+            <End Role="Desenvolvedor" EntitySet="Desenvolvedor" />
+            <End Role="LancamentoHoras" EntitySet="LancamentoHoras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoHoras_Projeto_ProjetoId" Association="Self.FK_LancamentoHoras_Projeto_ProjetoId">
+            <End Role="Projeto" EntitySet="Projeto" />
+            <End Role="LancamentoHoras" EntitySet="LancamentoHoras" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbLancamentoHorasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Desenvolvedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cpf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LancamentoHoras" Relationship="Self.FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId" FromRole="Desenvolvedor" ToRole="LancamentoHoras" />
+          <NavigationProperty Name="Projeto" Relationship="Self.DesenvolvedorProjeto" FromRole="Desenvolvedor" ToRole="Projeto" />
+        </EntityType>
+        <EntityType Name="LancamentoHoras">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataInicial" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DataFinal" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DesenvolvedorId" Type="Int32" Nullable="false" />
+          <Property Name="ProjetoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Desenvolvedor" Relationship="Self.FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId" FromRole="LancamentoHoras" ToRole="Desenvolvedor" />
+          <NavigationProperty Name="Projeto" Relationship="Self.FK_LancamentoHoras_Projeto_ProjetoId" FromRole="LancamentoHoras" ToRole="Projeto" />
+        </EntityType>
+        <EntityType Name="Projeto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LancamentoHoras" Relationship="Self.FK_LancamentoHoras_Projeto_ProjetoId" FromRole="Projeto" ToRole="LancamentoHoras" />
+          <NavigationProperty Name="Desenvolvedor" Relationship="Self.DesenvolvedorProjeto" FromRole="Projeto" ToRole="Desenvolvedor" />
+        </EntityType>
+        <Association Name="FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId">
+          <End Role="Desenvolvedor" Type="Self.Desenvolvedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LancamentoHoras" Type="Self.LancamentoHoras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Desenvolvedor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LancamentoHoras">
+              <PropertyRef Name="DesenvolvedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LancamentoHoras_Projeto_ProjetoId">
+          <End Role="Projeto" Type="Self.Projeto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LancamentoHoras" Type="Self.LancamentoHoras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projeto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LancamentoHoras">
+              <PropertyRef Name="ProjetoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DesenvolvedorProjeto">
+          <End Role="Desenvolvedor" Type="Self.Desenvolvedor" Multiplicity="*" />
+          <End Role="Projeto" Type="Self.Projeto" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DbLancamentoHorasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Desenvolvedor" EntityType="Self.Desenvolvedor" />
+          <EntitySet Name="LancamentoHoras" EntityType="Self.LancamentoHoras" />
+          <EntitySet Name="Projeto" EntityType="Self.Projeto" />
+          <AssociationSet Name="FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId" Association="Self.FK_LancamentoHoras_Desenvolvedor_DesenvolvedorId">
+            <End Role="Desenvolvedor" EntitySet="Desenvolvedor" />
+            <End Role="LancamentoHoras" EntitySet="LancamentoHoras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoHoras_Projeto_ProjetoId" Association="Self.FK_LancamentoHoras_Projeto_ProjetoId">
+            <End Role="Projeto" EntitySet="Projeto" />
+            <End Role="LancamentoHoras" EntitySet="LancamentoHoras" />
+          </AssociationSet>
+          <AssociationSet Name="DesenvolvedorProjeto" Association="Self.DesenvolvedorProjeto">
+            <End Role="Desenvolvedor" EntitySet="Desenvolvedor" />
+            <End Role="Projeto" EntitySet="Projeto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbLancamentoHorasModelStoreContainer" CdmEntityContainer="DbLancamentoHorasEntities">
+          <EntitySetMapping Name="Desenvolvedor">
+            <EntityTypeMapping TypeName="DbLancamentoHorasModel.Desenvolvedor">
+              <MappingFragment StoreEntitySet="Desenvolvedor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Cpf" ColumnName="Cpf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LancamentoHoras">
+            <EntityTypeMapping TypeName="DbLancamentoHorasModel.LancamentoHoras">
+              <MappingFragment StoreEntitySet="LancamentoHoras">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DataInicial" ColumnName="DataInicial" />
+                <ScalarProperty Name="DataFinal" ColumnName="DataFinal" />
+                <ScalarProperty Name="DesenvolvedorId" ColumnName="DesenvolvedorId" />
+                <ScalarProperty Name="ProjetoId" ColumnName="ProjetoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projeto">
+            <EntityTypeMapping TypeName="DbLancamentoHorasModel.Projeto">
+              <MappingFragment StoreEntitySet="Projeto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DesenvolvedorProjeto" TypeName="DbLancamentoHorasModel.DesenvolvedorProjeto" StoreEntitySet="DesenvolvedorProjeto">
+            <EndProperty Name="Desenvolvedor">
+              <ScalarProperty Name="Id" ColumnName="DesenvolvedorId" />
+            </EndProperty>
+            <EndProperty Name="Projeto">
+              <ScalarProperty Name="Id" ColumnName="ProjetoId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
