@@ -49,22 +49,29 @@ namespace API_LancamentoHoras.Controllers
         // POST: api/LancamentoHoras
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<LancamentoHoras>> PostLancamentoHoras(LancamentoHoras lancamentoHoras)
+        public async Task<ActionResult<Validacao>> PostLancamentoHoras(LancamentoHoras lancamentoHoras)
         {
-            var desenvolvedorProjeto = _context.DesenvolvedorProjeto
+            try
+            {
+                var desenvolvedorProjeto = _context.DesenvolvedorProjeto
                 .FirstOrDefault(dp =>
                 dp.DesenvolvedorId == lancamentoHoras.DesenvolvedorId &&
                 dp.ProjetoId == lancamentoHoras.ProjetoId);
 
-            if(desenvolvedorProjeto == null)
-            {
-                return Ok("O projeto não está vinculado ao desenvolvedor");
+                if (desenvolvedorProjeto == null)
+                {
+                    return Ok("O projeto não está vinculado ao desenvolvedor");
+                }
+
+                _context.LancamentoHoras.Add(lancamentoHoras);
+                await _context.SaveChangesAsync();
+
+                return Ok(new Validacao("Enviado"));
             }
-
-            _context.LancamentoHoras.Add(lancamentoHoras);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetLancamentoHoras", new { id = lancamentoHoras.Id }, lancamentoHoras);
+            catch (Exception)
+            {
+                return Ok("Erro no lançamento das Horas");
+            }
         }
 
         // DELETE: api/LancamentoHoras/5
