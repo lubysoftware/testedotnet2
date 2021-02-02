@@ -14,7 +14,8 @@ namespace API_LancamentoHoras.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,14 +89,14 @@ namespace API_LancamentoHoras.Migrations
 
             migrationBuilder.InsertData(
                 table: "Desenvolvedor",
-                columns: new[] { "Id", "Cpf", "Nome" },
+                columns: new[] { "Id", "Cpf", "Nome", "Senha" },
                 values: new object[,]
                 {
-                    { 1, "15648548545", "Lauro" },
-                    { 2, "94851451545", "Roberto" },
-                    { 3, "45180084610", "Ronaldo" },
-                    { 4, "00451104001", "Rodrigo" },
-                    { 5, "74050048122", "Alexandre" }
+                    { 1, "15648548545", "Lauro", "Lauro" },
+                    { 2, "94851451545", "Roberto", "Roberto" },
+                    { 3, "45180084610", "Ronaldo", "Ronaldo" },
+                    { 4, "00451104001", "Rodrigo", "Rodrigo" },
+                    { 5, "74050048122", "Alexandre", "Alexandre" }
                 });
 
             migrationBuilder.InsertData(
@@ -126,15 +127,15 @@ namespace API_LancamentoHoras.Migrations
                 columns: new[] { "Id", "DataFinal", "DataInicial", "DesenvolvedorId", "ProjetoId" },
                 values: new object[,]
                 {
-                    { 3, new DateTime(2021, 1, 30, 10, 25, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 30, 8, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 },
-                    { 6, new DateTime(2021, 2, 1, 20, 10, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 1, 8, 10, 0, 0, DateTimeKind.Unspecified), 3, 1 },
-                    { 7, new DateTime(2021, 2, 1, 20, 10, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 1, 18, 10, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 8, new DateTime(2021, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 2, 18, 10, 0, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 2, new DateTime(2021, 1, 29, 15, 20, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 29, 13, 20, 0, 0, DateTimeKind.Unspecified), 5, 2 },
-                    { 4, new DateTime(2021, 1, 31, 18, 50, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 31, 14, 30, 0, 0, DateTimeKind.Unspecified), 5, 2 },
-                    { 5, new DateTime(2021, 1, 31, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 31, 10, 15, 0, 0, DateTimeKind.Unspecified), 1, 2 },
-                    { 9, new DateTime(2021, 2, 2, 17, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 2, 8, 10, 0, 0, DateTimeKind.Unspecified), 5, 2 },
-                    { 1, new DateTime(2021, 1, 29, 14, 50, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 29, 13, 25, 50, 0, DateTimeKind.Unspecified), 4, 3 }
+                    { 3, new DateTime(2021, 1, 31, 10, 25, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 31, 8, 0, 0, 0, DateTimeKind.Unspecified), 2, 1 },
+                    { 6, new DateTime(2021, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 2, 8, 10, 0, 0, DateTimeKind.Unspecified), 3, 1 },
+                    { 7, new DateTime(2021, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 2, 18, 10, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 8, new DateTime(2021, 2, 3, 20, 10, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 3, 18, 10, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2021, 1, 30, 15, 20, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 30, 13, 20, 0, 0, DateTimeKind.Unspecified), 5, 2 },
+                    { 4, new DateTime(2021, 2, 1, 18, 50, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 1, 14, 30, 0, 0, DateTimeKind.Unspecified), 5, 2 },
+                    { 5, new DateTime(2021, 2, 1, 15, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 1, 10, 15, 0, 0, DateTimeKind.Unspecified), 1, 2 },
+                    { 9, new DateTime(2021, 2, 3, 17, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 2, 3, 8, 10, 0, 0, DateTimeKind.Unspecified), 5, 2 },
+                    { 1, new DateTime(2021, 1, 30, 14, 50, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 30, 13, 25, 50, 0, DateTimeKind.Unspecified), 4, 3 }
                 });
 
             migrationBuilder.CreateIndex(

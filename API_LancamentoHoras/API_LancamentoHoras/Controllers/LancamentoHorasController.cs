@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_LancamentoHoras.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_LancamentoHoras.Controllers
 {
@@ -22,45 +23,62 @@ namespace API_LancamentoHoras.Controllers
 
         // GET: api/LancamentoHoras
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<LancamentoHoras>>> GetLancamentoHoras()
         {
-            return await _context.LancamentoHoras.ToListAsync();
+            try
+            {
+                return await _context.LancamentoHoras.ToListAsync();
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro ao listar as horas cadastradas" });
+            }
         }
 
         // GET: api/LancamentoHoras/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<LancamentoHoras>> GetLancamentoHoras(int id)
         {
-            IQueryable<LancamentoHoras> query = _context.LancamentoHoras;
-            query = query.Include(p => p.Desenvolvedor);
-            query = query.Include(p => p.Projeto);
-            query = query.Where(a => a.Id == id);
-
-            var lancamentoHoras = await query.FirstOrDefaultAsync();
-
-            if (lancamentoHoras == null)
+            try
             {
-                return NotFound();
-            }
+                IQueryable<LancamentoHoras> query = _context.LancamentoHoras;
+                query = query.Include(p => p.Desenvolvedor);
+                query = query.Include(p => p.Projeto);
+                query = query.Where(a => a.Id == id);
 
-            return lancamentoHoras;
+                var lancamentoHoras = await query.FirstOrDefaultAsync();
+
+                if (lancamentoHoras == null)
+                {
+                    return Ok(new Validacao("Lançamento de horas não encontrado"));
+                }
+
+                return lancamentoHoras;
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro ao visualizar o lançamento da hora" });
+            }
         }
 
         // POST: api/LancamentoHoras
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Validacao>> PostLancamentoHoras(LancamentoHoras lancamentoHoras)
         {
             try
             {
                 var desenvolvedorProjeto = _context.DesenvolvedorProjeto
                 .FirstOrDefault(dp =>
-                dp.DesenvolvedorId == lancamentoHoras.DesenvolvedorId &&
-                dp.ProjetoId == lancamentoHoras.ProjetoId);
+                    dp.DesenvolvedorId == lancamentoHoras.DesenvolvedorId &&
+                    dp.ProjetoId == lancamentoHoras.ProjetoId);
 
                 if (desenvolvedorProjeto == null)
                 {
-                    return Ok("O projeto não está vinculado ao desenvolvedor");
+                    return Ok(new Validacao("O projeto não está vinculado ao desenvolvedor"));
                 }
 
                 _context.LancamentoHoras.Add(lancamentoHoras);
@@ -70,24 +88,32 @@ namespace API_LancamentoHoras.Controllers
             }
             catch (Exception)
             {
-                return Ok("Erro no lançamento das Horas");
+                return NotFound(new { Erro = "Erro no lançamento das Horas" });
             }
         }
 
         // DELETE: api/LancamentoHoras/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteLancamentoHoras(int id)
         {
-            var lancamentoHoras = await _context.LancamentoHoras.FindAsync(id);
-            if (lancamentoHoras == null)
+            try
             {
-                return NotFound();
+                var lancamentoHoras = await _context.LancamentoHoras.FindAsync(id);
+                if (lancamentoHoras == null)
+                {
+                    return Ok(new Validacao("Id não foi encontrado"));
+                }
+
+                _context.LancamentoHoras.Remove(lancamentoHoras);
+                await _context.SaveChangesAsync();
+
+                return Ok(new Validacao("Deletado com sucesso"));
             }
-
-            _context.LancamentoHoras.Remove(lancamentoHoras);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro ao deletar a hora cadastrada" });
+            }
         }
 
         private bool LancamentoHorasExists(int id)

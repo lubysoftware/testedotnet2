@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_LancamentoHoras.Models;
+using API_LancamentoHoras.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_LancamentoHoras.Controllers
 {
@@ -20,7 +22,38 @@ namespace API_LancamentoHoras.Controllers
             _context = context;
         }
 
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] Desenvolvedor desenvolvedor)
+        {
+            try
+            {
+                var query = _context.Desenvolvedor.Where(x => x.Nome == desenvolvedor.Nome && x.Senha == desenvolvedor.Senha);
+
+                if (query.Count() == 0)
+                    return NotFound(new Validacao("Usuário ou senha inválidos"));
+
+                desenvolvedor = await query.FirstOrDefaultAsync();
+
+                var token = TokenService.GenerateToken(desenvolvedor);
+
+                desenvolvedor.Senha = ""; //Esconder senha
+
+                return new
+                {
+                    token = token,
+                    desenvolvedor = desenvolvedor
+                };
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro na autenticação" });
+            }
+        }
+
         [HttpGet("ValidacaoCPF/{cpf}")]
+        [Authorize]
         public IActionResult ValidacaoCPF(string cpf)
         {
             try
@@ -32,12 +65,13 @@ namespace API_LancamentoHoras.Controllers
             }
             catch (Exception)
             {
-                return Ok("Erro na validação do CPF");
+                return NotFound(new { Erro = "Erro na validação do CPF" });
             }
         }
 
         // GET: api/Ranking
         [HttpGet("Ranking")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<DesenvolvedorRanking>>> GetRanking()
         {
             try
@@ -65,12 +99,13 @@ namespace API_LancamentoHoras.Controllers
             }
             catch (Exception)
             {
-                return Ok("Erro ao obter o ranking dos desenvolvedores");
+                return NotFound(new { Erro = "Erro ao obter o ranking dos desenvolvedores" });
             }
         }
 
         // GET: api/Desenvolvedor
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Desenvolvedor>>> GetDesenvolvedor()
         {
             try
@@ -79,13 +114,13 @@ namespace API_LancamentoHoras.Controllers
             }
             catch (Exception)
             {
-
-                return Ok("Erro ao obter a lista de desenvolvedores");
+                return NotFound(new { Erro = "Erro ao obter a lista de desenvolvedores" });
             }
         }
 
         // GET: api/Desenvolvedor/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Desenvolvedor>> GetDesenvolvedor(int id)
         {
             try
@@ -99,25 +134,26 @@ namespace API_LancamentoHoras.Controllers
 
                 if (desenvolvedor == null)
                 {
-                    return NotFound();
+                    return Ok(new Validacao("Desenvolvedor não encontrado"));
                 }
 
                 return desenvolvedor;
             }
             catch (Exception)
             {
-                return Ok("Erro ao obter os dados do desenvolvedor");
+                return NotFound(new { Erro = "Erro ao obter os dados do desenvolvedor" });
             }            
         }
 
         // PUT: api/Desenvolvedor/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutDesenvolvedor(int id, Desenvolvedor desenvolvedor)
         {
             if (id != desenvolvedor.Id)
             {
-                return BadRequest("");
+                return Ok(new Validacao("Id na URL está diferente do corpo da requisição"));
             }
 
             _context.Entry(desenvolvedor).State = EntityState.Modified;
@@ -125,47 +161,60 @@ namespace API_LancamentoHoras.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+
+                return Ok(new Validacao("Alterado com sucesso"));
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!DesenvolvedorExists(id))
-                {
-                    return NotFound();
-                }
+                    return NotFound(new { Erro = "Desenvolvedor Inexistente" });
                 else
-                {
-                    throw;
-                }
+                    return NotFound(new { Erro = "Erro ao atualizar desenvolvedor" });
             }
-
-            return NoContent();
         }
 
         // POST: api/Desenvolvedor
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Desenvolvedor>> PostDesenvolvedor(Desenvolvedor desenvolvedor)
         {
-            _context.Desenvolvedor.Add(desenvolvedor);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Desenvolvedor.Add(desenvolvedor);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDesenvolvedor", new { id = desenvolvedor.Id }, desenvolvedor);
+                return CreatedAtAction("GetDesenvolvedor", new { id = desenvolvedor.Id }, desenvolvedor);
+            }
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro ao adicionar desenvolvedor" });
+            }
         }
 
         // DELETE: api/Desenvolvedor/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteDesenvolvedor(int id)
         {
-            var desenvolvedor = await _context.Desenvolvedor.FindAsync(id);
-            if (desenvolvedor == null)
+            try
             {
-                return NotFound();
+                var desenvolvedor = await _context.Desenvolvedor.FindAsync(id);
+
+                if (desenvolvedor == null)
+                {
+                    return Ok(new Validacao("Desenvolvedor não encontrado"));
+                }
+
+                _context.Desenvolvedor.Remove(desenvolvedor);
+                await _context.SaveChangesAsync();
+
+                return Ok(new Validacao("Desenvolvedor excluído com sucesso"));
             }
-
-            _context.Desenvolvedor.Remove(desenvolvedor);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro ao deletar desenvolvedor" });
+            }
         }
 
         private bool DesenvolvedorExists(int id)

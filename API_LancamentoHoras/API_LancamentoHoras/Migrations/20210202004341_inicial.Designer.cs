@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_LancamentoHoras.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210201002425_inicial")]
+    [Migration("20210202004341_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace API_LancamentoHoras.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Senha")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Desenvolvedor");
@@ -43,31 +46,36 @@ namespace API_LancamentoHoras.Migrations
                         {
                             Id = 1,
                             Cpf = "15648548545",
-                            Nome = "Lauro"
+                            Nome = "Lauro",
+                            Senha = "Lauro"
                         },
                         new
                         {
                             Id = 2,
                             Cpf = "94851451545",
-                            Nome = "Roberto"
+                            Nome = "Roberto",
+                            Senha = "Roberto"
                         },
                         new
                         {
                             Id = 3,
                             Cpf = "45180084610",
-                            Nome = "Ronaldo"
+                            Nome = "Ronaldo",
+                            Senha = "Ronaldo"
                         },
                         new
                         {
                             Id = 4,
                             Cpf = "00451104001",
-                            Nome = "Rodrigo"
+                            Nome = "Rodrigo",
+                            Senha = "Rodrigo"
                         },
                         new
                         {
                             Id = 5,
                             Cpf = "74050048122",
-                            Nome = "Alexandre"
+                            Nome = "Alexandre",
+                            Senha = "Alexandre"
                         });
                 });
 
@@ -149,62 +157,54 @@ namespace API_LancamentoHoras.Migrations
                         new
                         {
                             Id = 1,
-                            DataFinal = new DateTime(2021, 1, 29, 14, 50, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 1, 29, 13, 25, 50, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 1, 30, 14, 50, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 30, 13, 25, 50, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 4,
                             ProjetoId = 3
                         },
                         new
                         {
                             Id = 2,
-                            DataFinal = new DateTime(2021, 1, 29, 15, 20, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 1, 29, 13, 20, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 1, 30, 15, 20, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 30, 13, 20, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 5,
                             ProjetoId = 2
                         },
                         new
                         {
                             Id = 3,
-                            DataFinal = new DateTime(2021, 1, 30, 10, 25, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 1, 30, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 1, 31, 10, 25, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 1, 31, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 2,
                             ProjetoId = 1
                         },
                         new
                         {
                             Id = 4,
-                            DataFinal = new DateTime(2021, 1, 31, 18, 50, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 1, 31, 14, 30, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 2, 1, 18, 50, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 1, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 5,
                             ProjetoId = 2
                         },
                         new
                         {
                             Id = 5,
-                            DataFinal = new DateTime(2021, 1, 31, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 1, 31, 10, 15, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 2, 1, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 1, 10, 15, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 1,
                             ProjetoId = 2
                         },
                         new
                         {
                             Id = 6,
-                            DataFinal = new DateTime(2021, 2, 1, 20, 10, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 2, 1, 8, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 2, 8, 10, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 3,
                             ProjetoId = 1
                         },
                         new
                         {
                             Id = 7,
-                            DataFinal = new DateTime(2021, 2, 1, 20, 10, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 2, 1, 18, 10, 0, 0, DateTimeKind.Unspecified),
-                            DesenvolvedorId = 1,
-                            ProjetoId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
                             DataFinal = new DateTime(2021, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified),
                             DataInicial = new DateTime(2021, 2, 2, 18, 10, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 1,
@@ -212,9 +212,17 @@ namespace API_LancamentoHoras.Migrations
                         },
                         new
                         {
+                            Id = 8,
+                            DataFinal = new DateTime(2021, 2, 3, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 3, 18, 10, 0, 0, DateTimeKind.Unspecified),
+                            DesenvolvedorId = 1,
+                            ProjetoId = 1
+                        },
+                        new
+                        {
                             Id = 9,
-                            DataFinal = new DateTime(2021, 2, 2, 17, 30, 0, 0, DateTimeKind.Unspecified),
-                            DataInicial = new DateTime(2021, 2, 2, 8, 10, 0, 0, DateTimeKind.Unspecified),
+                            DataFinal = new DateTime(2021, 2, 3, 17, 30, 0, 0, DateTimeKind.Unspecified),
+                            DataInicial = new DateTime(2021, 2, 3, 8, 10, 0, 0, DateTimeKind.Unspecified),
                             DesenvolvedorId = 5,
                             ProjetoId = 2
                         });

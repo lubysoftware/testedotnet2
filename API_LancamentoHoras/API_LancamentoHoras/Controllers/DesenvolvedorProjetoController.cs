@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_LancamentoHoras.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_LancamentoHoras.Controllers
 {
@@ -22,64 +23,68 @@ namespace API_LancamentoHoras.Controllers
 
         // GET: api/DesenvolvedorProjeto
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<DesenvolvedorProjeto>>> GetProjetoDesenvolvedor()
         {
-            return await _context.DesenvolvedorProjeto.ToListAsync();
-        }
-
-        // GET: api/DesenvolvedorProjeto/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<DesenvolvedorProjeto>> GetDesenvolvedorProjeto(int id)
-        {
-            var desenvolvedorProjeto = await _context.DesenvolvedorProjeto.FindAsync(id);
-
-            if (desenvolvedorProjeto == null)
+            try
             {
-                return NotFound();
+                return await _context.DesenvolvedorProjeto.ToListAsync();
             }
-
-            return desenvolvedorProjeto;
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro listar projetos" });
+            }
         }
 
         // POST: api/DesenvolvedorProjeto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<DesenvolvedorProjeto>> PostDesenvolvedorProjeto(DesenvolvedorProjeto desenvolvedorProjeto)
         {
-            _context.DesenvolvedorProjeto.Add(desenvolvedorProjeto);
             try
             {
+                var query = _context.DesenvolvedorProjeto.Where(x =>
+                x.DesenvolvedorId == desenvolvedorProjeto.DesenvolvedorId &&
+                x.ProjetoId == desenvolvedorProjeto.ProjetoId);
+
+                if (query.Count() > 0)
+                    return Ok(new Validacao("Este projeto já estava cadastrado ao desenvolvedor"));
+
+                _context.DesenvolvedorProjeto.Add(desenvolvedorProjeto);
+
                 await _context.SaveChangesAsync();
+
+                return Ok(new Validacao("Sucesso ao adicionar projeto para o desenvolvedor"));
             }
             catch (DbUpdateException)
             {
-                if (DesenvolvedorProjetoExists(desenvolvedorProjeto.ProjetoId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(new { Erro = "Erro ao incluir projeto ao desenvolvedor" });
             }
-
-            return CreatedAtAction("GetDesenvolvedorProjeto", new { id = desenvolvedorProjeto.ProjetoId }, desenvolvedorProjeto);
         }
 
         // DELETE: api/DesenvolvedorProjeto/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDesenvolvedorProjeto(int id)
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeleteDesenvolvedorProjeto([FromBody] DesenvolvedorProjeto dp)
         {
-            var desenvolvedorProjeto = await _context.DesenvolvedorProjeto.FindAsync(id);
-            if (desenvolvedorProjeto == null)
+            try
             {
-                return NotFound();
+                var desenvolvedorProjeto = _context.DesenvolvedorProjeto
+                    .Where(x => x.DesenvolvedorId == dp.DesenvolvedorId && x.ProjetoId == dp.ProjetoId);
+
+                if (desenvolvedorProjeto.Count() == 0)
+                    return Ok(new Validacao("Relação desenvolvedor-projeto inexistente"));
+
+                _context.DesenvolvedorProjeto.Remove(desenvolvedorProjeto.FirstOrDefault());
+                await _context.SaveChangesAsync();
+
+                return Ok(new Validacao("Excluído com successo"));
             }
-
-            _context.DesenvolvedorProjeto.Remove(desenvolvedorProjeto);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception)
+            {
+                return NotFound(new { Erro = "Erro ao deletar relação desenvolvedor projeto" });
+            }
         }
 
         private bool DesenvolvedorProjetoExists(int id)

@@ -13,6 +13,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using API_LancamentoHoras.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API_LancamentoHoras
 {
@@ -28,7 +31,6 @@ namespace API_LancamentoHoras
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<Contexto>(opt => opt.UseInMemoryDatabase("Lista"));
             services.AddDbContext<Contexto>(options => options.UseSqlServer(Configuration.GetConnectionString("StringDeConexao")));
             services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -36,6 +38,29 @@ namespace API_LancamentoHoras
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_LancamentoHoras", Version = "v1" });
             });
+
+            #region Autencitação
+
+            var key = Encoding.ASCII.GetBytes(Settings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +77,10 @@ namespace API_LancamentoHoras
 
             app.UseRouting();
 
+            #region Autenticação
+            app.UseAuthentication();
             app.UseAuthorization();
+            #endregion
 
             app.UseEndpoints(endpoints =>
             {

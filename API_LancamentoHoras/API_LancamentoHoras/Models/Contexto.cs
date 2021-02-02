@@ -27,11 +27,11 @@ namespace API_LancamentoHoras.Models
 
             modelBuilder.Entity<Desenvolvedor>()
                 .HasData(new List<Desenvolvedor>(){
-                    new Desenvolvedor(1,"Lauro","15648548545"),
-                    new Desenvolvedor(2,"Roberto","94851451545"),
-                    new Desenvolvedor(3,"Ronaldo","45180084610"),
-                    new Desenvolvedor(4,"Rodrigo","00451104001"),
-                    new Desenvolvedor(5,"Alexandre","74050048122"),
+                    new Desenvolvedor(1,"Lauro","15648548545","Lauro"),
+                    new Desenvolvedor(2,"Roberto","94851451545","Roberto"),
+                    new Desenvolvedor(3,"Ronaldo","45180084610","Ronaldo"),
+                    new Desenvolvedor(4,"Rodrigo","00451104001","Rodrigo"),
+                    new Desenvolvedor(5,"Alexandre","74050048122","Alexandre"),
                 });
 
             modelBuilder.Entity<Projeto>()
