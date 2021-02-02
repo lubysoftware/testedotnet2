@@ -22,7 +22,7 @@ namespace API_LancamentoHoras.Services
                 {
                     new Claim(ClaimTypes.Name, desenvolvedor.Nome.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(5),
+                Expires = DateTime.UtcNow.AddMinutes(5),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
