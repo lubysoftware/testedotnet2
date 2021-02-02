@@ -3,3 +3,4 @@
 add-migration inicial
 update-database
 
+Assistir ao vído de apresentação: https://youtu.be/Ol4f2TVmgaY
