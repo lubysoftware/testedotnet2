@@ -45,5 +45,5 @@ Desenvolver um serviço que seja capaz de gerar um lançamento de horas.
 
 #### Identificação:
 Nome: Danilo Souza Frazão<br/>
-E-mail: danilo_frazao@outlook.com
+E-mail: danilo_frazao@outlook.com<br>
 Vídeo de apresentação: https://youtu.be/Ol4f2TVmgaY
