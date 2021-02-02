@@ -1,1 +1,5 @@
-﻿
+﻿-Abrir o Console do Gerenciador de Pacotes
+-Executar os comandos para criar o banco de dados:
+add-migration inicial
+update-database
+
